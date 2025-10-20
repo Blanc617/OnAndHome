@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온앤홈 관리자</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-wrapper">
+    <!-- 컨텐츠 영역 -->
+    <div class="on-content">
+      <!-- 사이드바 메뉴 -->
+      <div class="on-side-menu">
+        <div class="side-menu-logo">
+          <h2>On&Home</h2>
+        </div>
+        <div class="on-side-menu-nav">
+          <ul class="side-menu-list">
+            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
+            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
+            <li>
+              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
+              <ul>
+                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
+                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
+                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
+                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
+          </ul>
+        </div>
+        <div class="on-side-menu-user">
+          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
+          <div class="on-side-menu-logout">
+            <span style="font-size: 16px;">logout</span>
+            <button class="log-out"></button>
+          </div>
+        </div>
+      </div>
+      <!-- <내부영역 -->
+      <div class="on-main">
+        <h2 class="mb-30">Order List</h2>
+        <div class="flex mb-20 justify-end">
+          <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
+          <button class="btn-ico btn-ico--srch"></button>
+        </div>
+        <div class="grid">
+          <table>
+            <colgroup>
+              <col>
+              <col width="30%">
+              <col>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">주문번호</th>
+                <th scope="col">상품명</th>
+                <th scope="col">정상가격</th>
+                <th scope="col">할인가격</th>
+                <th scope="col">구매자명</th>
+                <th scope="col">주문일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">LG SIGNATURE OLED 8K</td>
+                <td class="center">4,500,000</td>
+                <td class="center">2,850,000</td>
+                <td class="center">이상혁</td>
+                <td class="center">2025-10-18</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-457</a></td>
+                <td class="center">Samsung Bespoke 냉장고</td>
+                <td class="center">3,200,000</td>
+                <td class="center">2,490,000</td>
+                <td class="center">김연아</td>
+                <td class="center">2025-10-17</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-458</a></td>
+                <td class="center">Apple MacBook Air M3</td>
+                <td class="center">1,890,000</td>
+                <td class="center">1,690,000</td>
+                <td class="center">박보검</td>
+                <td class="center">2025-10-17</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-459</a></td>
+                <td class="center">Dyson Gen5 Detect 무선청소기</td>
+                <td class="center">1,290,000</td>
+                <td class="center">1,090,000</td>
+                <td class="center">이지은</td>
+                <td class="center">2025-10-16</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">Sony WH-1000XM5 헤드폰</td>
+                <td class="center">590,000</td>
+                <td class="center">490,000</td>
+                <td class="center">정해인</td>
+                <td class="center">2025-10-16</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">LG 퓨리케어 공기청정기</td>
+                <td class="center">820,000</td>
+                <td class="center">680,000</td>
+                <td class="center">한소희</td>
+                <td class="center">2025-10-15</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">Canon EOS R8 카메라</td>
+                <td class="center">2,590,000</td>
+                <td class="center">2,290,000</td>
+                <td class="center">박서준</td>
+                <td class="center">2025-10-15</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">Samsung QLED 75 Q90C</td>
+                <td class="center">4,200,000</td>
+                <td class="center">3,790,000</td>
+                <td class="center">김유정</td>
+                <td class="center">2025-10-14</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">Apple iPhone 16 Pro</td>
+                <td class="center">1,690,000</td>
+                <td class="center">1,450,000</td>
+                <td class="center">이도현</td>
+                <td class="center">2025-10-14</td>
+              </tr>
+              <tr>
+                <td class="center"><a href="/admin/order/detail.html">123-456</a></td>
+                <td class="center">Samsung Galaxy Tab S9 Ultra</td>
+                <td class="center">1,590,000</td>
+                <td class="center">1,390,000</td>
+                <td class="center">문채원</td>
+                <td class="center">2025-10-13</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
