@@ -1,4 +1,4 @@
 package com.onandhome.user;
 
-public class userController {
+public class UserService {
 }

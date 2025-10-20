@@ -1,4 +1,4 @@
 package com.onandhome.product;
 
-public class productController {
+public class ProductController {
 }

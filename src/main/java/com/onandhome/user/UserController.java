@@ -1,4 +1,4 @@
 package com.onandhome.user;
 
-public class userRepository {
+public class UserController {
 }
