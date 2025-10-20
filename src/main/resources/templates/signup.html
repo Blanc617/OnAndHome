@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>온앤홈 - Admin 회원가입</title>
+  <title>온앤홈 - User 회원가입</title>
   <link rel="stylesheet" href="/css/import.css" />
   <style>
     * {
@@ -47,11 +47,11 @@
     }
     
     .signup-role {
-      background: #fff3e0;
+      background: #e3f2fd;
       padding: 8px 12px;
       border-radius: 4px;
       font-size: 12px;
-      color: #e65100;
+      color: #1565c0;
       font-weight: 600;
       text-align: center;
     }
@@ -79,8 +79,8 @@
     
     .form-group input:focus {
       outline: none;
-      border-color: #ff9800;
-      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
     }
     
     .error-message {
@@ -112,12 +112,12 @@
     }
     
     .btn-submit {
-      background: #ff9800;
+      background: #4CAF50;
       color: white;
     }
     
     .btn-submit:hover {
-      background: #f57c00;
+      background: #388E3C;
     }
     
     .btn-cancel {
@@ -137,7 +137,7 @@
     }
     
     .login-link a {
-      color: #ff9800;
+      color: #4CAF50;
       text-decoration: none;
       font-weight: 600;
     }
@@ -159,12 +159,6 @@
       color: #c62828;
       border: 1px solid #ffcdd2;
     }
-    
-    .alert-success {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 1px solid #c8e6c9;
-    }
   </style>
 </head>
 <body>
@@ -172,7 +166,7 @@
     <div class="signup-card">
       <div class="signup-logo-wrap">
         <h1 class="signup_header">On&Home</h1>
-        <div class="signup-role">👨‍💼 관리자 회원가입 (ADMIN)</div>
+        <div class="signup-role">👤 일반 사용자 회원가입 (USER)</div>
       </div>
       
       <div id="alertBox" class="alert"></div>
@@ -198,19 +192,19 @@
 
         <div class="form-group">
           <label for="email">이메일 <span style="color: #d32f2f;">*</span></label>
-          <input type="email" id="email" name="email" placeholder="admin@onandhome.com" required />
+          <input type="email" id="email" name="email" placeholder="example@onandhome.com" required />
           <div id="emailError" class="error-message"></div>
         </div>
 
         <div class="form-group">
           <label for="username">이름 <span style="color: #d32f2f;">*</span></label>
-          <input type="text" id="username" name="username" placeholder="관리자 이름" required />
+          <input type="text" id="username" name="username" placeholder="홍길동" required />
           <div id="usernameError" class="error-message"></div>
         </div>
 
         <div class="form-group">
           <label for="phone">휴대폰</label>
-          <input type="tel" id="phone" name="phone" placeholder="010-9999-9999" />
+          <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" />
         </div>
 
         <div class="button-group">
@@ -219,7 +213,7 @@
         </div>
 
         <div class="login-link">
-          이미 계정이 있으신가요? <a href="/admin/login">로그인</a>
+          이미 계정이 있으신가요? <a href="/login">로그인</a>
         </div>
       </form>
     </div>
@@ -309,8 +303,7 @@
           phone: document.getElementById('phone').value || null
         };
 
-        // ⚠️ 중요: role=ADMIN 파라미터 추가
-        const response = await fetch('/api/user/register?role=ADMIN', {
+        const response = await fetch('/api/user/register?role=USER', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -321,9 +314,9 @@
         const result = await response.json();
 
         if (result.success) {
-          showAlert('관리자 회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.', 'success');
+          showAlert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.', 'success');
           setTimeout(() => {
-            window.location.href = '/admin/login?signup=true';
+            window.location.href = '/login?signup=true';
           }, 1500);
         } else {
           showAlert(result.message || '회원가입 실패', 'error');
