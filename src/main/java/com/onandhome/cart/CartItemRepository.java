@@ -3,7 +3,7 @@ package com.onandhome.cart;
 import java.util.List;
 
 import com.onandhome.cart.entity.CartItem;
-import com.onandhome.user.User;
+import com.onandhome.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

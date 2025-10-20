@@ -1,7 +1,7 @@
 package com.onandhome.cart.entity;
 
 import com.onandhome.product.entity.Product;
-import com.onandhome.user.User;
+import com.onandhome.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +24,4 @@ public class CartItem {
 
 	private int quantity;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

@@ -13,5 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order save(Order order);
 
-    List<Order> findByUser(com.onandhome.user.User user);
+    List<Order> findByUser(com.onandhome.user.entity.User user);
+
+
 }

@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/order")
 public class OrderController {
 	private final OrderService svc;
 
 	public OrderController(OrderService svc) {
 		this.svc = svc;
 	}
+
 
 	@PostMapping("/checkout")
 	public Order checkout(@RequestBody Map<String, Object> body) {

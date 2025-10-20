@@ -9,7 +9,7 @@ import com.onandhome.cart.CartItemRepository;
 import com.onandhome.order.entity.Order;
 import com.onandhome.order.entity.OrderItem;
 import com.onandhome.product.ProductRepository;
-import com.onandhome.user.User;
+import com.onandhome.user.entity.User;
 import com.onandhome.user.UserRepository;
 import org.springframework.stereotype.Service;
 

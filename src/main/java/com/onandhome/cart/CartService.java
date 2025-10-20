@@ -5,10 +5,11 @@ import java.util.List;
 import com.onandhome.cart.entity.CartItem;
 import com.onandhome.product.entity.Product;
 import com.onandhome.product.ProductRepository;
-import com.onandhome.user.User;
 import com.onandhome.user.UserRepository;
+import com.onandhome.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 @RequiredArgsConstructor
 @Service

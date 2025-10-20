@@ -3,7 +3,7 @@ package com.onandhome.order.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.onandhome.user.User;
+import com.onandhome.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
