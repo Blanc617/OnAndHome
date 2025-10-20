@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온앤홈 관리자</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-wrapper">
+    <!-- 컨텐츠 영역 -->
+    <div class="on-content">
+      <!-- 사이드바 메뉴 -->
+      <div class="on-side-menu">
+        <div class="side-menu-logo">
+          <h2>On&Home</h2>
+        </div>
+        <div class="on-side-menu-nav">
+          <ul class="side-menu-list">
+            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
+            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
+            <li>
+              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
+              <ul>
+                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
+                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
+                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
+                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
+          </ul>
+        </div>
+        <div class="on-side-menu-user">
+          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
+          <div class="on-side-menu-logout">
+            <span style="font-size: 16px;">logout</span>
+            <button class="log-out"></button>
+          </div>
+        </div>
+      </div>
+      <!-- <내부영역 -->
+      <div class="on-main">
+        <h2 class="mb-30">Notice Board List</h2>
+        <div class="flex mb-20 justify-end">
+          <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
+          <button class="btn-ico btn-ico--srch"></button>
+        </div>
+        <div class="grid">
+          <table>
+            <colgroup>
+              <col width="10%">
+              <col>
+              <col width="20%">
+              <col width="20%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="center">01</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">쇼핑몰 오픈입니다.</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-10-18</td>
+              </tr>
+              <tr>
+                <td class="center">02</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">추석 연휴 배송 일정 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-09-05</td>
+              </tr>
+              <tr>
+                <td class="center">03</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">신규 회원 대상 할인 쿠폰 지급 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-09-20</td>
+              </tr>
+              <tr>
+                <td class="center">04</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">시스템 점검으로 인한 서비스 일시 중단 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-08-14</td>
+              </tr>
+              <tr>
+                <td class="center">05</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">여름 시즌 한정 세일 이벤트 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-07-01</td>
+              </tr>
+              <tr>
+                <td class="center">06</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">적립금 제도 변경 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-06-15</td>
+              </tr>
+              <tr>
+                <td class="center">07</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">배송지 정보 변경 기능 개선 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-05-28</td>
+              </tr>
+              <tr>
+                <td class="center">08</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">신규 브랜드 입점 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-04-10</td>
+              </tr>
+              <tr>
+                <td class="center">09</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">무료 배송 이벤트 종료 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-03-22</td>
+              </tr>
+              <tr>
+                <td class="center">10</td>
+                <td class="center"><a href="/admin/board/notice/detail.html">고객센터 운영시간 변경 안내</a></td>
+                <td class="center">admin</td>
+                <td class="center">2025-02-03</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="flex mb-20 mt-20 justify-end">
+          <a href="/admin/board/notice/write.html"><button class="btn btn--primary">등록</button></a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
