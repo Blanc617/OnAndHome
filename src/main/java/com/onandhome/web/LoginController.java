@@ -5,13 +5,15 @@ import com.onandhome.user.dto.UserDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -115,4 +117,116 @@ public class LoginController {
         
         return "admin/login";
     }
+    //유연 작업(OK)
+    //회원 정보 조회
+    @GetMapping("/admin/edit-view")
+    public ResponseEntity<Map<String, Object>> getMyInfo(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser == null) {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+
+            Optional<UserDTO> userOptional = userService.getUserById(loginUser.getId());
+
+            if (userOptional.isPresent()) {
+                response.put("success", true);
+                response.put("data", userOptional.get());
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "사용자를 찾을 수 없습니다.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "사용자 정보 조회 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    //유연 작업(실패 창은 OK)
+    //회원 정보 수정
+    @PatchMapping("/admin/edit")
+    public ResponseEntity<Map<String, Object>> editUser(
+            @RequestBody UserDTO userDTO,
+            HttpSession session) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser == null) {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+
+            userDTO.setId(loginUser.getId());
+
+            //UserService는 userDTO 하나만 받음!!
+            UserDTO updatedUser = userService.updateUser(userDTO);
+
+            session.setAttribute(SESSION_USER_KEY, updatedUser);
+
+            response.put("success", true);
+            response.put("message", "회원 정보 수정 성공");
+            response.put("data", updatedUser);
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "회원 정보 수정 중 오류 발생");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    //유연 작업 (실패 창 OK)
+    //회원 탈퇴
+    @DeleteMapping("/admin/delete")
+    public ResponseEntity<Map<String, Object>> deleteUser(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser == null) {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+
+            userService.deleteUser(loginUser.getId());
+
+            session.invalidate(); //세션 종료 (로그아웃)
+
+            response.put("success", true);
+            response.put("message", "회원 탈퇴가 완료되었습니다.");
+            log.info("회원 탈퇴 완료: {}", loginUser.getUserId());
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        } catch (Exception e) {
+            log.error("회원 탈퇴 중 오류: {}", e.getMessage(), e);
+            response.put("success", false);
+            response.put("message", "회원 탈퇴 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 }
+
