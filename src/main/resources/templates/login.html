@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>온앤홈 - Admin 로그인</title>
+  <title>온앤홈 - User 로그인</title>
   <link rel="stylesheet" href="/css/import.css" />
   <style>
     body {
@@ -41,11 +41,11 @@
     }
     
     .login-role {
-      background: #fff3e0;
+      background: #e8f5e9;
       padding: 8px 12px;
       border-radius: 4px;
       font-size: 12px;
-      color: #e65100;
+      color: #2e7d32;
       font-weight: 600;
       text-align: center;
     }
@@ -68,8 +68,8 @@
     
     .input:focus {
       outline: none;
-      border-color: #ff9800;
-      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
     }
     
     .w-full {
@@ -98,26 +98,26 @@
       transition: all 0.3s ease;
     }
     
-    .btn--orange {
-      background: #ff9800;
+    .btn--green {
+      background: #4CAF50;
       color: white;
       width: 100%;
     }
     
-    .btn--orange:hover {
-      background: #f57c00;
+    .btn--green:hover {
+      background: #388E3C;
     }
     
     .btn--outline {
       background: white;
-      color: #ff9800;
-      border: 2px solid #ff9800;
+      color: #4CAF50;
+      border: 2px solid #4CAF50;
       width: 100%;
       margin-top: 10px;
     }
     
     .btn--outline:hover {
-      background: #fff3e0;
+      background: #f1f8f5;
     }
     
     .error-alert {
@@ -163,7 +163,7 @@
     }
     
     .login-links a {
-      color: #ff9800;
+      color: #4CAF50;
       text-decoration: none;
       font-weight: 600;
     }
@@ -178,17 +178,17 @@
     <div class="login-card">
       <div class="login-logo-wrap">
         <h1 class="login_header">On&Home</h1>
-        <div class="login-role">👨‍💼 관리자 로그인</div>
+        <div class="login-role">👤 일반 사용자 로그인</div>
       </div>
       
       <!-- 정보 메시지 -->
       <div class="info-alert">
-        <p>관리자만 로그인할 수 있습니다.</p>
+        <p>회원가입 후 로그인할 수 있습니다.</p>
       </div>
       
       <!-- 에러 메시지 표시 -->
       <div th:if="${param.error}" class="error-alert">
-        <p>아이디 또는 비밀번호가 일치하지 않습니다. (관리자 권한 확인됨)</p>
+        <p>아이디 또는 비밀번호가 일치하지 않습니다.</p>
       </div>
       
       <!-- 로그아웃 메시지 표시 -->
@@ -198,20 +198,20 @@
       
       <!-- 회원가입 완료 메시지 -->
       <div th:if="${param.signup}" class="success-alert">
-        <p>관리자 회원가입이 완료되었습니다. 로그인해주세요.</p>
+        <p>회원가입이 완료되었습니다. 로그인해주세요.</p>
       </div>
       
       <!-- 로그인 폼 -->
-      <form th:action="@{/admin/login}" method="post">
+      <form th:action="@{/login}" method="post">
         <div class="mt-20">
           <h4 class="login-h4">ID</h4>
-          <input type="text" name="userId" class="input w-full" placeholder="관리자 ID" required />
+          <input type="text" name="userId" class="input w-full" placeholder="가입한 아이디" required />
         </div>
         <div class="mt-20">
           <h4 class="login-h4">PASSWORD</h4>
           <input type="password" name="password" class="input w-full" placeholder="*************" required />
         </div>
-        <button class="btn btn--orange w-full mt-40" type="submit">로그인</button>
+        <button class="btn btn--green w-full mt-40" type="submit">로그인</button>
       </form>
       
       <!-- 링크 -->
@@ -219,9 +219,9 @@
         <span>또는</span>
       </div>
       <div class="login-links">
-        계정이 없으신가요? <a href="/admin/signup">회원가입</a>
+        계정이 없으신가요? <a href="/signup">회원가입</a>
         <span>|</span>
-        <a href="/login">User 로그인</a>
+        <a href="/admin/login">Admin 로그인</a>
       </div>
       
       <div class="center mt-20" style="font-size: xx-small; color: #999;">

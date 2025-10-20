@@ -57,13 +57,13 @@ public class UserService {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            
+
             // 활성 사용자 확인
             if (!user.getActive()) {
                 log.warn("비활성 사용자: {}", userId);
                 return Optional.empty();
             }
-            
+
             // 비밀번호 검증 (일반 문자열 비교)
             if (password != null && password.equals(user.getPassword())) {
                 log.info("사용자 로그인 성공: {}", userId);

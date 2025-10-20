@@ -22,14 +22,20 @@ public class UserController {
     private static final String SESSION_USER_KEY = "loginUser";
 
     /**
-     * 회원가입 API
-     * POST /api/user/register
+     * User 회원가입 API
+     * POST /api/user/register?role=USER
      */
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> register(
+            @RequestBody UserDTO userDTO,
+            @RequestParam(value = "role", defaultValue = "USER") String role) {
         Map<String, Object> response = new HashMap<>();
         try {
-            log.info("회원가입 요청: {}", userDTO.getUserId());
+            log.info("회원가입 요청: {} (role: {})", userDTO.getUserId(), role);
+
+            // role 설정 (USER 또는 ADMIN)
+            userDTO.setRole(role);
+
             UserDTO registeredUser = userService.register(userDTO);
             response.put("success", true);
             response.put("message", "회원가입 성공");
@@ -65,7 +71,7 @@ public class UserController {
                 UserDTO user = userOptional.get();
                 // 세션에 사용자 정보 저장
                 session.setAttribute(SESSION_USER_KEY, user);
-                
+
                 response.put("success", true);
                 response.put("message", "로그인 성공");
                 response.put("data", user);
