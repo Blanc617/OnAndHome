@@ -1,28 +1,230 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>온앤홈 관리자</title>
-    <link rel="stylesheet" href="../css/import.css" />
-  <script src="../js/oncommon.js"></script>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+  <style>
+    body {
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+    
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+    }
+    
+    .login-card {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .login-logo-wrap {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .login_header {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .login-h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    
+    .mb-16 {
+      margin-bottom: 16px;
+    }
+    
+    .input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+    
+    .w-full {
+      width: 100%;
+    }
+    
+    .mt-40 {
+      margin-top: 40px;
+    }
+    
+    .mt-20 {
+      margin-top: 20px;
+    }
+    
+    .center {
+      text-align: center;
+    }
+    
+    .btn {
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    .btn--blk {
+      background: #2196F3;
+      color: white;
+      width: 100%;
+    }
+    
+    .btn--blk:hover {
+      background: #1976D2;
+    }
+    
+    .btn--outline {
+      background: white;
+      color: #2196F3;
+      border: 2px solid #2196F3;
+      width: 100%;
+    }
+    
+    .btn--outline:hover {
+      background: #f0f7ff;
+    }
+    
+    .error-alert {
+      background: #ffebee;
+      border: 1px solid #ffcdd2;
+      color: #c62828;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      text-align: center;
+    }
+    
+    .success-alert {
+      background: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      color: #2e7d32;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      text-align: center;
+    }
+    
+    .info-alert {
+      background: #e3f2fd;
+      border: 1px solid #bbdefb;
+      color: #1565c0;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      text-align: center;
+    }
+    
+    .signup-section {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .signup-text {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .signup-link {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .signup-link a {
+      color: #2196F3;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <div class="login-wrap">
     <div class="login-card">
       <div class="login-logo-wrap">
-        <h1 class="login_header">Logo</h1>
+        <h1 class="login_header">On&Home</h1>
       </div>
-      <div class="mb-16">
-        <h4 class="login-h4">ID</h4>
-        <input class="input w-full" placeholder="ID를 입력하세요" />
+      
+      <!-- 정보 메시지 -->
+      <div class="info-alert">
+        <p>회원가입 후 로그인할 수 있습니다.</p>
       </div>
-      <div>
-        <h4 class="login-h4">PASSWORD</h4>
-        <input class="input w-full" placeholder="*************" />
+      
+      <!-- 에러 메시지 표시 -->
+      <div th:if="${param.error}" class="error-alert">
+        <p>아이디 또는 비밀번호가 일치하지 않습니다.</p>
       </div>
-      <a href="dashboard.html"><button class="btn btn--blk w-full mt-40" type="submit">로그인</button></a>
-      <div class="center mt-20" style="font-size: xx-small;">
+      
+      <!-- 로그아웃 메시지 표시 -->
+      <div th:if="${param.logout}" class="success-alert">
+        <p>로그아웃되었습니다.</p>
+      </div>
+      
+      <!-- 회원가입 완료 메시지 -->
+      <div th:if="${param.signup}" class="success-alert">
+        <p>회원가입이 완료되었습니다. 로그인해주세요.</p>
+      </div>
+      
+      <!-- 로그인 폼 -->
+      <form th:action="@{/admin/login}" method="post">
+        <div class="mb-16">
+          <h4 class="login-h4">ID</h4>
+          <input type="text" name="userId" class="input w-full" placeholder="회원가입 시 등록한 ID" required />
+        </div>
+        <div class="mb-16">
+          <h4 class="login-h4">PASSWORD</h4>
+          <input type="password" name="password" class="input w-full" placeholder="*************" required />
+        </div>
+        <button class="btn btn--blk w-full mt-40" type="submit">로그인</button>
+      </form>
+      
+      <!-- 회원가입 섹션 -->
+      <div class="signup-section">
+        <div class="signup-text">아직 계정이 없으신가요?</div>
+        <a href="/admin/signup" class="btn btn--outline">회원가입</a>
+      </div>
+      
+      <div class="center mt-20" style="font-size: xx-small; color: #999;">
         ©2025 on&home. All rights reserved.
       </div>
     </div>
