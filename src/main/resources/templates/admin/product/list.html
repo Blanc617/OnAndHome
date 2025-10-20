@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>온앤홈 관리자</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-wrapper">
+    <!-- 컨텐츠 영역 -->
+    <div class="on-content">
+      <!-- 사이드바 메뉴 -->
+      <div class="on-side-menu">
+        <div class="side-menu-logo">
+          <h2>On&Home</h2>
+        </div>
+        <div class="on-side-menu-nav">
+          <ul class="side-menu-list">
+            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
+            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
+            <li>
+              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
+              <ul>
+                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
+                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
+                <li><a href="/admin/board/review/list.html">리뷰</a></li> 
+                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
+          </ul>
+        </div>
+        <div class="on-side-menu-user">
+          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
+          <div class="on-side-menu-logout">
+            <span style="font-size: 16px;">logout</span>
+            <button class="log-out"></button>
+          </div>
+        </div>
+      </div>
+      <!-- <내부영역 -->
+      <div class="on-main">
+        <h2 class="mb-30">Product List</h2>
+        <div class="flex mb-20 justify-end">
+          <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
+          <button class="btn-ico btn-ico--srch"></button>
+        </div>
+        <div class="grid">
+          <table>
+            <colgroup>
+              <col width="10%">
+              <col>
+              <col width="30%">
+              <col>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">선택</th>
+                <th scope="col">상품코드</th>
+                <th scope="col">상품명</th>
+                <th scope="col">제조사</th>
+                <th scope="col">정상가격</th>
+                <th scope="col">할인가격</th>
+                <th scope="col">등록일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">PC-001</a></td>
+                <td class="center"><a href="/admin/product/detail.html">LG Gram 17 (2025)</a></td>
+                <td class="center">LG</td>
+                <td class="center">2,350,000</td>
+                <td class="center">1,890,000</td>
+                <td class="center">2025-10-18</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">RF-002</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Samsung Bespoke 냉장고 4도어</a></td>
+                <td class="center">Samsung</td>
+                <td class="center">3,200,000</td>
+                <td class="center">2,780,000</td>
+                <td class="center">2025-10-17</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">AC-003</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Dyson Pure Cool 공기청정기</a></td>
+                <td class="center">Dyson</td>
+                <td class="center">950,000</td>
+                <td class="center">790,000</td>
+                <td class="center">2025-10-17</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">WM-004</a></td>
+                <td class="center"><a href="/admin/product/detail.html">LG 트롬 세탁기 AI DD</a></td>
+                <td class="center">LG</td>
+                <td class="center">1,580,000</td>
+                <td class="center">1,290,000</td>
+                <td class="center">2025-10-16</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">OV-005</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Samsung 스마트 오븐 DualCook</a></td>
+                <td class="center">Samsung</td>
+                <td class="center">890,000</td>
+                <td class="center">720,000</td>
+                <td class="center">2025-10-15</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">VC-006</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Dyson Gen5 Detect 무선청소기</a></td>
+                <td class="center">Dyson</td>
+                <td class="center">1,290,000</td>
+                <td class="center">990,000</td>
+                <td class="center">2025-10-14</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">CA-007</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Canon EOS R6 Mark II</a></td>
+                <td class="center">Canon</td>
+                <td class="center">3,490,000</td>
+                <td class="center">2,950,000</td>
+                <td class="center">2025-10-13</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">MB-008</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Apple MacBook Air M3</a></td>
+                <td class="center">Apple</td>
+                <td class="center">1,890,000</td>
+                <td class="center">1,590,000</td>
+                <td class="center">2025-10-12</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">PR-009</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Epson EcoTank L3250 프린터</a></td>
+                <td class="center">Epson</td>
+                <td class="center">340,000</td>
+                <td class="center">290,000</td>
+                <td class="center">2025-10-11</td>
+              </tr>
+              <tr>
+                <td class="center"><input type="checkbox"></td>
+                <td class="center"><a href="/admin/product/detail.html">SP-010</a></td>
+                <td class="center"><a href="/admin/product/detail.html">Sony WH-1000XM5 무선 헤드폰</a></td>
+                <td class="center">Sony</td>
+                <td class="center">590,000</td>
+                <td class="center">480,000</td>
+                <td class="center">2025-10-10</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="flex mb-20 mt-20 justify-end">
+          <button class="btn btn--secondary">삭제</button>
+          <a href="/admin/product/create.html"><button class="btn btn--primary">등록</button></a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
