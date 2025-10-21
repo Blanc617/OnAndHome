@@ -1,8 +1,9 @@
-package com.onandhome.product;
+package com.onandhome.admin.adminProduct;
 
+import com.onandhome.admin.adminProduct.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.onandhome.product.entity.Product;
+
 import java.util.List;
 
 @Repository

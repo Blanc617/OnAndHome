@@ -1,8 +1,8 @@
-package com.onandhome.product;
+package com.onandhome.admin.adminProduct;
 
 import java.util.List;
 
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import jakarta.persistence.Column;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

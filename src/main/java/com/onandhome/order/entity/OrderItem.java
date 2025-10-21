@@ -1,6 +1,6 @@
 package com.onandhome.order.entity;
 
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 

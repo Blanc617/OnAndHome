@@ -1,8 +1,7 @@
 package com.onandhome;
 
-import com.onandhome.product.ProductRepository;
-import com.onandhome.product.entity.Product;
-import com.onandhome.user.entity.User;
+import com.onandhome.admin.adminProduct.ProductRepository;
+import com.onandhome.admin.adminProduct.entity.Product;
 import com.onandhome.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
