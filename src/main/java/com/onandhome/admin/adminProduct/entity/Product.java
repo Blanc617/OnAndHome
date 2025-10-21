@@ -30,4 +30,21 @@ public class Product {
 	private String thumbnailImage; // 썸네일 이미지 URL (컬럼명: thumbnail_image)
 
 	private String detailImage; // 상품 상세 이미지 URL (컬럼명: detail_image)
+
+	/**
+	 * 재고 차감 (주문 시)
+	 */
+	public void removeStock(int quantity) {
+		if (this.stock < quantity) {
+			throw new IllegalArgumentException("재고가 부족합니다. 현재 재고: " + this.stock);
+		}
+		this.stock -= quantity;
+	}
+
+	/**
+	 * 재고 증가 (주문 취소 시)
+	 */
+	public void addStock(int quantity) {
+		this.stock += quantity;
+	}
 }
