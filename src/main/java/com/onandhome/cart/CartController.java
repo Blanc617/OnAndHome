@@ -1,44 +1,66 @@
 package com.onandhome.cart;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import com.onandhome.cart.entity.CartItem;
+import com.onandhome.product.entity.Product;
+import com.onandhome.product.ProductRepository;
+import com.onandhome.user.UserRepository;
+import com.onandhome.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/api/cart")
+@Service
 public class CartController {
-	
-	private final CartService cartService;
+    private final CartItemRepository cartRepo;
+    private final ProductRepository productRepo;
+    private final UserRepository userRepo;
 
+    @Transactional(readOnly = true)
+    public List<CartItem> getCartItems(Long userId) {
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) return List.of();
+        return cartRepo.findByUser(user);
+    }
 
-	// userId는 간단히 쿼리로 넘깁니다 (실제 서비스면 인증 필요)
-	@GetMapping
-	public List<CartItem> getCart(@RequestParam Long userId) {
-		return cartService.getCartItems(userId);
-	}
+    @Transactional
+    public CartItem addToCart(Long userId, Long productId, int qty) {
+        User user = userRepo.findById(userId).orElseThrow();
+        Product p = productRepo.findById(productId).orElseThrow();
+        Optional<CartItem> existing = cartRepo.findByUserAndProduct(user, p);
+        if (existing.isPresent()) {
+            CartItem item = existing.get();
+            item.setQuantity(item.getQuantity() + Math.max(qty, 1));
+            return cartRepo.save(item);
+        }
+        CartItem item = new CartItem();
+        item.setUser(user);
+        item.setProduct(p);
+        item.setQuantity(Math.max(qty, 1));
+        return cartRepo.save(item);
+    }
 
-	@PostMapping("/add")
-	public CartItem add(@RequestBody Map<String, Object> body) {
-		Long userId = Long.valueOf(body.get("userId").toString());
-		Long productId = Long.valueOf(body.get("productId").toString());
-		int qty = Integer.parseInt(body.get("quantity").toString());
-		return cartService.addToCart(userId, productId, qty);
-	}
+    @Transactional
+    public CartItem updateQuantity(Long userId, Long productId, int qty) {
+        User user = userRepo.findById(userId).orElseThrow();
+        Product p = productRepo.findById(productId).orElseThrow();
+        CartItem item = cartRepo.findByUserAndProduct(user, p).orElseThrow();
+        item.setQuantity(Math.max(qty, 1));
+        return cartRepo.save(item);
+    }
 
-	@PostMapping("/clear")
-	public String clear(@RequestBody Map<String, Object> body) {
-		Long userId = Long.valueOf(body.get("userId").toString());
-        cartService.clearCart(userId);
-		return "OK";
-	}
+    @Transactional
+    public void removeItem(Long cartItemId) {
+        cartRepo.deleteById(cartItemId);
+    }
+
+    @Transactional
+    public void clearCart(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow();
+        cartRepo.deleteByUser(user);
+    }
 }
+

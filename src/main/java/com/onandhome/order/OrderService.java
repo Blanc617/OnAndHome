@@ -1,71 +1,90 @@
 package com.onandhome.order;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.onandhome.cart.entity.CartItem;
 import com.onandhome.cart.CartItemRepository;
+import com.onandhome.cart.entity.CartItem;
 import com.onandhome.order.entity.Order;
 import com.onandhome.order.entity.OrderItem;
-import com.onandhome.product.ProductRepository;
-import com.onandhome.user.entity.User;
 import com.onandhome.user.UserRepository;
+import com.onandhome.user.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-
+@RequiredArgsConstructor
 @Service
 public class OrderService {
-	private final OrderRepository orderRepository;
-	private final CartItemRepository cartItemRepository;
-	private final UserRepository userRepository;
-	private final ProductRepository productRepository;
+    private final OrderRepository orderRepo;
+    private final UserRepository userRepo;
+    private final CartItemRepository cartRepo;
 
-	public OrderService(OrderRepository orderRepository, CartItemRepository cartItemRepository, UserRepository userRepository,
-			ProductRepository productRepository) {
-		this.orderRepository = orderRepository;
-		this.cartItemRepository = cartItemRepository;
-		this.userRepository = userRepository;
-		this.productRepository = productRepository;
-	}
+    @Transactional(readOnly = true)
+    public List<Order> list(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow();
+        return orderRepo.findByUserOrderByCreatedAtDesc(user);
+    }
 
-	// 간단한 checkout: cart -> order, 결제 시 PAID로 변경
-	public Order checkout(Long userId) {
-		User user = userRepository.findById(userId).orElseThrow();
-		List<CartItem> cartItems = cartItemRepository.findByUser(user);
-		if (cartItems.isEmpty())
-			throw new RuntimeException("Cart empty");
+    @Transactional(readOnly = true)
+    public List<CartItem> checkout(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow();
+        return cartRepo.findByUser(user);
+    }
 
-		List<OrderItem> items = cartItems.stream().map(ci -> {
-			OrderItem oi = new OrderItem();
-			oi.setProductId(ci.getProduct().getId());
-			oi.setProductName(ci.getProduct().getName());
-			oi.setUnitPrice(ci.getProduct().getPrice());
-			oi.setQuantity(ci.getQuantity());
-			return oi;
-		}).collect(Collectors.toList());
+    @Transactional
+    public Order create(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow();
+        List<CartItem> cartItems = cartRepo.findByUser(user);
+        if (cartItems.isEmpty()) {
+            throw new IllegalStateException("Cart is empty");
+        }
+        Order order = new Order();
+        order.setUser(user);
+        order.setStatus("CREATED");
+        order.setCreatedAt(LocalDateTime.now());
+        order.setOrderNumber(UUID.randomUUID().toString().substring(0, 12));
+        List<OrderItem> items = new ArrayList<>();
+        double total = 0.0;
+        for (CartItem ci : cartItems) {
+            OrderItem oi = new OrderItem();
+            oi.setOrder(order);
+            oi.setProduct(ci.getProduct());
+            oi.setPrice(ci.getProduct().getPrice());
+            oi.setQuantity(ci.getQuantity());
+            items.add(oi);
+            total += ci.getProduct().getPrice() * ci.getQuantity();
+        }
+        order.setItems(items);
+        order.setTotalAmount(total);
+        Order saved = orderRepo.save(order);
+        cartRepo.deleteByUser(user);
+        return saved;
+    }
 
-		int total = items.stream().mapToInt(i -> i.getUnitPrice() * i.getQuantity()).sum();
+    @Transactional
+    public Order pay(Long orderId) {
+        Order order = orderRepo.findById(orderId).orElseThrow();
+        order.setStatus("PAID");
+        order.setPaidAt(LocalDateTime.now());
+        return orderRepo.save(order);
+    }
 
-		Order order = new Order();
-		order.setUser(user);
-		order.setCreatedAt(LocalDateTime.now());
-		order.setStatus("PAID"); // 결제는 모의로 바로 완료 처리
-		order.setTotalPrice(total);
-		order.setItems(items);
+    @Transactional(readOnly = true)
+    public Order detail(Long orderId) {
+        return orderRepo.findById(orderId).orElseThrow();
+    }
 
-		Order saved = orderRepository.save(order);
-        cartItemRepository.deleteByUser(user); // 장바구니 비우기
-		return saved;
-	}
-
-	public List<Order> getOrders(Long userId) {
-		User user = userRepository.findById(userId).orElseThrow();
-		return orderRepository.findByUser(user);
-	}
-
-	public Order getOrder(Long orderId) {
-		return (Order) orderRepository.findById(orderId).orElse(null);
-	}
+    @Transactional(readOnly = true)
+    public String track(Long orderId) {
+        Order order = orderRepo.findById(orderId).orElseThrow();
+        return switch (order.getStatus()) {
+            case "CREATED" -> "PREPARING";
+            case "PAID" -> "IN_TRANSIT";
+            case "DELIVERED" -> "DELIVERED";
+            default -> "UNKNOWN";
+        };
+    }
 }
