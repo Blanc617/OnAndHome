@@ -1,6 +1,6 @@
-package com.onandhome.product.dto;
+package com.onandhome.admin.adminProduct.dto;
 
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import lombok.*;
 
 @Getter

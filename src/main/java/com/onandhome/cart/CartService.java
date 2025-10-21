@@ -3,8 +3,8 @@ package com.onandhome.cart;
 import java.util.List;
 
 import com.onandhome.cart.entity.CartItem;
-import com.onandhome.product.entity.Product;
-import com.onandhome.product.ProductRepository;
+import com.onandhome.admin.adminProduct.entity.Product;
+import com.onandhome.admin.adminProduct.ProductRepository;
 import com.onandhome.user.UserRepository;
 import com.onandhome.user.entity.User;
 import lombok.RequiredArgsConstructor;

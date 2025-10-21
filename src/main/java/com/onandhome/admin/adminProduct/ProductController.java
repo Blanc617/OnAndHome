@@ -1,12 +1,12 @@
-package com.onandhome.product;
+package com.onandhome.admin.adminProduct;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.onandhome.product.dto.ProductDTO;
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.dto.ProductDTO;
+import com.onandhome.admin.adminProduct.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

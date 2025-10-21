@@ -18,7 +18,7 @@ public class HelloController {
     public String hello() {
         return "Hello, OnAndHome from jinu branch!";
     }
-    
+
     /**
      * 대시보드 페이지 조회
      */
@@ -26,7 +26,7 @@ public class HelloController {
     public String dashboard() {
         return "admin/dashboard";
     }
-    
+
     /**
      * 홈페이지 리다이렉트
      */
