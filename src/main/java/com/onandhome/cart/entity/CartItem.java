@@ -1,6 +1,6 @@
 package com.onandhome.cart.entity;
 
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import com.onandhome.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;

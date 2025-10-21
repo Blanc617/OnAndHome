@@ -1,4 +1,4 @@
-package com.onandhome.product.entity;
+package com.onandhome.admin.adminProduct.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.onandhome.admin.controller;
+package com.onandhome.admin.adminNotice;
 
 import com.onandhome.Notice.NoticeService;
 import com.onandhome.Notice.entity.Notice;
