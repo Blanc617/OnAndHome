@@ -13,19 +13,16 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "orders")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order")
 public class Order {
 
-public class Order {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-	private Long id;
+    private Long id;
 
     // ✅ 회원 정보 추가 (ManyToOne 관계)
     @ManyToOne(fetch = FetchType.LAZY)
