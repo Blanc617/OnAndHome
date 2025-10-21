@@ -9,17 +9,25 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "product")
 public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	@Column(length = 1000)
-	private String description;
+    @Column(length = 1000)
+    private String description;
 
-	private int price; // 원 단위로 사용
+    @Column(nullable = false)
+    private int price; // 정상가 (원 단위)
 
-	private int stock;
+    @Column(nullable = false)
+    private int stock;
+
+    private String thumbnailImage; // 썸네일 이미지 URL (컬럼명: thumbnail_image)
+
+    private String detailImage; // 상품 상세 이미지 URL (컬럼명: detail_image)
 }
