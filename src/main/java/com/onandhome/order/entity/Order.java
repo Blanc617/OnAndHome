@@ -1,54 +1,93 @@
 package com.onandhome.order.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.onandhome.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-// @Setter를 사용하면 모든 필드에 Setter가 자동 생성됩니다.
 @Entity
+@Table(name = "orders")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+	private Long id;
 
-    private String orderNumber; // 주문 번호
-
-    private String status; // 주문 상태 (예: PENDING, PAID, SHIPPED, DELIVERED)
-
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    private LocalDateTime paidAt; // 결제 완료 시각
-
-    private double totalAmount; // 총 결제 금액
-
-    // ✅ 회원 정보 (ManyToOne 관계)
-    @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩 설정
+    // ✅ 회원 정보 추가 (ManyToOne 관계)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    // ✅ 주문 항목 (OneToMany 관계) - DTO가 아닌 OrderItem 엔티티를 사용해야 합니다.
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> items; // 이 필드의 타입은 List<OrderItem> 입니다.
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = "PENDING";
+    @CreatedDate // 엔티티 생성 시 자동 시간 저장
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    private int totalPrice;
+    private String orderNumber;
+    private LocalDateTime paidAt; //결제 시간 추가
+
+    public enum OrderStatus {
+        ORDERED, CANCELED, DELIVERING, DELIVERED
+    }
+
+    //생성 메소드
+    public static Order create(User user, List<OrderItem> orderItems) {
+        Order order = new Order();
+        order.user = user;
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.status = OrderStatus.ORDERED; // 생성 즉시 '주문 완료' 상태
+        order.orderNumber = UUID.randomUUID().toString().substring(0, 12);
+        order.calculateTotalPrice();
+        return order;
+    }
+
+    //연관관계 편의 메소드
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    //비즈니스 로직
+
+    public void pay() {
+        //결제시 나중에 이미 취소된 주문을 결제하거나 중복 결제하는 등의 문제가 생길 수 있어 조건문 필요
+        this.status = OrderStatus.ORDERED;
+        this.calculateTotalPrice();
+    }
+
+    public void cancel() {
+        if (status == OrderStatus.DELIVERED) {
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+        this.status = OrderStatus.CANCELED;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
         }
     }
 
-    // ⭐ 중요: 기존 코드에서 불필요하게 수동으로 작성되었던 Setter 및 Getter들은
-    // Lombok(@Getter, @Setter)이 자동으로 생성하므로 모두 제거했습니다.
-    // 특히 DTO를 인자로 받던 public void setItems(...) 메서드는 JPA 오류의 원인이므로 반드시 제거해야 합니다.
+    private void calculateTotalPrice() {
+        this.totalPrice = orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+    }
 }
+

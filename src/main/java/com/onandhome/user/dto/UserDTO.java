@@ -29,9 +29,15 @@ public class UserDTO {
     private String birthDate;
 
     private String address;
+<<<<<<< HEAD
 
     private String role;
 
+=======
+    
+    private Integer role;  // 0: ADMIN, 1: USER
+    
+>>>>>>> 907911771ca0e39edc38d892143979f2daf3eca9
     private Boolean active;
 
     private LocalDateTime createdAt;

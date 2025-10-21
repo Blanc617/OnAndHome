@@ -1,4 +1,4 @@
-package com.onandhome.admin.controller;
+package com.onandhome.admin.adminReview;
 
 import com.onandhome.review.ReviewService;
 import com.onandhome.review.entity.Review;

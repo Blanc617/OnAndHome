@@ -303,7 +303,7 @@
           phone: document.getElementById('phone').value || null
         };
 
-        const response = await fetch('/api/user/register?role=USER', {
+        const response = await fetch('/api/user/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

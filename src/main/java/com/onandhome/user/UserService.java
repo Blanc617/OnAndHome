@@ -31,9 +31,9 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
         }
 
-        // role 설정 (기본값: USER)
+        // role 설정 (기본값: 1 = 일반사용자)
         if (userDTO.getRole() == null) {
-            userDTO.setRole("USER");
+            userDTO.setRole(1);
         }
 
         // active 설정 (기본값: true)
