@@ -1,4 +1,4 @@
-package com.onandhome.admin.dto;
+package com.onandhome.admin.adminProduct.dto;
 
 import lombok.*;
 /**
@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdminDTO {
+public class AdminProductDTO {
 
     /** 기능 구분 (상품관리 / 주문관리 등) */
     private String category;

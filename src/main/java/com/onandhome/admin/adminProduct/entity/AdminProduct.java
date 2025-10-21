@@ -1,4 +1,4 @@
-package com.onandhome.admin.entity;
+package com.onandhome.admin.adminProduct.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import lombok.AccessLevel;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "admin_apis") // 테이블 명을 admin_product_id 로 하는지?
+@Table(name = "admin_apis") // (DB 테이블 질문) 테이블 명을 admin_product_id 로 하는지?
 public class AdminProduct {
 
     @Id

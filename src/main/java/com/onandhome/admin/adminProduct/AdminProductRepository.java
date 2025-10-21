@@ -1,6 +1,6 @@
-package com.onandhome.admin;
+package com.onandhome.admin.adminProduct;
 
-import com.onandhome.admin.entity.AdminProduct;
+import com.onandhome.admin.adminProduct.entity.AdminProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

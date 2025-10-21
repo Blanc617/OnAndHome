@@ -1,4 +1,4 @@
-package com.onandhome.admin;
+package com.onandhome.admin.adminProduct;
 
 import com.onandhome.product.ProductRepository;
 import com.onandhome.product.entity.Product;

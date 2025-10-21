@@ -25,4 +25,8 @@ public class ProductService {
     public Product save(Product p) {
         return productRepository.save(p);
     }
+
+    public void delete(Long productId) {    // AdminProductController delete 메소드에서 추가
+        productRepository.deleteById(productId);
+    }
 }
