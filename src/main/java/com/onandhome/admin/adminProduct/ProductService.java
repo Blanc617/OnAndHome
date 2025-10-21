@@ -1,8 +1,8 @@
-package com.onandhome.product;
+package com.onandhome.admin.adminProduct;
 
 import java.util.List;
 
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import org.springframework.stereotype.Service;
 
 

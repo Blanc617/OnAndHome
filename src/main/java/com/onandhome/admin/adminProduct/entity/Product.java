@@ -1,4 +1,4 @@
-package com.onandhome.product.entity;
+package com.onandhome.admin.adminProduct.entity;
 
 import com.onandhome.qna.entity.Qna;
 import com.onandhome.review.entity.Review;
