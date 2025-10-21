@@ -16,7 +16,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "orders")
 @Getter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class) //JPA auditing 기능 주문시간 자동생성
+@AllArgsConstructor
+@Table(name = "order")
+public class Order {
 
 public class Order {
 

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     
     @Id
@@ -41,8 +41,8 @@ public class User {
     @Column
     private String address;
     
-    @Column(nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'USER'")
-    private String role;  // USER, ADMIN
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 1")
+    private Integer role;  // 0: ADMIN, 1: USER
     
     @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private Boolean active;
@@ -58,7 +58,7 @@ public class User {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
         if (role == null) {
-            role = "USER";
+            role = 1;  // 기본값: 일반사용자
         }
         if (active == null) {
             active = true;
