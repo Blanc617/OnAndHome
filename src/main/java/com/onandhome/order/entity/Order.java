@@ -35,7 +35,7 @@ public class Order {
 
     @CreatedDate // 엔티티 생성 시 자동 시간 저장
     @Column(updatable = false)
-    private LocalDateTime orderDate;
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

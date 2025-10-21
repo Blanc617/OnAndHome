@@ -45,11 +45,11 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updated_at = LocalDateTime.now();
 
- /*   @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private List<Qna> qnas = new ArrayList<>();*/
+    private List<Qna> qnas = new ArrayList<>();
 
     //정적 팩토리 메소드 추가
     public static Product createProduct(String name, String description, int price, int stock, String category, String status) {

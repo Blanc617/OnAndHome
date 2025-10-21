@@ -49,7 +49,7 @@ public class OrderService {
                 .map(cartItem -> OrderItem.createOrderItem(
                         cartItem.getProduct(),
                         cartItem.getProduct().getPrice(),
-//                      cartItem.getCount()   //CartItem에 getCount 수량 메소드 만들어주세요
+                      cartItem.getQuantity()   //CartItem에 getCount 수량 메소드 만들어주세요
                 ))
                 .collect(Collectors.toList());
         //3. 주문 생성
@@ -59,7 +59,7 @@ public class OrderService {
         Order savedOrder = orderRepo.save(order);
 
         //5. 장바구니 비우기
-//        cartRepo.deletedByUser(user); //CartItemRepository에 deletedByUser 추가해주세요
+        cartRepo.deleteByUser(user);
 
         return order;
     }
