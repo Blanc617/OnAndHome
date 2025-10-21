@@ -9,16 +9,19 @@
 <body>
 <div class="on-wrapper">
     <div class="on-content">
+        <!-- 사이드바 불러오기 -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
         <div class="on-main">
             <h2 class="mb-30">Q&A 답변 수정</h2>
 
+            <!-- 질문 제목 -->
             <div class="on-comp-tbl-row">
                 <div class="on-comp-tbl-th col-2">질문 제목</div>
                 <div class="on-comp-tbl-td col-10" th:text="${qna.title}">교환 정책 문의</div>
             </div>
 
+            <!-- 질문 내용 -->
             <div class="on-comp-tbl-row high-100">
                 <div class="on-comp-tbl-th col-2">질문 내용</div>
                 <div class="on-comp-tbl-td col-10" th:text="${qna.question}">
@@ -26,6 +29,7 @@
                 </div>
             </div>
 
+            <!-- 답변 수정 폼 -->
             <form th:action="@{/admin/board/qna/answer/edit/{id}(id=${qna.id})}" method="post" class="mt-20">
                 <div class="on-comp-tbl-row high-100">
                     <div class="on-comp-tbl-th col-2">답변 수정</div>
@@ -36,9 +40,12 @@
                 </div>
 
                 <div class="flex justify-end mt-20">
-                    <a th:href="@{/admin/board/qna/{id}(id=${qna.id})}">
-                        <button type="button" class="btn btn--quarternary-outline mr-4">취소</button>
+                    <!-- ✅ a 태그를 버튼처럼 바꾼 형태 -->
+                    <a th:href="@{/admin/board/qna/{id}(id=${qna.id})}"
+                       class="btn btn--quarternary-outline mr-4">
+                        취소
                     </a>
+
                     <button type="submit" class="btn btn--tertiary">저장</button>
                 </div>
             </form>

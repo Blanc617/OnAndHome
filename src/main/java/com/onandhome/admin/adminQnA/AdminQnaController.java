@@ -111,6 +111,4 @@ public class AdminQnaController {
         qnaService.save(qna);
         return "redirect:/admin/board/qna/" + id;
     }
-
-
 }
