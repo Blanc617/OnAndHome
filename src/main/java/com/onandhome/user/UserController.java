@@ -23,18 +23,17 @@ public class UserController {
 
     /**
      * User 회원가입 API
-     * POST /api/user/register?role=USER
+     * POST /api/user/register
+     * role은 항상 1(일반사용자)로 설정됨
      */
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> register(
-            @RequestBody UserDTO userDTO,
-            @RequestParam(value = "role", defaultValue = "USER") String role) {
+    public ResponseEntity<Map<String, Object>> register(@RequestBody UserDTO userDTO) {
         Map<String, Object> response = new HashMap<>();
         try {
-            log.info("회원가입 요청: {} (role: {})", userDTO.getUserId(), role);
+            log.info("회원가입 요청: {}", userDTO.getUserId());
 
-            // role 설정 (USER 또는 ADMIN)
-            userDTO.setRole(role);
+            // role 항상 1(일반사용자)로 설정
+            userDTO.setRole(1);
 
             UserDTO registeredUser = userService.register(userDTO);
             response.put("success", true);

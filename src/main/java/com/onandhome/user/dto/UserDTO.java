@@ -30,7 +30,7 @@ public class UserDTO {
     
     private String address;
     
-    private String role;
+    private Integer role;  // 0: ADMIN, 1: USER
     
     private Boolean active;
     
