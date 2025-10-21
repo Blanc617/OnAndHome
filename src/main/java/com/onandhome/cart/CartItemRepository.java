@@ -1,7 +1,7 @@
 package com.onandhome.cart;
 
 import com.onandhome.cart.entity.CartItem;
-import com.onandhome.product.entity.Product;
+import com.onandhome.admin.adminProduct.entity.Product;
 import com.onandhome.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
