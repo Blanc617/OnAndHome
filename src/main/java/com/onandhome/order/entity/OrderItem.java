@@ -1,5 +1,6 @@
 package com.onandhome.order.entity;
 
+import com.onandhome.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,4 +22,11 @@ public class OrderItem {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Order order;
+
+    public void setProduct(Product product) {
+    }
+
+    public void setPrice(int price) {
+
+    }
 }

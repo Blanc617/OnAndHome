@@ -40,4 +40,7 @@ public class CartService {
 		User user = userRepo.findById(userId).orElseThrow();
 		cartRepo.deleteByUser(user);
 	}
+
+    public void updateQuantity(Long aLong, Long productId, int quantity) {
+    }
 }

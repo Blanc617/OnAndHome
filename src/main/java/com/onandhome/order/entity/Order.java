@@ -15,9 +15,13 @@ import lombok.*;
 @Table(name = "orders")
 public class Order {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 	private String productName;
 	private int quantity;
@@ -45,4 +49,18 @@ public class Order {
 
     public void setUser(User user) {
     }
+
+    public void setOrderNumber(String substring) {
+    }
+
+    public void setTotalAmount(double total) {
+    }
+
+    public void setPaidAt(LocalDateTime now) {
+    }
+
+    public String getStatus() {
+        return null;
+    }
+
 }

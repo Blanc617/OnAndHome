@@ -1,4 +1,4 @@
-package com.onandhome.web;
+package com.onandhome.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,20 +56,20 @@ public class AdminController {
     }
     
     // ========== 공지사항 ==========
-    @GetMapping("/board/notice/list")
-    public String noticeList() {
-        return "admin/board/notice/list";
-    }
+//    @GetMapping("/board/notice/list")
+//    public String noticeList() {
+//        return "admin/board/notice/list";
+//    }
     
     @GetMapping("/board/notice/detail")
     public String noticeDetail() {
         return "admin/board/notice/detail";
     }
     
-    @GetMapping("/board/notice/write")
-    public String noticeWrite() {
-        return "admin/board/notice/write";
-    }
+//    @GetMapping("/board/notice/write")
+//    public String noticeWrite() {
+//        return "admin/board/notice/write";
+//    }
     
     @GetMapping("/board/notice/edit")
     public String noticeEdit() {
@@ -88,10 +88,10 @@ public class AdminController {
     }
     
     // ========== Q&A ==========
-    @GetMapping("/board/qna/list")
-    public String qnaList() {
-        return "admin/board/qna/list";
-    }
+//    @GetMapping("/board/qna/list")
+//    public String qnaList() {
+//        return "admin/board/qna/list";
+//    }
     
     @GetMapping("/board/qna/detail")
     public String qnaDetail() {

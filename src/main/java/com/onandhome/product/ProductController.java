@@ -3,6 +3,7 @@ package com.onandhome.product;
 import java.util.List;
 
 import com.onandhome.product.entity.Product;
+import jakarta.persistence.Column;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
+
+    @Column(name = "category_id")
+    private Long categoryId;
 	private final ProductService productService;
 
 	public ProductController(ProductService productService) {
