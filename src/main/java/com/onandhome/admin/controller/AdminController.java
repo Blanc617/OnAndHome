@@ -6,7 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 관리자 공통 페이지 컨트롤러
- * - 사용자, 상품, 주문, 대시보드 관리
+ * - 사용자, 주문, 대시보드 관리
+ * 
+ * ⚠️ 상품 관리는 AdminProductController로 이동됨
+ * - /admin/product/list → AdminProductController.list()
+ * - /admin/product/create → AdminProductController.createForm()
+ * - /admin/product/edit/{id} → AdminProductController.editForm()
+ * - /admin/product/{id} → AdminProductController.detail()
  */
 @Controller
 @RequestMapping("/admin")
@@ -24,15 +30,11 @@ public class AdminController {
     }
 
     // ==================== 상품 관리 ====================
-    @GetMapping("/product/list")
-    public String productList() {
-        return "admin/product/list";
-    }
-
-    @GetMapping("/product/create")
-    public String productCreate() {
-        return "admin/product/create";
-    }
+    // ⚠️ 주의: AdminProductController로 이동됨
+    // 중복 매핑 방지를 위해 삭제됨
+    // @GetMapping("/product/list")
+    // @GetMapping("/product/create")
+    // 위 매핑들은 AdminProductController에서 처리됩니다.
 
     @GetMapping("/product/detail")
     public String productDetail() {
