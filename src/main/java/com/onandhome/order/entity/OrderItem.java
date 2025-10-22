@@ -26,7 +26,7 @@ public class OrderItem {
 
     @Column(nullable = false)
     private int orderPrice; // 주문 가격
-    
+
     @Column(nullable = false)
     private int count; //주문 수량
 
@@ -48,7 +48,7 @@ public class OrderItem {
     public void cancel() {
         getProduct().addStock(count); // 재고 원복 로직
     }
-    
+
     /**
      * 주문 상품 전체 가격 조회
      */

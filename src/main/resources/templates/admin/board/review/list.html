@@ -1,137 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>온앤홈 관리자</title>
-  <link rel="stylesheet" href="/css/import.css" />
-  <script src="/js/oncommon.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온앤홈 관리자</title>
+    <link rel="stylesheet" href="/css/import.css" />
+    <script src="/js/oncommon.js"></script>
 </head>
 <body>
-  <!-- 백그라운드 -->
-  <div class="on-wrapper">
+<!-- 백그라운드 -->
+<div class="on-wrapper">
     <!-- 컨텐츠 영역 -->
     <div class="on-content">
-      <!-- 사이드바 메뉴 -->
-      <div class="on-side-menu">
-        <div class="side-menu-logo">
-          <h2>On&Home</h2>
-        </div>
-        <div class="on-side-menu-nav">
-          <ul class="side-menu-list">
-            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
-            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
-            <li>
-              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
-              <ul>
-                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
-                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
-                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
-                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
-              </ul>
-            </li>
-            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
-          </ul>
-        </div>
-        <div class="on-side-menu-user">
-          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
-          <div class="on-side-menu-logout">
-            <span style="font-size: 16px;">logout</span>
-            <button class="log-out"></button>
-          </div>
-        </div>
-      </div>
-      <!-- <내부영역 -->
-      <div class="on-main">
-        <h2 class="mb-30">Review Board List</h2>
-        <div class="flex mb-20 justify-end">
-          <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
-          <button class="btn-ico btn-ico--srch"></button>
-        </div>
-        <div class="grid">
-          <table>
-            <colgroup>
-              <col width="10%">
-              <col>
-              <col width="20%">
-              <col width="20%">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col">번호</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성일자</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="center">01</td>
-                <td class="center"><a href="/admin/board/review/detail.html">배송도 빠르고 물건도 좋네요.</a></td>
-                <td class="center">제니</td>
-                <td class="center">2025-10-18</td>
-              </tr>
-              <tr>
-                <td class="center">02</td>
-                <td class="center"><a href="/admin/board/review/detail.html">포장 깔끔하고 색상도 화면이랑 똑같아요!</a></td>
-                <td class="center">지민</td>
-                <td class="center">2025-10-17</td>
-              </tr>
-              <tr>
-                <td class="center">03</td>
-                <td class="center"><a href="/admin/board/review/detail.html">설치기사님도 친절하시고 제품 만족합니다.</a></td>
-                <td class="center">이도현</td>
-                <td class="center">2025-10-17</td>
-              </tr>
-              <tr>
-                <td class="center">04</td>
-                <td class="center"><a href="/admin/board/review/detail.html">가격 대비 품질이 아주 좋아요. 추천!</a></td>
-                <td class="center">한소희</td>
-                <td class="center">2025-10-16</td>
-              </tr>
-              <tr>
-                <td class="center">05</td>
-                <td class="center"><a href="/admin/board/review/detail.html">생각보다 조용하고 성능도 괜찮아요.</a></td>
-                <td class="center">정국</td>
-                <td class="center">2025-10-15</td>
-              </tr>
-              <tr>
-                <td class="center">06</td>
-                <td class="center"><a href="/admin/board/review/detail.html">배송 중 파손 없이 잘 도착했어요. 감사합니다.</a></td>
-                <td class="center">아이유</td>
-                <td class="center">2025-10-15</td>
-              </tr>
-              <tr>
-                <td class="center">07</td>
-                <td class="center"><a href="/admin/board/review/detail.html">디자인이 세련되고 집 인테리어에 잘 어울려요.</a></td>
-                <td class="center">차은우</td>
-                <td class="center">2025-10-14</td>
-              </tr>
-              <tr>
-                <td class="center">08</td>
-                <td class="center"><a href="/admin/board/review/detail.html">처음엔 고민했는데 사길 정말 잘했어요!</a></td>
-                <td class="center">윈터</td>
-                <td class="center">2025-10-13</td>
-              </tr>
-              <tr>
-                <td class="center">09</td>
-                <td class="center"><a href="/admin/board/review/detail.html">제품 설명이 자세해서 믿고 구매했습니다.</a></td>
-                <td class="center">카리나</td>
-                <td class="center">2025-10-12</td>
-              </tr>
-              <tr>
-                <td class="center">10</td>
-                <td class="center"><a href="/admin/board/review/detail.html">A/S 문의했는데 빠르게 처리해주셔서 좋아요.</a></td>
-                <td class="center">태연</td>
-                <td class="center">2025-10-11</td>
-              </tr>
 
-            </tbody>
-          </table>
+        <!-- ✅ 사이드바 fragment로 변경 -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- ===== 메인 내부영역 ===== -->
+        <div class="on-main">
+            <h2 class="mb-30">Review Board List</h2>
+
+            <div class="flex mb-20 justify-end">
+                <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
+                <button class="btn-ico btn-ico--srch"></button>
+            </div>
+
+            <div class="grid">
+                <table>
+                    <colgroup>
+                        <col width="10%">
+                        <col>
+                        <col width="20%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일자</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <!-- ✅ 타임리프 반복문으로 리뷰 목록 출력 -->
+                    <tr th:each="review, stat : ${reviews}">
+                        <td class="center" th:text="${stat.count}">1</td>
+                        <td class="center">
+                            <a th:href="@{/admin/board/review/detail/{id}(id=${review.id})}"
+                               th:text="${#strings.abbreviate(review.content, 30)}">
+                                배송도 빠르고 물건도 좋네요.
+                            </a>
+                        </td>
+                        <td class="center" th:text="${review.user.username}">제니</td>
+                        <td class="center" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">
+                            2025-10-18
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
-      </div>
+
     </div>
-  </div>
+</div>
 </body>
 </html>

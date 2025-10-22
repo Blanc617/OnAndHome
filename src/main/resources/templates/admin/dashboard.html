@@ -26,7 +26,7 @@
               <ul>
                 <li><a href="/admin/board/dashboard">게시판 전체보기</a></li>
                 <li><a href="/admin/board/notice/list">공지사항</a></li>
-                <li><a href="/admin/board/review/list">리뷰</a></li> 
+                <li><a href="/admin/board/review/list">리뷰</a></li>
                 <li><a href="/admin/board/qna/list">Q&amp;A</a></li>
               </ul>
             </li>
@@ -47,20 +47,20 @@
       <!-- <내부영역 -->
       <div class="on-main">
         <h2 class="mb-30">Dash Board</h2>
-        
+
         <!-- 비로그인 사용자 경고 -->
         <div th:unless="${session.loginUser}" style="background-color: #fee; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #e94738;">
           <p style="color: #e94738; margin: 0; font-weight: bold;">로그인이 필요합니다.</p>
           <p style="color: #999; margin: 8px 0 0 0; font-size: 12px;"><a href="/admin/login" style="color: #0b1293;">로그인 페이지로 이동</a></p>
         </div>
-        
+
         <div class="dash-wrapper gap-20">
           <div class="dash-up gap-20">
             <div class="dash-content">
               <h3 class="dash-content-tit">공지사항</h3>
               <div class="dash-content-inner mb-12">오늘의 주문<span class="dash-content-value"><a href="#">00</a></span>건</div>
-              <div class="dash-content-inner mb-12">오늘의 매출<span class="dash-content-value"><a href="#">00</a></span>원</div>              
-              <div class="dash-content-inner mb-12">이달의 매출<span class="dash-content-value"><a href="#">00</a></span>원</div>   
+              <div class="dash-content-inner mb-12">오늘의 매출<span class="dash-content-value"><a href="#">00</a></span>원</div>
+              <div class="dash-content-inner mb-12">이달의 매출<span class="dash-content-value"><a href="#">00</a></span>원</div>
             </div>
             <div class="dash-content">
               <h3 class="dash-content-tit">상품 현황</h3>

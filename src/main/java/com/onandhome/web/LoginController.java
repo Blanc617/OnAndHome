@@ -69,7 +69,7 @@ public class LoginController {
                 log.info("User 로그인 성공: {}", userId);
                 
                 // 대시보드로 리다이렉트
-                return "redirect:/user/dashboard";
+                return "redirect:/admin/board/dashboard";
                 
             } else {
                 log.warn("로그인 실패 - 아이디 또는 비밀번호 오류: {}", userId);

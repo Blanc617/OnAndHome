@@ -23,7 +23,7 @@ public class OrderController {
     /**
      * 주문 생성 API
      * POST /api/orders/create
-     * 
+     *
      * 요청 예시:
      * {
      *   "userId": 1,
@@ -44,12 +44,12 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("주문 생성 API 호출: userId={}", request.getUserId());
-            
+
             OrderDTO orderDTO = orderService.createOrder(request);
             response.put("success", true);
             response.put("message", "주문이 생성되었습니다.");
             response.put("data", orderDTO);
-            
+
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
             log.warn("주문 생성 실패: {}", e.getMessage());
@@ -73,12 +73,12 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("사용자 주문 목록 조회: userId={}", userId);
-            
+
             List<OrderDTO> orders = orderService.getOrders(userId);
             response.put("success", true);
             response.put("data", orders);
             response.put("count", orders.size());
-            
+
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             log.warn("주문 조회 실패: {}", e.getMessage());
@@ -102,11 +102,11 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("주문 상세 조회: orderId={}", orderId);
-            
+
             OrderDTO order = orderService.getOrder(orderId);
             response.put("success", true);
             response.put("data", order);
-            
+
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             log.warn("주문 조회 실패: {}", e.getMessage());
@@ -130,12 +130,12 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("주문 결제 처리: orderId={}", orderId);
-            
+
             OrderDTO orderDTO = orderService.pay(orderId);
             response.put("success", true);
             response.put("message", "결제가 완료되었습니다.");
             response.put("data", orderDTO);
-            
+
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             log.warn("결제 실패: {}", e.getMessage());
@@ -159,12 +159,12 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("주문 취소 요청: orderId={}", orderId);
-            
+
             OrderDTO orderDTO = orderService.cancel(orderId);
             response.put("success", true);
             response.put("message", "주문이 취소되었습니다.");
             response.put("data", orderDTO);
-            
+
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             log.warn("주문 취소 실패: {}", e.getMessage());
@@ -193,11 +193,11 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("주문 배송 상태 조회: orderId={}", orderId);
-            
+
             String trackingStatus = orderService.track(orderId);
             response.put("success", true);
             response.put("data", trackingStatus);
-            
+
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             log.warn("배송 상태 조회 실패: {}", e.getMessage());
@@ -221,12 +221,12 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("장바구니 기반 주문 생성: userId={}", userId);
-            
+
             OrderDTO orderDTO = orderService.createOrderFromCart(userId);
             response.put("success", true);
             response.put("message", "주문이 생성되었습니다.");
             response.put("data", orderDTO);
-            
+
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {
             log.warn("주문 생성 실패: {}", e.getMessage());
