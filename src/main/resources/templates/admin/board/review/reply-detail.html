@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰 상세보기</title>
+    <title>온앤홈 관리자</title>
     <link rel="stylesheet" href="/css/import.css" />
     <script src="/js/oncommon.js"></script>
 </head>
@@ -11,24 +11,35 @@
 <div class="on-wrapper">
     <div class="on-content">
 
+        <!-- ✅ 사이드바 fragment 교체 -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
+        <!-- ===== 내부영역 ===== -->
         <div class="on-main">
-            <h2 class="mb-30">리뷰 상세보기</h2>
+            <h2 class="mb-30">Review Detail</h2>
 
+            <!-- ✅ 리뷰 상세내용 -->
             <div class="on-comp-tbl mt-10">
                 <div class="on-comp-tbl-row">
                     <div class="on-comp-tbl-th col-2">번호</div>
-                    <div class="on-comp-tbl-td col-10" th:text="${review.id}">1</div>
+                    <div class="on-comp-tbl-td col-10" th:text="${review.id}">01</div>
                 </div>
+
                 <div class="on-comp-tbl-row">
                     <div class="on-comp-tbl-th col-2">작성자</div>
                     <div class="on-comp-tbl-td col-10" th:text="${review.username}">홍길동</div>
                 </div>
+
                 <div class="on-comp-tbl-row">
                     <div class="on-comp-tbl-th col-2">상품명</div>
                     <div class="on-comp-tbl-td col-10" th:text="${review.productName}">가습기</div>
                 </div>
+
+                <div class="on-comp-tbl-row">
+                    <div class="on-comp-tbl-th col-2">별점</div>
+                    <div class="on-comp-tbl-td col-10" th:text="${review.rating}">5</div>
+                </div>
+
                 <div class="on-comp-tbl-row">
                     <div class="on-comp-tbl-th col-2">내용</div>
                     <div class="on-comp-tbl-td col-10" th:text="${review.content}">
@@ -37,7 +48,7 @@
                 </div>
             </div>
 
-            <!-- ✅ 답글 목록 -->
+            <!-- ✅ 댓글(답글) 목록 -->
             <div class="mt-40">
                 <h3 class="mb-20">답글 목록</h3>
                 <div th:if="${#lists.isEmpty(replies)}">
@@ -48,8 +59,9 @@
                     <div class="flex justify-between items-center">
                         <div>
                             <strong th:text="${reply.username}">관리자</strong>
-                            <span class="text-sm text-gray"
-                                  th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                            <span class="text-sm text-gray" th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}">
+                                2025-10-22 09:30
+                            </span>
                         </div>
                         <form th:action="@{/admin/board/review/reply/delete/{id}(id=${reply.id})}" method="post">
                             <input type="hidden" name="reviewId" th:value="${review.id}" />
@@ -60,10 +72,11 @@
                 </div>
             </div>
 
-            <!-- ✅ 답글 작성 -->
+            <!-- ✅ 댓글 작성 폼 -->
             <div class="mt-40">
                 <h3 class="mb-10">답글 작성</h3>
                 <form th:action="@{/admin/board/review/reply/write/{reviewId}(reviewId=${review.id})}" method="post">
+                    <input type="hidden" name="userId" value="1" /> <!-- 관리자 ID (임시 값) -->
                     <textarea name="content" class="input w-full mb-10" rows="4" placeholder="답글을 입력하세요"></textarea>
                     <div class="flex justify-end">
                         <button type="submit" class="btn btn--primary">등록</button>

@@ -2,66 +2,56 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>온앤홈 관리자</title>
+    <title>리뷰 목록</title>
     <link rel="stylesheet" href="/css/import.css" />
-    <script src="/js/oncommon.js"></script>
 </head>
 <body>
-<!-- 백그라운드 -->
 <div class="on-wrapper">
-    <!-- 컨텐츠 영역 -->
     <div class="on-content">
 
-        <!-- ✅ 사이드바 fragment로 변경 -->
+        <!-- ✅ 사이드바 불러오기 -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-        <!-- ===== 메인 내부영역 ===== -->
+        <!-- 메인 컨텐츠 -->
         <div class="on-main">
             <h2 class="mb-30">Review Board List</h2>
 
-            <div class="flex mb-20 justify-end">
-                <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
-                <button class="btn-ico btn-ico--srch"></button>
+            <!-- 검색창 -->
+            <div class="flex justify-end mb-20">
+                <input type="text" class="input" placeholder="검색어를 입력하세요" style="width:250px;" />
+                <button class="btn btn--primary ml-5">🔍</button>
             </div>
 
-            <div class="grid">
-                <table>
-                    <colgroup>
-                        <col width="10%">
-                        <col>
-                        <col width="20%">
-                        <col width="20%">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th scope="col">번호</th>
-                        <th scope="col">내용</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">작성일자</th>
-                    </tr>
-                    </thead>
+            <!-- 리뷰 테이블 -->
+            <table class="on-comp-tbl" style="width:100%; border-collapse:collapse;">
+                <thead style="background-color:#f3f3f3;">
+                <tr>
+                    <th style="width:8%">번호</th>
+                    <th style="width:45%">내용</th>
+                    <th style="width:20%">작성자</th>
+                    <th style="width:27%">작성일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 비어 있을 경우 -->
+                <tr th:if="${#lists.isEmpty(reviewList)}">
+                    <td colspan="4" style="text-align:center;">등록된 리뷰가 없습니다.</td>
+                </tr>
 
-                    <tbody>
-                    <!-- ✅ 타임리프 반복문으로 리뷰 목록 출력 -->
-                    <tr th:each="review, stat : ${reviews}">
-                        <td class="center" th:text="${stat.count}">1</td>
-                        <td class="center">
-                            <a th:href="@{/admin/board/review/detail/{id}(id=${review.id})}"
-                               th:text="${#strings.abbreviate(review.content, 30)}">
-                                배송도 빠르고 물건도 좋네요.
-                            </a>
-                        </td>
-                        <td class="center" th:text="${review.user.username}">제니</td>
-                        <td class="center" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">
-                            2025-10-18
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                <!-- 데이터가 있을 경우 반복 출력 -->
+                <tr th:each="review, stat : ${reviewList}">
+                    <td th:text="${stat.count}">1</td>
+                    <td>
+                        <a th:href="@{/admin/board/review/detail/{id}(id=${review.id})}"
+                           th:text="${review.content}"
+                           style="color:#333; text-decoration:none;">내용</a>
+                    </td>
+                    <td th:text="${review.username}">작성자</td>
+                    <td th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">2025-10-22 15:30</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
     </div>
 </div>
 </body>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 답글 수정</title>
+    <link rel="stylesheet" href="/css/import.css" />
+    <script src="/js/oncommon.js"></script>
+</head>
+<body>
+<div class="on-wrapper">
+    <div class="on-content">
+
+        <!-- ✅ 사이드바 fragment -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <div class="on-main">
+            <h2 class="mb-30">리뷰 답글 수정</h2>
+
+            <!-- ✅ 리뷰 기본정보 -->
+            <div class="on-comp-tbl mt-10">
+                <div class="on-comp-tbl-row">
+                    <div class="on-comp-tbl-th col-2">상품명</div>
+                    <div class="on-comp-tbl-td col-10"
+                         th:text="${review != null and review.productName != null ? review.productName : '상품명 없음'}">
+                        상품명 없음
+                    </div>
+                </div>
+                <div class="on-comp-tbl-row">
+                    <div class="on-comp-tbl-th col-2">리뷰 내용</div>
+                    <div class="on-comp-tbl-td col-10" th:text="${review.content}">내용 없음</div>
+                </div>
+            </div>
+
+            <!-- ✅ 답글 수정 폼 -->
+            <form th:action="@{/admin/board/review/reply/edit}" method="post" class="mt-30">
+                <input type="hidden" name="replyId" th:value="${reply.id}" />
+                <input type="hidden" name="reviewId" th:value="${review.id}" />
+
+                <div class="on-comp-tbl">
+                    <div class="on-comp-tbl-row">
+                        <div class="on-comp-tbl-th col-2">답글 내용</div>
+                        <div class="on-comp-tbl-td col-10">
+                            <textarea name="content" class="input w-full mb-10" rows="4"
+                                      placeholder="답글 내용을 입력하세요"
+                                      th:text="${reply.content}"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end mt-10">
+                    <a th:href="@{|/admin/board/review/detail/${review.id}|}"
+                       class="btn btn--quarternary-outline mr-4">취소</a>
+                    <button type="submit" class="btn btn--primary">수정완료</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
