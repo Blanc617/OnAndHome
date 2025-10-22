@@ -143,6 +143,35 @@ public class UserController {
     }
 
     /**
+     * 세션 정보 조회 API
+     * GET /api/user/session-info
+     */
+//    @GetMapping("/session-info")
+//    public ResponseEntity<Map<String, Object>> getSessionInfo(HttpSession session) {
+//        Map<String, Object> response = new HashMap<>();
+//        try {
+//            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+//
+//            if (loginUser != null) {
+//                response.put("loggedIn", true);
+//                response.put("user", loginUser);
+//                response.put("isAdmin", loginUser.getRole() == 0); // role 0이 관리자
+//                return ResponseEntity.ok(response);
+//            } else {
+//                response.put("loggedIn", false);
+//                response.put("user", null);
+//                response.put("isAdmin", false);
+//                return ResponseEntity.ok(response);
+//            }
+//        } catch (Exception e) {
+//            log.error("세션 정보 조회 중 오류: {}", e.getMessage(), e);
+//            response.put("loggedIn", false);
+//            response.put("message", "세션 정보 조회 중 오류가 발생했습니다.");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+//        }
+//    }
+
+    /**
      * 로그인 요청 내부 클래스
      */
     public static class LoginRequest {
