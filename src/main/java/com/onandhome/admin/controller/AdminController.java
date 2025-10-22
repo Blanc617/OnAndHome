@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 관리자 공통 페이지 컨트롤러
  * - 사용자, 주문, 대시보드 관리
- * 
+ *
  * ⚠️ 상품 관리는 AdminProductController로 이동됨
  * - /admin/product/list → AdminProductController.list()
  * - /admin/product/create → AdminProductController.createForm()
@@ -42,19 +42,39 @@ public class AdminController {
     }
 
     // ==================== 주문 관리 ====================
-    @GetMapping("/order/list")
-    public String orderList() {
-        return "admin/order/list";
-    }
+
+    // ✅ [수정] AdminOrderController와 충돌하므로 주석 처리합니다.
+    // @GetMapping("/order/list")
+    // public String orderList() {
+    //     return "admin/order/list";
+    // }
 
     @GetMapping("/order/detail")
     public String orderDetail() {
         return "admin/order/detail";
     }
 
-    // ==================== 게시판 대시보드 ====================
-    @GetMapping("/board/dashboard")
-    public String boardDashboard() {
-        return "admin/board/dashboard";
-    }
+    // ==================== 게시판 관리 ====================
+
+    // ✅ [수정] AdminNoticeController, AdminQnaController 등과
+    // URL 매핑이 중복되므로(Ambiguous mapping) 모두 주석 처리합니다.
+    // @GetMapping("/board/notice/list")
+    // public String noticeList() {
+    //     return "admin/board/notice/list";
+    // }
+    //
+    // @GetMapping("/board/notice/write")
+    // public String noticeWrite() {
+    //     return "admin/board/notice/write";
+    // }
+    //
+    // @GetMapping("/board/qna/list")
+    // public String qnaList() {
+    //     return "admin/board/qna/list";
+    // }
+    //
+    // @GetMapping("/board/review/list")
+    // public String reviewList() {
+    //     return "admin/board/review/list";
+    // }
 }

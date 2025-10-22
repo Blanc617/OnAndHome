@@ -5,6 +5,7 @@ import com.onandhome.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +25,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * 주문번호로 주문 조회
      */
     Optional<Order> findByOrderNumber(String orderNumber);
+
+    List<Order> findAllByOrderByCreatedAtDesc();
+
+    List<Order> findByCreatedAtBetweenOrderByCreatedAtDesc(LocalDateTime start, LocalDateTime end);
 }
