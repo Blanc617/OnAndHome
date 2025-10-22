@@ -35,7 +35,7 @@
         <div class="on-header-inner2">
           <a href="/"><div class="header-logo-placeholder"></div></a>
           <div>
-            <h1>On&Home</h1>
+              <h1><a href="http://localhost:8080/user/index">On&Home</a></h1>
           </div>
           <div class="header-search-area">
             <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
@@ -315,6 +315,8 @@
           
           const imageSrc = product.thumbnailImage || '/product_img/placeholder.jpg';
           const priceFormatted = formatPrice(product.price);
+          const salePriceFormatted = product.salePrice ? formatPrice(product.salePrice) : priceFormatted;
+          const hasSalePrice = product.salePrice && product.salePrice < product.price;
 
           itemDiv.innerHTML = `
             <a href="/user/product/detail/${product.id}">
@@ -327,8 +329,8 @@
                 <li class="item-title">
                   <a href="/user/product/detail/${product.id}">${product.name}</a>
                 </li>
-                <li class="price-info-ori">${priceFormatted}</li>
-                <li class="price-info-sale">${priceFormatted}</li>
+                <li class="price-info-ori" style="display: ${hasSalePrice ? 'block' : 'none'};">${priceFormatted}</li>
+                <li class="price-info-sale">${salePriceFormatted}</li>
               </ul>
             </div>
           `;

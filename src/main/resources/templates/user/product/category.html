@@ -303,6 +303,8 @@
           
           const imageSrc = product.thumbnailImage || '/product_img/placeholder.jpg';
           const priceFormatted = formatPrice(product.price);
+          const salePriceFormatted = product.salePrice ? formatPrice(product.salePrice) : priceFormatted;
+          const hasSalePrice = product.salePrice && product.salePrice < product.price;
 
           itemDiv.innerHTML = `
             <a href="/user/product/detail/${product.id}">
@@ -315,8 +317,8 @@
                 <li class="item-title">
                   <a href="/user/product/detail/${product.id}">${product.name}</a>
                 </li>
-                <li class="price-info-ori" style="display: ${product.price > 0 ? 'block' : 'none'};">${priceFormatted}</li>
-                <li class="price-info-sale">${priceFormatted}</li>
+                <li class="price-info-ori" style="display: ${hasSalePrice ? 'block' : 'none'};">${priceFormatted}</li>
+                <li class="price-info-sale">${salePriceFormatted}</li>
               </ul>
             </div>
           `;
