@@ -17,15 +17,21 @@ public class ProductDTO {
 
     private String description;
 
-    private int price;
+    private int price; // 정상가
 
-    private int stock;
+    private Integer salePrice; // 할인가
+
+    private int stock; // 재고수량
 
     private String thumbnailImage; // 썸네일 이미지 URL
 
     private String detailImage; // 상품 상세 이미지 URL
 
     private String category; // 소 카테고리
+
+    private String manufacturer; // 제조사
+
+    private String country; // 제조국
 
     /**
      * Entity를 DTO로 변환
@@ -36,16 +42,18 @@ public class ProductDTO {
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .salePrice(product.getSalePrice())
                 .stock(product.getStock())
                 .thumbnailImage(product.getThumbnailImage())
                 .detailImage(product.getDetailImage())
                 .category(product.getCategory())
+                .manufacturer(product.getManufacturer())
+                .country(product.getCountry())
                 .build();
     }
 
     /**
      * DTO를 Entity로 변환
-     * @AllArgsConstructor 생성자를 사용하지 않고 빌더 패턴 사용
      */
     public Product toEntity() {
         return Product.builder()
@@ -53,10 +61,13 @@ public class ProductDTO {
                 .name(this.name)
                 .description(this.description)
                 .price(this.price)
+                .salePrice(this.salePrice)
                 .stock(this.stock)
                 .thumbnailImage(this.thumbnailImage)
                 .detailImage(this.detailImage)
                 .category(this.category)
+                .manufacturer(this.manufacturer)
+                .country(this.country)
                 .build();
     }
 }
