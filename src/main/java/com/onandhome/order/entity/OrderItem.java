@@ -11,22 +11,22 @@ import lombok.*;
 @Table(name = "order_item")
 public class OrderItem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
-	private Long id;
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-	private Order order;
+    private Order order;
 
     @Column(nullable = false)
     private int orderPrice; // 주문 가격
-    
+
     @Column(nullable = false)
     private int count; //주문 수량
 
@@ -48,7 +48,7 @@ public class OrderItem {
     public void cancel() {
         getProduct().addStock(count); // 재고 원복 로직
     }
-    
+
     /**
      * 주문 상품 전체 가격 조회
      */

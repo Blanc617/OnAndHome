@@ -73,7 +73,7 @@ public class ProductController {
 	/**
 	 * 상품 생성 (DTO 사용) ✅ Talent 테스트용
 	 * POST /api/products/create
-	 * 
+	 *
 	 * 요청 예시 (JSON):
 	 * {
 	 *     "name": "무선 이어폰",
@@ -89,12 +89,12 @@ public class ProductController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			log.info("상품 생성 요청: {}", productDTO.getName());
-			
+
 			ProductDTO createdProduct = productService.create(productDTO);
 			response.put("success", true);
 			response.put("message", "상품이 성공적으로 생성되었습니다.");
 			response.put("data", createdProduct);
-			
+
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (IllegalArgumentException e) {
 			log.warn("상품 생성 실패: {}", e.getMessage());
@@ -112,7 +112,7 @@ public class ProductController {
 	/**
 	 * 상품 수정
 	 * PUT /api/products/{id}
-	 * 
+	 *
 	 * 요청 예시 (JSON):
 	 * {
 	 *     "name": "무선 이어폰 프로",
@@ -130,12 +130,12 @@ public class ProductController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			log.info("상품 수정 요청: ID {}", id);
-			
+
 			ProductDTO updatedProduct = productService.update(id, productDTO);
 			response.put("success", true);
 			response.put("message", "상품이 성공적으로 수정되었습니다.");
 			response.put("data", updatedProduct);
-			
+
 			return ResponseEntity.ok(response);
 		} catch (IllegalArgumentException e) {
 			log.warn("상품 수정 실패: {}", e.getMessage());
@@ -159,11 +159,11 @@ public class ProductController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			log.info("상품 삭제 요청: ID {}", id);
-			
+
 			productService.delete(id);
 			response.put("success", true);
 			response.put("message", "상품이 성공적으로 삭제되었습니다.");
-			
+
 			return ResponseEntity.ok(response);
 		} catch (IllegalArgumentException e) {
 			log.warn("상품 삭제 실패: {}", e.getMessage());
@@ -187,12 +187,12 @@ public class ProductController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			log.info("상품 검색 요청: {}", keyword);
-			
+
 			List<Product> products = productService.search(keyword);
 			response.put("success", true);
 			response.put("data", products);
 			response.put("count", products.size());
-			
+
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			log.error("상품 검색 중 오류: {}", e.getMessage());

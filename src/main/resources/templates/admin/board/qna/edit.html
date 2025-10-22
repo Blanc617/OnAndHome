@@ -11,7 +11,7 @@
 <div class="on-wrapper">
     <div class="on-content">
 
-        <!-- ✅ 사이드바 fragment 불러오기 -->
+        <!-- ✅ 사이드바 fragment -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
         <div class="on-main">
@@ -61,17 +61,15 @@
                         <span th:text="${answer.responder}">관리자</span>
                     </div>
                     <div class="on-comp-tbl-td col-10 flex justify-between items-start">
-                        <!-- 답변 내용 -->
                         <div class="mr-4" th:text="${answer.content}">
                             고객님 안녕하세요 온앤홈입니다. 주문취소는 고객센터로 연락주시기 바랍니다.
                         </div>
 
-                        <!-- 버튼 영역 -->
+                        <!-- ✅ 버튼 영역 -->
                         <div class="flex">
                             <!-- 수정 -->
-                            <form th:action="@{/admin/board/qna/answer/edit/{id}(id=${answer.id})}" method="get">
-                                <button type="submit" class="btn-sm btn--tertiary mr-2">수정</button>
-                            </form>
+                            <a th:href="@{/admin/board/qna/answer/edit/{answerId}(answerId=${answer.id})}"
+                               class="btn-sm btn--tertiary mr-2">수정</a>
 
                             <!-- 삭제 -->
                             <form th:action="@{/admin/board/qna/answer/delete/{answerId}(answerId=${answer.id})}" method="post">
@@ -85,7 +83,7 @@
 
             <div class="on-border mt-20"></div>
 
-            <!-- ✅ 답변 등록 폼 -->
+            <!-- ✅ 답변 등록 -->
             <form th:action="@{/admin/board/qna/answer/{id}(id=${qna.id})}" method="post">
                 <div class="mt-20">
                     <div class="on-comp-tbl-row high-80">

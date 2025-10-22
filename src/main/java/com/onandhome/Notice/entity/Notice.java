@@ -26,4 +26,6 @@ public class Notice {
     private String content;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    private LocalDateTime updatedAt; // ✅ 새로 추가
 }

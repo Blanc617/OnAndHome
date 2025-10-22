@@ -10,21 +10,21 @@ import lombok.*;
 @ToString
 @Builder
 public class ProductDTO {
-    
+
     private Long id;
-    
+
     private String name;
-    
+
     private String description;
-    
+
     private int price;
-    
+
     private int stock;
-    
+
     private String thumbnailImage; // 썸네일 이미지 URL
-    
+
     private String detailImage; // 상품 상세 이미지 URL
-    
+
     /**
      * Entity를 DTO로 변환
      */
@@ -39,7 +39,7 @@ public class ProductDTO {
                 .detailImage(product.getDetailImage())
                 .build();
     }
-    
+
     /**
      * DTO를 Entity로 변환
      */
