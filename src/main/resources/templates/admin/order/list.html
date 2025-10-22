@@ -12,35 +12,12 @@
   <div class="on-wrapper">
     <!-- 컨텐츠 영역 -->
     <div class="on-content">
+
+
       <!-- 사이드바 메뉴 -->
-      <div class="on-side-menu">
-        <div class="side-menu-logo">
-          <h2>On&Home</h2>
-        </div>
-        <div class="on-side-menu-nav">
-          <ul class="side-menu-list">
-            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
-            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
-            <li>
-              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
-              <ul>
-                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
-                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
-                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
-                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
-              </ul>
-            </li>
-            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
-          </ul>
-        </div>
-        <div class="on-side-menu-user">
-          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
-          <div class="on-side-menu-logout">
-            <span style="font-size: 16px;">logout</span>
-            <button class="log-out"></button>
-          </div>
-        </div>
-      </div>
+      <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
       <!-- <내부영역 -->
       <div class="on-main">
         <h2 class="mb-30">Order List</h2>
