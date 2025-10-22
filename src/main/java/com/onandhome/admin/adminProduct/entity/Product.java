@@ -25,8 +25,11 @@ public class Product {
 	@Column(nullable = false)
 	private int price; // 정상가 (원 단위)
 
+	@Column(name = "sale_price")
+	private Integer salePrice; // 할인가 (원 단위)
+
 	@Column(nullable = false)
-	private int stock;
+	private int stock; // 재고수량
 
 	private String thumbnailImage; // 썸네일 이미지 URL (컬럼명: thumbnail_image)
 
@@ -34,6 +37,12 @@ public class Product {
 
 	@Column(name = "category")
 	private String category; // 소 카테고리 (TV, 오디오, 냉장고 등)
+
+	@Column(name = "manufacturer")
+	private String manufacturer; // 제조사
+
+	@Column(name = "country")
+	private String country; // 제조국
 
 	/**
 	 * 재고 차감 (주문 시)

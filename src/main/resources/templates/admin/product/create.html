@@ -62,7 +62,7 @@
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">카테고리</div>
           <div class="on-comp-tbl-td col-10">
-            <select id="category1" class="select mr-8">
+            <select id="category1" class="select mr-8" onchange="updateSubCategory()">
               <option value="">선택1</option>
               <option value="tv_audio">TV/오디오</option>
               <option value="kitchen">주방가전</option>
@@ -78,11 +78,11 @@
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">목록이미지</div>
           <div class="on-comp-tbl-td col-10 file-box">
-            <button type="button" class="btn btn--tertiary file-btn">파일첨부</button>
-            <input type="file" class="file-input" style="display:none;">
+            <button type="button" class="btn btn--tertiary file-btn" onclick="document.getElementById('thumbnailFileInput').click()">파일첨부</button>
+            <input type="file" id="thumbnailFileInput" class="file-input" accept="image/*" style="display:none;" onchange="uploadThumbnailImage(this)">
             <div class="file-input-wrap">
               <input class="on-inp w-400 file-name" id="thumbnailImage" readonly>
-              <button type="button" class="file-clear">✕</button>
+              <button type="button" class="file-clear" onclick="clearThumbnailImage()">✕</button>
             </div>
           </div>
         </div>
@@ -90,11 +90,11 @@
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">상세페이지</div>
           <div class="on-comp-tbl-td col-10 file-box">
-            <button type="button" class="btn btn--tertiary file-btn">파일첨부</button>
-            <input type="file" class="file-input" style="display:none;">
+            <button type="button" class="btn btn--tertiary file-btn" onclick="document.getElementById('detailFileInput').click()">파일첨부</button>
+            <input type="file" id="detailFileInput" class="file-input" accept="image/*" style="display:none;" onchange="uploadDetailImage(this)">
             <div class="file-input-wrap">
               <input class="on-inp w-400 file-name" id="detailImage" readonly>
-              <button type="button" class="file-clear">✕</button>
+              <button type="button" class="file-clear" onclick="clearDetailImage()">✕</button>
             </div>
           </div>
         </div>
@@ -102,25 +102,25 @@
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">제조사</div>
           <div class="on-comp-tbl-td col-10">
-            <input class="on-inp">
+            <input class="on-inp" id="manufacturer">
           </div>
         </div>
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">제조국</div>
           <div class="on-comp-tbl-td col-10">
-            <input class="on-inp">
+            <input class="on-inp" id="country">
           </div>
         </div>
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">정상가격</div>
           <div class="on-comp-tbl-td col-10">
-            <input class="on-inp" id="price" type="number">
+            <input class="on-inp" id="price" type="number" min="0">
           </div>
         </div>
         <div class="on-comp-tbl-row">
           <div class="on-comp-tbl-th col-2">할인가격</div>
           <div class="on-comp-tbl-td col-10">
-            <input class="on-inp" id="stock" type="number">
+            <input class="on-inp" id="salePrice" type="number" min="0">
           </div>
         </div>
       </div>
@@ -161,6 +161,12 @@
             <input class="on-inp" id="description">
           </div>
         </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">재고수량</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="stock" type="number" min="0">
+          </div>
+        </div>
       </div>
       <div class="flex justify-end mt-20">
         <a href="/admin/product/list"><button type="button" class="btn btn--quarternary-outline mr-4">목록</button></a>
@@ -172,6 +178,149 @@
 </div>
 
 <script>
+  // 전역 변수: 업로드된 이미지 URL 저장
+  let thumbnailImageUrl = '';
+  let detailImageUrl = '';
+
+  // 소분류 카테고리 데이터
+  const subCategories = {
+    'tv_audio': ['TV', '오디오', '홈시어터'],
+    'kitchen': ['냉장고', '전자레인지', '식기세척기', '정수기'],
+    'living': ['세탁기', '청소기', '에어컨'],
+    'air': ['에어컨', '공기청정기', '가습기', '제습기'],
+    'etc': ['기타']
+  };
+
+  // 소분류 업데이트 함수
+  function updateSubCategory() {
+    const category1 = document.getElementById('category1').value;
+    const category2Select = document.getElementById('category2');
+    
+    // 기존 옵션 제거
+    category2Select.innerHTML = '<option value="">선택2</option>';
+    
+    if (category1 && subCategories[category1]) {
+      subCategories[category1].forEach(sub => {
+        const option = document.createElement('option');
+        option.value = sub;
+        option.textContent = sub;
+        category2Select.appendChild(option);
+      });
+    }
+  }
+
+  /**
+   * 목록 이미지 업로드
+   */
+  async function uploadThumbnailImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // 파일 타입 검증
+    if (!file.type.startsWith('image/')) {
+      alert('이미지 파일만 업로드 가능합니다.');
+      input.value = '';
+      return;
+    }
+
+    // 파일 크기 검증 (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('파일 크기는 5MB를 초과할 수 없습니다.');
+      input.value = '';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        thumbnailImageUrl = result.fileUrl;
+        document.getElementById('thumbnailImage').value = file.name;
+        console.log('목록 이미지 업로드 성공:', thumbnailImageUrl);
+      } else {
+        alert(result.message || '이미지 업로드에 실패했습니다.');
+        input.value = '';
+      }
+    } catch (error) {
+      console.error('업로드 오류:', error);
+      alert('이미지 업로드 중 오류가 발생했습니다.');
+      input.value = '';
+    }
+  }
+
+  /**
+   * 상세 이미지 업로드
+   */
+  async function uploadDetailImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // 파일 타입 검증
+    if (!file.type.startsWith('image/')) {
+      alert('이미지 파일만 업로드 가능합니다.');
+      input.value = '';
+      return;
+    }
+
+    // 파일 크기 검증 (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('파일 크기는 5MB를 초과할 수 없습니다.');
+      input.value = '';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        detailImageUrl = result.fileUrl;
+        document.getElementById('detailImage').value = file.name;
+        console.log('상세 이미지 업로드 성공:', detailImageUrl);
+      } else {
+        alert(result.message || '이미지 업로드에 실패했습니다.');
+        input.value = '';
+      }
+    } catch (error) {
+      console.error('업로드 오류:', error);
+      alert('이미지 업로드 중 오류가 발생했습니다.');
+      input.value = '';
+    }
+  }
+
+  /**
+   * 목록 이미지 삭제
+   */
+  function clearThumbnailImage() {
+    document.getElementById('thumbnailFileInput').value = '';
+    document.getElementById('thumbnailImage').value = '';
+    thumbnailImageUrl = '';
+  }
+
+  /**
+   * 상세 이미지 삭제
+   */
+  function clearDetailImage() {
+    document.getElementById('detailFileInput').value = '';
+    document.getElementById('detailImage').value = '';
+    detailImageUrl = '';
+  }
+
   /**
    * 상품 등록 처리
    */
@@ -180,6 +329,7 @@
     const name = document.getElementById('name').value.trim();
     const category = document.getElementById('category2').value.trim();
     const price = parseInt(document.getElementById('price').value) || 0;
+    const salePrice = parseInt(document.getElementById('salePrice').value) || null;
     const stock = parseInt(document.getElementById('stock').value) || 0;
 
     if (!name) {
@@ -197,10 +347,19 @@
       return;
     }
 
-    if (stock < 0) {
+    if (salePrice !== null && salePrice < 0) {
       alert('할인가격은 0 이상이어야 합니다.');
       return;
     }
+
+    if (stock < 0) {
+      alert('재고수량은 0 이상이어야 합니다.');
+      return;
+    }
+
+    // 제조사, 제조국 가져오기
+    const manufacturer = document.getElementById('manufacturer').value.trim();
+    const country = document.getElementById('country').value.trim();
 
     // 폼 데이터 생성
     const data = {
@@ -208,10 +367,15 @@
       category: category,
       description: document.getElementById('description').value.trim(),
       price: price,
+      salePrice: salePrice,
       stock: stock,
-      thumbnailImage: document.getElementById('thumbnailImage').value.trim(),
-      detailImage: document.getElementById('detailImage').value.trim()
+      thumbnailImage: thumbnailImageUrl,
+      detailImage: detailImageUrl,
+      manufacturer: manufacturer,
+      country: country
     };
+
+    console.log('전송 데이터:', data);
 
     // API 요청
     fetch('/api/products/create', {
