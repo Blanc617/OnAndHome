@@ -1,4 +1,4 @@
-package com.onandhome.admin.adminQna;
+package com.onandhome.admin.adminQnA;
 
 
 import com.onandhome.qna.QnaService;
