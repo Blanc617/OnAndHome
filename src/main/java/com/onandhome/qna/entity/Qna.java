@@ -1,7 +1,7 @@
 package com.onandhome.qna.entity;
 
 import com.onandhome.admin.adminProduct.entity.Product;
-import com.onandhome.admin.adminQnA.entity.Answer;
+import com.onandhome.admin.adminQna.entity.Answer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

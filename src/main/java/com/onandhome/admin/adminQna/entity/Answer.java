@@ -1,11 +1,10 @@
-package com.onandhome.admin.adminQnA.entity;
+package com.onandhome.admin.adminQna.entity;
 
 import com.onandhome.qna.entity.Qna;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.onandhome.admin.adminQnA.entity.Answer;
 
 import java.time.LocalDateTime;
 

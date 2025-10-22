@@ -1,7 +1,6 @@
-package com.onandhome.admin.adminQnA;
+package com.onandhome.admin.adminQna;
 
-import com.onandhome.admin.adminQnA.AnswerRepository;
-import com.onandhome.admin.adminQnA.entity.Answer;
+import com.onandhome.admin.adminQna.entity.Answer;
 import com.onandhome.qna.QnaRepository;
 import com.onandhome.qna.entity.Qna;
 import lombok.RequiredArgsConstructor;

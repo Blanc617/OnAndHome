@@ -1,7 +1,7 @@
 package com.onandhome.admin.adminQna;
 
 
-import com.onandhome.admin.adminQnA.entity.Answer;
+import com.onandhome.admin.adminQna.entity.Answer;
 import com.onandhome.qna.QnaService;
 import com.onandhome.qna.entity.Qna;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 public class AdminQnaController {
 
     private final QnaService qnaService;
-    private final com.onandhome.admin.adminQnA.AnswerService answerService;
+    private final AnswerService answerService;
 
     /** QnA 목록 페이지 */
     /** ✅ QnA 목록 페이지 */
@@ -49,7 +49,7 @@ public class AdminQnaController {
         if (qna == null) throw new IllegalArgumentException("Q&A 없음");
 
         // ✅ 이 질문에 달린 모든 답변 조회
-        List<Answer> answers = answerService.findByQnaId(id);
+        List<Answer>answers = answerService.findByQnaId(id);
 
         model.addAttribute("qna", qna);
         model.addAttribute("answers", answers);
