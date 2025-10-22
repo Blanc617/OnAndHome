@@ -6,7 +6,9 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "order_item")
 public class OrderItem {
 
     @Id
@@ -22,7 +24,10 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @Column(nullable = false)
     private int orderPrice; // 주문 가격
+    
+    @Column(nullable = false)
     private int count; //주문 수량
 
     //생성 매소드
@@ -43,6 +48,7 @@ public class OrderItem {
     public void cancel() {
         getProduct().addStock(count); // 재고 원복 로직
     }
+    
     /**
      * 주문 상품 전체 가격 조회
      */
@@ -55,4 +61,3 @@ public class OrderItem {
         this.order = order;
     }
 }
-
