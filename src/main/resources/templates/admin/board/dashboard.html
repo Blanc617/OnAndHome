@@ -1,70 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>온앤홈 관리자</title>
-  <link rel="stylesheet" href="/css/import.css" />
-  <script src="/js/oncommon.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온앤홈 관리자</title>
+    <link rel="stylesheet" href="/css/import.css" />
+    <script src="/js/oncommon.js"></script>
 </head>
 <body>
-  <!-- 백그라운드 -->
-  <div class="on-wrapper">
+<!-- 백그라운드 -->
+<div class="on-wrapper">
     <!-- 컨텐츠 영역 -->
     <div class="on-content">
-      <!-- 사이드바 메뉴 -->
-      <div class="on-side-menu">
-        <div class="side-menu-logo">
-          <h2>On&Home</h2>
-        </div>
-        <div class="on-side-menu-nav">
-          <ul class="side-menu-list">
-            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
-            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
-            <li>
-              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
-              <ul>
-                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
-                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
-                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
-                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
-              </ul>
-            </li>
-            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
-          </ul>
-        </div>
-        <div class="on-side-menu-user">
-          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
-          <div class="on-side-menu-logout">
-            <span style="font-size: 16px;">logout</span>
-            <button class="log-out"></button>
-          </div>
-        </div>
-      </div>
-      <!-- <내부영역 -->
-      <div class="on-main">
-        <h2 class="mb-30">Board List</h2>
-        <div class="dash-wrapper gap-20">
-          <div class="dash-up gap-20">
-            <div class="dash-board-card">
-              <h3 class="dash-content-tit2">공지사항</h3>
-              <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/notice/list.html">35</a></span>건</div>
+
+        <!-- ✅ 사이드바 fragment 불러오기 -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- 내부영역 -->
+        <div class="on-main">
+            <h2 class="mb-30">Dash Board</h2>
+
+            <!-- 비로그인 사용자 경고 -->
+            <div th:unless="${session.loginUser}"
+                 style="background-color: #fee; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #e94738;">
+                <p style="color: #e94738; margin: 0; font-weight: bold;">로그인이 필요합니다.</p>
+                <p style="color: #999; margin: 8px 0 0 0; font-size: 12px;">
+                    <a href="/login" style="color: #0b1293;">로그인 페이지로 이동</a>
+                </p>
             </div>
-            <div class="dash-board-card">
-              <h3 class="dash-content-tit2">리뷰</h3>
-              <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/review/list.html">135</a></span>건</div>
-            </div>            
-          </div>
-          <div class="dash-up gap-20">
-            <div class="dash-board-card">
-              <h3 class="dash-content-tit2">Q&A</h3>
-              <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/qna/list.html">254</a></span>건</div>
+
+            <!-- 대시보드 콘텐츠 -->
+            <div class="dash-wrapper gap-20">
+                <div class="dash-up gap-20">
+
+                    <div class="dash-content">
+                        <h3 class="dash-content-tit">공지사항</h3>
+                        <div class="dash-content-inner mb-12">
+                            오늘의 주문<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            오늘의 매출<span class="dash-content-value"><a href="#">00</a></span>원
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            이달의 매출<span class="dash-content-value"><a href="#">00</a></span>원
+                        </div>
+                    </div>
+
+                    <div class="dash-content">
+                        <h3 class="dash-content-tit">상품 현황</h3>
+                        <div class="dash-content-inner mb-12">
+                            전체상품<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            판매 중 상품<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            판매 중지 상품<span class="dash-content-value"><a href="#">8</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            품절 상품<span class="dash-content-value"><a href="#">4</a></span>건
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-down gap-20">
+                    <div class="dash-content">
+                        <h3 class="dash-content-tit">회원 현황</h3>
+                        <div class="dash-content-inner mb-12">
+                            신규가입 회원<span class="dash-content-value"><a href="#">00</a></span>명
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            전체 회원<span class="dash-content-value"><a href="#">00</a></span>명
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            탈퇴 회원<span class="dash-content-value"><a href="#">00</a></span>명
+                        </div>
+                    </div>
+
+                    <div class="dash-content">
+                        <h3 class="dash-content-tit">게시판</h3>
+                        <div class="dash-content-inner mb-12">
+                            공지사항<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            고객리뷰<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            Q&A<span class="dash-content-value"><a href="#">00</a></span>건
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>          
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
+            <!-- // 대시보드 콘텐츠 끝 -->
+        </div> <!-- /.on-main -->
+    </div> <!-- /.on-content -->
+</div> <!-- /.on-wrapper -->
 </body>
 </html>

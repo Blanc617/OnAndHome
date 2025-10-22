@@ -38,7 +38,7 @@ public class OrderService {
     public List<OrderDTO> getOrders(Long userId) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-        
+
         List<Order> orders = orderRepo.findByUserOrderByCreatedAtDesc(user);
         return orders.stream()
                 .map(OrderDTO::fromEntity)
@@ -57,33 +57,33 @@ public class OrderService {
 
     /**
      * 주문 생성 (DTO 기반)
-     * 
+     *
      * @param request 주문 생성 요청
      * @return 생성된 주문 DTO
      */
     public OrderDTO createOrder(CreateOrderRequest request) {
         log.info("주문 생성 요청: userId={}", request.getUserId());
-        
+
         // 1. 사용자 조회
         User user = userRepo.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-        
+
         // 2. 주문 항목 검증 및 생성
         if (request.getOrderItems() == null || request.getOrderItems().isEmpty()) {
             throw new IllegalArgumentException("주문 항목이 최소 1개 이상이어야 합니다.");
         }
-        
+
         List<OrderItem> orderItems = new ArrayList<>();
         for (CreateOrderRequest.OrderItemRequest itemRequest : request.getOrderItems()) {
             // 상품 조회
             Product product = productRepo.findById(itemRequest.getProductId())
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다: " + itemRequest.getProductId()));
-            
+
             // 수량 검증
             if (itemRequest.getQuantity() <= 0) {
                 throw new IllegalArgumentException("주문 수량은 1 이상이어야 합니다.");
             }
-            
+
             // 재고 확인 및 OrderItem 생성
             try {
                 OrderItem orderItem = OrderItem.createOrderItem(
@@ -96,14 +96,14 @@ public class OrderService {
                 throw new IllegalArgumentException("상품 " + product.getName() + ": " + e.getMessage());
             }
         }
-        
+
         // 3. 주문 생성
         Order order = Order.create(user, orderItems);
-        
+
         // 4. 주문 저장
         Order savedOrder = orderRepo.save(order);
         log.info("주문 생성 완료: orderId={}, orderNumber={}", savedOrder.getId(), savedOrder.getOrderNumber());
-        
+
         return OrderDTO.fromEntity(savedOrder);
     }
 
@@ -112,12 +112,12 @@ public class OrderService {
      */
     public OrderDTO createOrderFromCart(Long userId) {
         log.info("장바구니 기반 주문 생성: userId={}", userId);
-        
+
         // 1. 사용자 및 장바구니 아이템 조회
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
         List<CartItem> cartItems = cartRepo.findByUser(user);
-        
+
         if (cartItems.isEmpty()) {
             throw new IllegalArgumentException("장바구니가 비어 있습니다.");
         }
@@ -130,7 +130,7 @@ public class OrderService {
                         cartItem.getQuantity()
                 ))
                 .collect(Collectors.toList());
-        
+
         // 3. 주문 생성
         Order order = Order.create(user, orderItems);
 
@@ -139,7 +139,7 @@ public class OrderService {
 
         // 5. 장바구니 비우기
         cartRepo.deleteByUser(user);
-        
+
         log.info("장바구니 기반 주문 생성 완료: orderId={}", savedOrder.getId());
         return OrderDTO.fromEntity(savedOrder);
     }
@@ -149,13 +149,13 @@ public class OrderService {
      */
     public OrderDTO pay(Long orderId) {
         log.info("주문 결제 처리: orderId={}", orderId);
-        
+
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
-        
+
         order.pay(); // paidAt 자동 설정
         Order savedOrder = orderRepo.save(order);
-        
+
         log.info("주문 결제 완료: orderId={}", orderId);
         return OrderDTO.fromEntity(savedOrder);
     }
@@ -165,10 +165,10 @@ public class OrderService {
      */
     public OrderDTO cancel(Long orderId) {
         log.info("주문 취소 요청: orderId={}", orderId);
-        
+
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
-        
+
         try {
             order.cancel();
             Order savedOrder = orderRepo.save(order);
@@ -187,7 +187,7 @@ public class OrderService {
     public String track(Long orderId) {
         Order order = orderRepo.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
-        
+
         return switch (order.getStatus()) {
             case ORDERED -> "주문 완료";
             case DELIVERING -> "배송중";

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On&Home - 카테고리</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+  <style>
+    .cate-tit {
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      border-bottom: 3px solid #333;
+      padding-bottom: 10px;
+    }
+    
+    .empty-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 16px;
+    }
+    
+    .item-array {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    @media (max-width: 1024px) {
+      .item-array {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .item-array {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .item-array {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .item-thum-wrapper {
+      height: 250px;
+      overflow: hidden;
+      background-color: #f5f5f5;
+    }
+    
+    .item-thum-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-main-wrap">
+    <!-- 헤더 -->
+    <header class="on-header">
+      <!-- line01 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div>
+            <ul class="sns-list">
+              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>
+              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>
+              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>
+              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>
+            </ul>
+          </div>
+          <div class="login-group">
+            <ul class="login-group-list" id="headerNav">
+              <!-- 동적으로 변경될 네비게이션 -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- line02 -->
+      <div class="on-header-top">
+        <div class="on-header-inner2">
+          <a href="/"><div class="header-logo-placeholder"></div></a>
+          <div>
+            <h1>On&Home</h1>
+          </div>
+          <div class="header-search-area">
+            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
+            <ul class="header-icons">
+              <li class="ico-mypage"><a href="/user/my_page"></a></li>
+              <li class="ico-cart"><a href="/user/cart"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 메뉴 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div class="menu-wrapper">
+            <ul class="gnb" id="categoryMenu">
+              <!-- 동적으로 로드될 카테고리 메뉴 -->
+            </ul>
+          </div>
+        </div>
+      </div>      
+    </header>
+
+    <!-- 상품 목록 영역 -->
+    <div class="on-item02 mb-80 mt-80">
+      <div class="on-item02-inner">
+        <h2 class="sub-title cate-tit" id="categoryTitle">상품 목록</h2>
+        
+        <!-- 상품 컨테이너 -->
+        <div id="productContainer">
+          <!-- 상품이 동적으로 로드됨 -->
+        </div>
+        
+        <!-- 상품 없음 메시지 -->
+        <div class="empty-message" id="emptyMessage" style="display: none;">
+          <h3>상품이 없습니다.</h3>
+          <p>다른 카테고리의 상품을 확인해주세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer-o">
+      <div class="footer-wrapper">
+        <div class="footer-l">
+          <div>고객센터 <span class="footer-number">1544-7777</span></div>
+          <div class="flex mt-20">
+            <div>
+              <ul class="footer-title">
+                <li>회사명</li>
+                <li>대표</li>
+                <li>팩스</li>
+                <li>이메일</li>
+                <li>주소</li>
+                <li>사업자등록번호</li>
+                <li>통신판매업신고</li>
+                <li>개인정보 책임자</li>
+              </ul>
+            </div>
+            <div class="ml-20">
+              <ul class="footer-title">
+                <li>(주)하이미디어</li>
+                <li>이상혁</li>
+                <li>02-1544-7778</li>
+                <li>faker@naver.com</li>
+                <li>서울 서초구 서초동 123-456</li>
+                <li>123-456789</li>
+                <li>카456-7894</li>
+                <li>최우제</li>
+              </ul>
+            </div>            
+          </div>
+        </div>
+        <div class="footer-r">
+          <div>
+            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>     
+  </div>
+
+  <script>
+    /**
+     * 카테고리 데이터 (index.html과 동일)
+     */
+    const categoryData = [
+      {
+        parentName: 'TV/오디오',
+        children: ['TV', '오디오']
+      },
+      {
+        parentName: '주방가전',
+        children: ['냉장고', '전자렌지', '식기세척기']
+      },
+      {
+        parentName: '생활가전',
+        children: ['세탁기', '청소기']
+      },
+      {
+        parentName: '에어컨/공기청정기',
+        children: ['에어컨', '공기청정기']
+      },
+      {
+        parentName: '기타',
+        children: ['정수기', '안마의자', 'PC']
+      }
+    ];
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCategoryMenu();
+      loadHeaderNavigation();
+      loadCategoryProducts();
+    });
+
+    /**
+     * 카테고리 상품 로드
+     */
+    function loadCategoryProducts() {
+      // URL 파라미터에서 카테고리 가져오기
+      const params = new URLSearchParams(window.location.search);
+      const category = params.get('category');
+
+      if (category) {
+        document.getElementById('categoryTitle').textContent = category + ' 상품';
+        fetchProductsByCategory(category);
+      } else {
+        // 카테고리 파라미터가 없으면 첫 번째 카테고리 로드
+        fetchProductsByCategory('TV');
+        document.getElementById('categoryTitle').textContent = 'TV 상품';
+      }
+    }
+
+    /**
+     * 카테고리별 상품 조회
+     */
+    function fetchProductsByCategory(category) {
+      console.log('카테고리 조회:', category);
+      
+      fetch(`/user/product/api/category/${encodeURIComponent(category)}`)
+        .then(response => {
+          console.log('응답 상태:', response.status);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('받은 데이터:', data);
+          if (data.success && data.products && data.products.length > 0) {
+            renderProducts(data.products);
+          } else {
+            showEmptyMessage();
+          }
+        })
+        .catch(error => {
+          console.error('상품 조회 오류:', error);
+          showEmptyMessage();
+        });
+    }
+
+    /**
+     * 상품 렌더링
+     */
+    function renderProducts(products) {
+      const productContainer = document.getElementById('productContainer');
+      const emptyMessage = document.getElementById('emptyMessage');
+
+      if (!products || products.length === 0) {
+        showEmptyMessage();
+        return;
+      }
+
+      productContainer.innerHTML = '';
+      emptyMessage.style.display = 'none';
+
+      // 3개씩 그룹화하여 렌더링
+      for (let i = 0; i < products.length; i += 3) {
+        const itemArray = document.createElement('div');
+        itemArray.className = 'item-array';
+
+        for (let j = i; j < i + 3 && j < products.length; j++) {
+          const product = products[j];
+          const itemDiv = document.createElement('div');
+          
+          const imageSrc = product.thumbnailImage || '/product_img/placeholder.jpg';
+          const priceFormatted = formatPrice(product.price);
+
+          itemDiv.innerHTML = `
+            <a href="/user/product/detail/${product.id}">
+              <div class="item-thum-wrapper">
+                <img src="${imageSrc}" alt="${product.name}" onerror="this.src='/product_img/placeholder.jpg'">
+              </div>
+            </a>
+            <div class="item-info">
+              <ul class="price-info">
+                <li class="item-title">
+                  <a href="/user/product/detail/${product.id}">${product.name}</a>
+                </li>
+                <li class="price-info-ori" style="display: ${product.price > 0 ? 'block' : 'none'};">${priceFormatted}</li>
+                <li class="price-info-sale">${priceFormatted}</li>
+              </ul>
+            </div>
+          `;
+
+          itemArray.appendChild(itemDiv);
+        }
+
+        productContainer.appendChild(itemArray);
+      }
+    }
+
+    /**
+     * 상품이 없음 메시지 표시
+     */
+    function showEmptyMessage() {
+      const productContainer = document.getElementById('productContainer');
+      const emptyMessage = document.getElementById('emptyMessage');
+      
+      productContainer.innerHTML = '';
+      emptyMessage.style.display = 'block';
+    }
+
+    /**
+     * 가격 포맷팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    /**
+     * 카테고리 메뉴 로드
+     */
+    function loadCategoryMenu() {
+      const categoryMenu = document.getElementById('categoryMenu');
+      categoryMenu.innerHTML = '';
+
+      categoryData.forEach(category => {
+        const li = document.createElement('li');
+        
+        const parentLink = document.createElement('a');
+        parentLink.href = '#';
+        parentLink.textContent = category.parentName;
+        parentLink.onclick = function(e) {
+          e.preventDefault();
+          return false;
+        };
+        
+        li.appendChild(parentLink);
+        
+        if (category.children && category.children.length > 0) {
+          const depth2 = document.createElement('ul');
+          depth2.className = 'depth2';
+          
+          category.children.forEach(child => {
+            const childLi = document.createElement('li');
+            const childLink = document.createElement('a');
+            childLink.href = `/user/product/category?category=${encodeURIComponent(child)}`;
+            childLink.textContent = child;
+            childLink.onclick = function() {
+              console.log('소 카테고리 클릭:', child);
+            };
+            childLi.appendChild(childLink);
+            depth2.appendChild(childLi);
+          });
+          
+          li.appendChild(depth2);
+        }
+        
+        categoryMenu.appendChild(li);
+      });
+
+      console.log('카테고리 메뉴 로드 완료');
+    }
+
+    /**
+     * 헤더 네비게이션 로드
+     */
+    function loadHeaderNavigation() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = '';
+
+          if (data.loggedIn) {
+            let navHTML = `
+              <li><a href="/user/my_page">마이페이지</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+
+            if (data.isAdmin) {
+              navHTML += `<li><a href="/admin/dashboard"><b>관리자</b></a></li>`;
+            }
+
+            navHTML += `
+              <li><a href="#" onclick="handleLogout(); return false;">로그아웃</a></li>
+            `;
+
+            headerNav.innerHTML = navHTML;
+          } else {
+            headerNav.innerHTML = `
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/signup">회원가입</a></li>
+              <li><a href="/">공지사항</a></li>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('세션 정보 조회 실패:', error);
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = `
+            <li><a href="/login">로그인</a></li>
+            <li><a href="/signup">회원가입</a></li>
+            <li><a href="/">공지사항</a></li>
+          `;
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function handleLogout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        window.location.href = '/logout';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -18,10 +18,10 @@ import lombok.*;
 @Table(name = "orders")
 public class Order {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-	private Long id;
+    private Long id;
 
     // ✅ 회원 정보 추가 (ManyToOne 관계)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,10 +40,10 @@ public class Order {
 
     @Column(nullable = false)
     private int totalPrice;
-    
+
     @Column(nullable = false)
     private String orderNumber;
-    
+
     private LocalDateTime paidAt; //결제 시간
 
     public enum OrderStatus {

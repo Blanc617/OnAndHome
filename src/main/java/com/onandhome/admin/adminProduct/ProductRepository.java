@@ -7,8 +7,19 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    
+    /**
+     * 상품명으로 검색
+     */
     List<Product> findByNameContainingIgnoreCase(String keyword);
-    // ⚠️ 아래 메서드 주석처리 또는 삭제
-    // List<Product> findByCategoryId(Long categoryId);
+    
+    /**
+     * 카테고리별 상품 조회
+     */
+    List<Product> findByCategory(String category);
+    
+    /**
+     * 카테고리명 포함 상품 조회
+     */
+    List<Product> findByCategoryContaining(String category);
 }
-

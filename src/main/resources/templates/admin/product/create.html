@@ -8,126 +8,234 @@
   <script src="/js/oncommon.js"></script>
 </head>
 <body>
-  <!-- 백그라운드 -->
-  <div class="on-wrapper">
-    <!-- 컨텐츠 영역 -->
-    <div class="on-content">
-      <!-- 사이드바 메뉴 -->
-      <div class="on-side-menu">
-        <div class="side-menu-logo">
-          <h2>On&Home</h2>
-        </div>
-        <div class="on-side-menu-nav">
-          <ul class="side-menu-list">
-            <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
-            <li><a href="/admin/product/list.html"><span class="ico_item"></span>상품관리</a></li>
-            <li>
-              <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
-              <ul>
-                <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
-                <li><a href="/admin/board/notice/list.html">공지사항</a></li>
-                <li><a href="/admin/board/review/list.html">리뷰</a></li> <!-- 오타 수정 -->
-                <li><a href="/admin/board/qna/list.html">Q&amp;A</a></li>
-              </ul>
-            </li>
-            <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
-          </ul>
-        </div>
-        <div class="on-side-menu-user">
-          <span class="on-side-menu-id">Admin</span><span>님</span></sla><br><span> 안녕하세요</span>
-          <div class="on-side-menu-logout">
-            <span style="font-size: 16px;">logout</span>
-            <button class="log-out"></button>
-          </div>
-        </div>
+<!-- 백그라운드 -->
+<div class="on-wrapper">
+  <!-- 컨텐츠 영역 -->
+  <div class="on-content">
+    <!-- 사이드바 메뉴 -->
+    <div class="on-side-menu">
+      <div class="side-menu-logo">
+        <h2>On&Home</h2>
       </div>
-      <!-- <내부영역 -->
-      <div class="on-main">
-        <h2 class="mb-30">Product Create</h2>
-        <div class="">
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">상품코드</div>
-            <div class="on-comp-tbl-td col-10">PC-001</div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">등록일자</div>
-            <div class="on-comp-tbl-td col-10">2025-01-01</div>
-          </div>          
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">상품명</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">제조사</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">제조국</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>          
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">정상가격</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">할인가격</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>                                                        
+      <div class="on-side-menu-nav">
+        <ul class="side-menu-list">
+          <li><a href="/admin/order/list.html"><span class="ico_order"></span>주문관리</a></li>
+          <li><a href="/admin/product/list"><span class="ico_item"></span>상품관리</a></li>
+          <li>
+            <a href="/admin/board/dashboard.html"><span class="ico_board"></span>게시판관리</a>
+            <ul>
+              <li><a href="/admin/board/dashboard.html">게시판 전체보기</a></li>
+              <li><a href="/admin/board/notice/list.html">공지사항</a></li>
+              <li><a href="/admin/board/review/list.html">리뷰</a></li>
+              <li><a href="/admin/board/qna/list.html">Q&A</a></li>
+            </ul>
+          </li>
+          <li><a href="/admin/user/list.html"><span class="ico_member"></span>회원관리</a></li>
+        </ul>
+      </div>
+      <div class="on-side-menu-user">
+        <span class="on-side-menu-id">Admin</span><span>님</span><br><span>안녕하세요</span>
+        <div class="on-side-menu-logout">
+          <span style="font-size: 16px;">logout</span>
+          <button class="log-out"></button>
         </div>
-        <div class="flex justify-end mt-20">
-          <a href="/admin/product/list.html"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
-          <a href="#"><button class="btn btn--primary">등록</button></a>
-        </div>
-        <div class="on-border mt-20"></div>
-        <h3 class="mt-20 mb-12">상세스펙</h3>
-        <div class="">
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">크기</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">무게</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>          
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">전압</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">재질</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-          <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">추가상품</div>
-            <div class="on-comp-tbl-td col-10">
-              <input class="on-inp">
-            </div>
-          </div>
-        </div>
-        <div class="flex justify-end mt-20">
-          <a href="/admin/product/list.html"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
-          <a href="#"><button class="btn btn--primary">등록</button></a>
-        </div>                                
       </div>
     </div>
+    <!-- 내부영역 -->
+    <div class="on-main">
+      <h2 class="mb-30">Product Create</h2>
+      <div class="">
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">상품코드</div>
+          <div class="on-comp-tbl-td col-10">PC-001</div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">등록일자</div>
+          <div class="on-comp-tbl-td col-10">2025-01-01</div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">상품명</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="name">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">카테고리</div>
+          <div class="on-comp-tbl-td col-10">
+            <select id="category1" class="select mr-8">
+              <option value="">선택1</option>
+              <option value="tv_audio">TV/오디오</option>
+              <option value="kitchen">주방가전</option>
+              <option value="living">생활가전</option>
+              <option value="air">에어컨/공기청정기</option>
+              <option value="etc">기타</option>
+            </select>
+            <select id="category2" class="select">
+              <option value="">선택2</option>
+            </select>
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">목록이미지</div>
+          <div class="on-comp-tbl-td col-10 file-box">
+            <button type="button" class="btn btn--tertiary file-btn">파일첨부</button>
+            <input type="file" class="file-input" style="display:none;">
+            <div class="file-input-wrap">
+              <input class="on-inp w-400 file-name" id="thumbnailImage" readonly>
+              <button type="button" class="file-clear">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">상세페이지</div>
+          <div class="on-comp-tbl-td col-10 file-box">
+            <button type="button" class="btn btn--tertiary file-btn">파일첨부</button>
+            <input type="file" class="file-input" style="display:none;">
+            <div class="file-input-wrap">
+              <input class="on-inp w-400 file-name" id="detailImage" readonly>
+              <button type="button" class="file-clear">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">제조사</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">제조국</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">정상가격</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="price" type="number">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">할인가격</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="stock" type="number">
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end mt-20">
+        <a href="/admin/product/list"><button type="button" class="btn btn--quarternary-outline mr-4">목록</button></a>
+        <button type="button" class="btn btn--primary" onclick="submitProduct()">등록</button>
+      </div>
+      <div class="on-border mt-20"></div>
+      <h3 class="mt-20 mb-12">상세스펙</h3>
+      <div class="">
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">크기</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">무게</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">전압</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">재질</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp">
+          </div>
+        </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">추가상품</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="description">
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end mt-20">
+        <a href="/admin/product/list"><button type="button" class="btn btn--quarternary-outline mr-4">목록</button></a>
+        <button type="button" class="btn btn--primary" onclick="submitProduct()">등록</button>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<script>
+  /**
+   * 상품 등록 처리
+   */
+  function submitProduct() {
+    // 필수 필드 검증
+    const name = document.getElementById('name').value.trim();
+    const category = document.getElementById('category2').value.trim();
+    const price = parseInt(document.getElementById('price').value) || 0;
+    const stock = parseInt(document.getElementById('stock').value) || 0;
+
+    if (!name) {
+      alert('상품명은 필수입니다.');
+      return;
+    }
+
+    if (!category) {
+      alert('카테고리는 필수입니다.');
+      return;
+    }
+
+    if (price < 0) {
+      alert('정상가격은 0 이상이어야 합니다.');
+      return;
+    }
+
+    if (stock < 0) {
+      alert('할인가격은 0 이상이어야 합니다.');
+      return;
+    }
+
+    // 폼 데이터 생성
+    const data = {
+      name: name,
+      category: category,
+      description: document.getElementById('description').value.trim(),
+      price: price,
+      stock: stock,
+      thumbnailImage: document.getElementById('thumbnailImage').value.trim(),
+      detailImage: document.getElementById('detailImage').value.trim()
+    };
+
+    // API 요청
+    fetch('/api/products/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert('상품이 성공적으로 등록되었습니다.');
+        window.location.href = '/admin/product/list';
+      } else {
+        alert(result.message || '상품 등록 중 오류가 발생했습니다.');
+      }
+    })
+    .catch(error => {
+      console.error('등록 오류:', error);
+      alert('상품 등록 중 오류가 발생했습니다.');
+    });
+  }
+</script>
+
 </body>
 </html>

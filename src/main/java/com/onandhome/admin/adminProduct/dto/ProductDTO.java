@@ -10,21 +10,23 @@ import lombok.*;
 @ToString
 @Builder
 public class ProductDTO {
-    
+
     private Long id;
-    
+
     private String name;
-    
+
     private String description;
-    
+
     private int price;
-    
+
     private int stock;
-    
+
     private String thumbnailImage; // 썸네일 이미지 URL
-    
+
     private String detailImage; // 상품 상세 이미지 URL
-    
+
+    private String category; // 소 카테고리
+
     /**
      * Entity를 DTO로 변환
      */
@@ -37,21 +39,24 @@ public class ProductDTO {
                 .stock(product.getStock())
                 .thumbnailImage(product.getThumbnailImage())
                 .detailImage(product.getDetailImage())
+                .category(product.getCategory())
                 .build();
     }
-    
+
     /**
      * DTO를 Entity로 변환
+     * @AllArgsConstructor 생성자를 사용하지 않고 빌더 패턴 사용
      */
     public Product toEntity() {
-        return new Product(
-                this.id,
-                this.name,
-                this.description,
-                this.price,
-                this.stock,
-                this.thumbnailImage,
-                this.detailImage
-        );
+        return Product.builder()
+                .id(this.id)
+                .name(this.name)
+                .description(this.description)
+                .price(this.price)
+                .stock(this.stock)
+                .thumbnailImage(this.thumbnailImage)
+                .detailImage(this.detailImage)
+                .category(this.category)
+                .build();
     }
 }

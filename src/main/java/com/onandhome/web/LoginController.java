@@ -31,7 +31,7 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage() {
         log.debug("로그인 페이지 요청");
-        return "login";
+        return "user/login";  // templates/user/login.html
     }
     
     /**
@@ -40,11 +40,12 @@ public class LoginController {
     @GetMapping("/signup")
     public String userSignupPage() {
         log.debug("User 회원가입 페이지 요청");
-        return "signup";
+        return "user/regist";  // templates/user/regist.html
     }
     
     /**
      * 로그인 처리 POST 요청 (User)
+     * 로그인 성공 시 /user/index로 리다이렉트
      */
     @PostMapping("/login")
     public String login(
@@ -68,19 +69,19 @@ public class LoginController {
                 
                 log.info("User 로그인 성공: {}", userId);
                 
-                // 대시보드로 리다이렉트
-                return "redirect:/user/dashboard";
+                // 사용자 메인 페이지로 리다이렉트
+                return "redirect:/user/index";
                 
             } else {
                 log.warn("로그인 실패 - 아이디 또는 비밀번호 오류: {}", userId);
                 redirectAttributes.addAttribute("error", true);
-                return "redirect:/login";
+                return "redirect:/login";  // templates/user/login.html로 리다이렉트
             }
             
         } catch (Exception e) {
             log.error("로그인 처리 중 오류 발생: {}", e.getMessage());
             model.addAttribute("errorMessage", "로그인 처리 중 오류가 발생했습니다.");
-            return "login";
+            return "user/login";  // templates/user/login.html
         }
     }
     
@@ -90,13 +91,18 @@ public class LoginController {
      */
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+        if (loginUser != null) {
+            log.info("User 로그아웃: {}", loginUser.getUserId());
+        }
+        
         session.removeAttribute(SESSION_USER_KEY);
         session.invalidate();
         
         log.info("User 로그아웃 처리 완료");
         
         redirectAttributes.addAttribute("logout", true);
-        return "redirect:/login";
+        return "redirect:/login";  // templates/user/login.html로 리다이렉트
     }
     
 
@@ -211,5 +217,52 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-}
 
+    /**
+     * 현재 세션 정보 조회 (헤더 네비게이션 업데이트용)
+     * GET /api/user/session-info
+     * 로그인 상태, 사용자명, Admin 여부 반환
+     * 
+     * role: 0 = ADMIN, 1 = USER
+     */
+    @GetMapping("/api/user/session-info")
+    public ResponseEntity<Map<String, Object>> getSessionInfo(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser != null) {
+                // 로그인 상태
+                response.put("loggedIn", true);
+                response.put("userId", loginUser.getUserId());
+                response.put("username", loginUser.getUsername());
+                
+                // 사용자 역할 확인 (Admin인지 확인)
+                // role: 0 = ADMIN, 1 = USER
+                boolean isAdmin = false;
+                if (loginUser.getRole() != null) {
+                    // role이 0이면 ADMIN
+                    isAdmin = loginUser.getRole() == 0;
+                }
+                response.put("isAdmin", isAdmin);
+                
+                log.debug("세션 정보 조회 - 로그인 사용자: {} (Admin: {})", loginUser.getUserId(), isAdmin);
+            } else {
+                // 비로그인 상태
+                response.put("loggedIn", false);
+                response.put("isAdmin", false);
+                log.debug("세션 정보 조회 - 비로그인 사용자");
+            }
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            log.error("세션 정보 조회 중 오류: {}", e.getMessage(), e);
+            response.put("loggedIn", false);
+            response.put("isAdmin", false);
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+}
