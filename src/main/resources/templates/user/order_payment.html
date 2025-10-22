@@ -260,5 +260,188 @@
       </div>
     </footer>     
   </div>
+
+  <script>
+    // 전역 변수: 주문 상품 정보
+    let orderProduct = null;
+    let orderQuantity = 1;
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadOrderInfo();
+    });
+
+    /**
+     * URL 파라미터에쓜 상품 ID 추출
+     */
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    /**
+     * 주문 정보 로드
+     */
+    function loadOrderInfo() {
+      const productId = getUrlParameter('productId');
+      const quantity = getUrlParameter('quantity') || 1;
+
+      if (!productId) {
+        alert('잘못된 접근입니다.');
+        window.location.href = '/';
+        return;
+      }
+
+      orderQuantity = parseInt(quantity);
+
+      // 상품 정보 로드
+      fetch(`/api/products/${productId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('상품을 찾을 수 없습니다.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success && data.data) {
+            orderProduct = data.data;
+            displayOrderInfo();
+            loadUserInfo();
+          } else {
+            throw new Error('상품 정보를 불러올 수 없습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('상품 로드 오류:', error);
+          alert('상품 정보를 불러올 수 없습니다.');
+          window.location.href = '/';
+        });
+    }
+
+    /**
+     * 주문 정보 표시
+     */
+    function displayOrderInfo() {
+      if (!orderProduct) return;
+
+      // 주문번호 생성 (현재 시간 기반)
+      const orderNumber = generateOrderNumber();
+      
+      // 주문정보 테이블 수정
+      const tableBody = document.querySelector('table.table:nth-of-type(2) tbody');
+      
+      // 가격 계산 (할인가가 있으면 할인가, 없으면 정상가)
+      const price = orderProduct.salePrice && orderProduct.salePrice > 0 
+        ? orderProduct.salePrice 
+        : orderProduct.price;
+      const totalPrice = price * orderQuantity;
+
+      // 테이블 내용 교체
+      tableBody.innerHTML = `
+        <tr>
+          <th>주문번호</th>
+          <td colspan="5">${orderNumber}</td>
+        </tr>
+        <tr>
+          <th>주문상품 리스트</th>
+          <th colspan="5"></th>
+        </tr>
+        <tr>
+          <th>상품명</th>
+          <td>${orderProduct.name}</td>
+          <th>수량</th>
+          <td class="center">${orderQuantity}</td>
+          <th>가격</th>
+          <td class="right">${formatPrice(price)}</td>
+        </tr>
+        <tr class="high-50">
+          <th>주문 합계</th>
+          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+        </tr>
+      `;
+    }
+
+    /**
+     * 주문번호 생성
+     */
+    function generateOrderNumber() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      return `${year}${month}${day}-${random}`;
+    }
+
+    /**
+     * 가격 포매팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    /**
+     * 사용자 정보 로드
+     */
+    function loadUserInfo() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          if (data.loggedIn && data.user) {
+            // 사용자 정보가 있으면 폼에 채우기
+            const inputs = document.querySelectorAll('table.table:first-of-type input, table.table:first-of-type textarea');
+            if (inputs.length >= 5) {
+              inputs[0].value = data.user.username || ''; // 이름
+              inputs[1].value = data.user.userId || ''; // ID
+              inputs[2].value = data.user.phone || ''; // 전화번호
+              inputs[3].value = data.user.email || ''; // 이메일
+              inputs[4].value = data.user.address || ''; // 주소
+            }
+          }
+        })
+        .catch(error => {
+          console.error('사용자 정보 로드 실패:', error);
+          // 사용자 정보 로드 실패해도 주문은 계속 진행 가능
+        });
+    }
+
+    /**
+     * 결제하기 버튼 이벤트
+     */
+    document.getElementById('btnPay').addEventListener('click', function() {
+      // 배송정보 검증
+      const inputs = document.querySelectorAll('table.table:first-of-type input, table.table:first-of-type textarea');
+      const name = inputs[0].value.trim();
+      const phone = inputs[2].value.trim();
+      const address = inputs[4].value.trim();
+
+      if (!name) {
+        alert('이름을 입력해주세요.');
+        inputs[0].focus();
+        return;
+      }
+
+      if (!phone) {
+        alert('전화번호를 입력해주세요.');
+        inputs[2].focus();
+        return;
+      }
+
+      if (!address) {
+        alert('주소를 입력해주세요.');
+        inputs[4].focus();
+        return;
+      }
+
+      // TODO: 실제 결제 API 연동
+      if (confirm('결제를 진행하시겠습니까?')) {
+        alert('결제 기능은 현재 개발 중입니다.');
+        // 결제 성공 후 주문 완료 페이지로 이동
+        // window.location.href = '/user/order_complete';
+      }
+    });
+  </script>
 </body>
 </html>
