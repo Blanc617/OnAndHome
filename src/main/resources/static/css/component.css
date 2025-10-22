@@ -51,7 +51,7 @@
 .btn:not(:last-child) {margin-right:8px;}
 .btn-group:not(:last-child) {margin-bottom:12px;}
 
-.btn-sm-group{position:relative ;display: flex;margin-top: 12px;}
+.btn-sm-group{position:relative ;display: flex;}
 .btn-sm:not(:last-child) {margin-right:8px;}
 .btn-sm-group:not(:last-child) {margin-bottom:12px;}
 
@@ -165,7 +165,8 @@
 
 /* Input */
 .input {display:inline-block; padding:0 16px; width:auto; height:30px; border-radius:8px; border:1px solid #777; font-size:14px; font-weight:300; color:var(--txt-medium-color); transition: box-shadow 0.2s ease}
-.input:focus {box-shadow: 0 0 0 1px var(--border-light-color)}
+.input-m {display:inline-block; padding:0 16px; width:auto; height:30px; border-radius:20px; border:1px solid #c4c4c4; font-size:14px; font-weight:300; color:var(--txt-medium-color); transition: box-shadow 0.2s ease}
+.input:focus {box-shadow: 0 0 0 px var(--border-light-color)}
 .input[required] {background-color:var(--status-required-color)}
 .input[readonly] {background-color:var(--status-readonly-color)}
 

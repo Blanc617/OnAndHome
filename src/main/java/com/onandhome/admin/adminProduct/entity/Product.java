@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "product")
 public class Product {
 	@Id
@@ -30,6 +31,9 @@ public class Product {
 	private String thumbnailImage; // 썸네일 이미지 URL (컬럼명: thumbnail_image)
 
 	private String detailImage; // 상품 상세 이미지 URL (컬럼명: detail_image)
+
+	@Column(name = "category")
+	private String category; // 소 카테고리 (TV, 오디오, 냉장고 등)
 
 	/**
 	 * 재고 차감 (주문 시)

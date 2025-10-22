@@ -35,6 +35,15 @@ public class ProductService {
     }
 
     /**
+     * 카테고리별 상품 조회
+     */
+    @Transactional(readOnly = true)
+    public List<Product> getByCategory(String category) {
+        log.debug("카테고리별 상품 조회: {}", category);
+        return productRepository.findByCategory(category);
+    }
+
+    /**
      * 상품 생성 (DTO 사용)
      */
     public ProductDTO create(ProductDTO productDTO) {
@@ -81,6 +90,9 @@ public class ProductService {
         }
         if (productDTO.getDetailImage() != null) {
             product.setDetailImage(productDTO.getDetailImage());
+        }
+        if (productDTO.getCategory() != null) {
+            product.setCategory(productDTO.getCategory());
         }
 
         Product updatedProduct = productRepository.save(product);
