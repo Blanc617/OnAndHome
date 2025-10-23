@@ -307,7 +307,11 @@
 .on-header-top{position: relative;width: 100%;border-bottom: 1px solid #c1c1c1;align-items: center;display: flex;}
 .on-header-inner{display:flex; justify-content: space-between; position:relative;width: 100%; max-width: 1200px; height: 40px;margin: 0 auto;}
 .on-header-inner2{display:flex; align-items: center; justify-content: space-between; position:relative;width: 100%; max-width: 1200px; height: 100px;margin: 0 auto;}
-
+.header-logo{
+    width: 153px;
+    height: 38px;
+    background-image: url("/images/logo.png");
+}
 .menu-wrapper{display:flex; justify-content: flex-start; position:relative;width: 100%; max-width: 1200px; height: 40px;margin: 0 auto;}
 
 .main-slide-wrapper{width: 100%;height:500px;position: relative;}
