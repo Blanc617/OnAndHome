@@ -24,10 +24,8 @@
             </ul>
           </div>
           <div class="login-group">
-            <ul class="login-group-list">
-              <li><a href="/user/login.html">로그인</a></li>
-              <li><a href="/user/regeist.html">회원가입</a></li>
-              <li><a href="/user/notice.html">공지사항</a></li>
+            <ul class="login-group-list" id="headerNav">
+              <!-- 동적으로 변경될 네비게이션 -->
             </ul>
           </div>
         </div>
@@ -35,15 +33,15 @@
       <!-- line02 -->
       <div class="on-header-top">
         <div class="on-header-inner2">
-          <a href=""><div class="header-logo-placeholder"></div></a>
+          <a href="/"><div class="header-logo-placeholder"></div></a>
           <div>
             <h1>On&Home</h1>
           </div>
           <div class="header-search-area">
             <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
             <ul class="header-icons">
-              <li class="ico-mypage"><a href="#"></a></li>
-              <li class="ico-cart"><a href="#"></a></li>
+              <li class="ico-mypage"><a href="/user/my_page"></a></li>
+              <li class="ico-cart"><a href="/user/cart"></a></li>
             </ul>
           </div>
         </div>
@@ -52,44 +50,8 @@
       <div class="on-header-top">
         <div class="on-header-inner">
           <div class="menu-wrapper">
-            <ul class="gnb">
-              <li>
-                <a href="#">TV/오디오</a>
-                <ul class="depth2">
-                  <li><a href="#">TV</a></li>
-                  <li><a href="#">오디오</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">주방가전</a>
-                <ul class="depth2">
-                  <li><a href="#">냉장고</a></li>
-                  <li><a href="#">전자렌지</a></li>
-                  <li><a href="#">식기세척기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">생활가전</a>
-                <ul class="depth2">
-                  <li><a href="#">세탁기</a></li>
-                  <li><a href="#">청소기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">에어컨/공기청정기</a>
-                <ul class="depth2">
-                  <li><a href="#">에어컨</a></li>
-                  <li><a href="#">공기청정기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">기타</a>
-                <ul class="depth2">
-                  <li><a href="#">정수기</a></li>
-                  <li><a href="#">안마의자</a></li>
-                  <li><a href="#">PC</a></li>
-                </ul>
-              </li>
+            <ul class="gnb" id="categoryMenu">
+              <!-- 동적으로 로드될 카테고리 메뉴 -->
             </ul>
           </div>
         </div>
@@ -103,32 +65,34 @@
         <h2 class="sub-title cate-tit">상품 상세정보</h2>
         <div class="item-array">
           <div>
-            <div class="item-thum-wrapper detail_thum"><img class="detail_img" src="/product_img/thum_01.jpg"></div>
+            <div class="item-thum-wrapper detail_thum">
+              <img class="detail_img" id="productThumbnail" src="/product_img/thum_01.jpg" alt="상품 이미지">
+            </div>
           </div>
           <div class="detail-info-wrapper">
-            <h2>2025 Crystal UHD UF8500</h2>
+            <h2 id="productName">2025 Crystal UHD UF8500</h2>
             <div>
               <table>
                 <th class="detail-info-th">정상가격</th>
-                <td class="detail-price">2,250,000</td>
+                <td class="detail-price" id="productPrice">2,250,000</td>
               </table>
             </div>
             <div>
               <table>
                 <th class="detail-info-th">할인가격</th>
-                <td class="detail-sale-price">1,650,000</td>
+                <td class="detail-sale-price" id="productSalePrice">1,650,000</td>
               </table>
             </div>
             <div>
               <table>
                 <th class="detail-info-th">제조사</th>
-                <td class="">삼성전자</td>
+                <td class="" id="productManufacturer">-</td>
               </table>
             </div>                         
             <div>
               <table>
                 <th class="detail-info-th">제조국</th>
-                <td class="">VIETNAM</td>
+                <td class="" id="productCountry">-</td>
               </table>
             </div>
             <div>
@@ -144,15 +108,15 @@
               </table>
             </div>
             <div class="btn-group">
-              <button class="btn btn-buy">바로구매</button>
-              <button class="btn btn-cart">장바구니 담기</button>
+              <button class="btn btn-buy" onclick="buyNow()">바로구매</button>
+              <button class="btn btn-cart" onclick="addToCart()">장바구니 담기</button>
             </div>                                         
           </div>
         </div>
         <div class="border-1p"></div>
         <div class="item-array justify-center mt-40">
-          <div class="">
-            <img src="/product_img/detail-001.png">
+          <div class="" id="productDetailImageContainer">
+            <img id="productDetailImage" src="/product_img/detail-001.png" alt="상세 이미지">
           </div>
         </div>
         <div class="border-2p"></div>
@@ -278,7 +242,7 @@
         </div>
         <div class="footer-r">
           <div>
-            <span class="footer-number">Review 게시판</span>
+            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -293,7 +257,7 @@
                       
           </div>
           <div>
-            <span class="footer-number">Q&A 게시판</span>
+            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -313,5 +277,259 @@
       </div>
     </footer>     
   </div>
+
+  <script>
+    // 전역 변수: 현재 상품 정보
+    let currentProduct = null;
+
+    /**
+     * 카테고리 데이터
+     */
+    const categoryData = [
+      {
+        parentName: 'TV/오디오',
+        children: ['TV', '오디오']
+      },
+      {
+        parentName: '주방가전',
+        children: ['냉장고', '전자렌지', '식기세척기']
+      },
+      {
+        parentName: '생활가전',
+        children: ['세탁기', '청소기']
+      },
+      {
+        parentName: '에어컨/공기청정기',
+        children: ['에어컨', '공기청정기']
+      },
+      {
+        parentName: '기타',
+        children: ['정수기', '안마의자', 'PC']
+      }
+    ];
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCategoryMenu();
+      loadHeaderNavigation();
+      loadProductDetail();
+    });
+
+    /**
+     * 상품 상세 정보 로드
+     */
+    function loadProductDetail() {
+      // URL에서 상품 ID 추출
+      const pathParts = window.location.pathname.split('/');
+      const productId = pathParts[pathParts.length - 1];
+
+      if (!productId || isNaN(productId)) {
+        alert('잘못된 접근입니다.');
+        window.location.href = '/';
+        return;
+      }
+
+      console.log('상품 ID:', productId);
+
+      // API 호출
+      fetch(`/api/products/${productId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('상품을 찾을 수 없습니다.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('받은 데이터:', data);
+          if (data.success && data.data) {
+            currentProduct = data.data;
+            displayProductDetail(data.data);
+          } else {
+            throw new Error('상품 정보를 불러올 수 없습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('상품 로드 오류:', error);
+          alert('상품 정보를 불러올 수 없습니다.');
+          window.location.href = '/';
+        });
+    }
+
+    /**
+     * 상품 상세 정보 표시
+     */
+    function displayProductDetail(product) {
+      // 상품명
+      document.getElementById('productName').textContent = product.name || '상품명 없음';
+
+      // 썸네일 이미지
+      const thumbnailImg = document.getElementById('productThumbnail');
+      if (product.thumbnailImage) {
+        thumbnailImg.src = product.thumbnailImage;
+        thumbnailImg.onerror = function() {
+          this.src = '/product_img/placeholder.jpg';
+        };
+      }
+
+      // 정상가격
+      const priceFormatted = formatPrice(product.price);
+      document.getElementById('productPrice').textContent = priceFormatted;
+
+      // 할인가격
+      if (product.salePrice && product.salePrice < product.price) {
+        const salePriceFormatted = formatPrice(product.salePrice);
+        document.getElementById('productSalePrice').textContent = salePriceFormatted;
+      } else {
+        // 할인가가 없으면 정상가 표시
+        document.getElementById('productSalePrice').textContent = priceFormatted;
+      }
+
+      // 제조사 - DB 값 사용
+      document.getElementById('productManufacturer').textContent = product.manufacturer || '-';
+
+      // 제조국 - DB 값 사용
+      document.getElementById('productCountry').textContent = product.country || '-';
+
+      // 상세 이미지
+      const detailImg = document.getElementById('productDetailImage');
+      if (product.detailImage) {
+        detailImg.src = product.detailImage;
+        detailImg.onerror = function() {
+          this.src = '/product_img/detail-001.png';
+        };
+      }
+
+      // 페이지 타이틀 변경
+      document.title = product.name + ' - On&Home';
+    }
+
+    /**
+     * 가격 포맷팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    /**
+     * 바로구매
+     */
+    function buyNow() {
+      if (!currentProduct) {
+        alert('상품 정보를 불러오는 중입니다.');
+        return;
+      }
+      
+      // 상품 ID를 파라미터로 전달하며 주문 페이지로 이동
+      window.location.href = `/user/order_payment?productId=${currentProduct.id}&quantity=1`;
+    }
+
+    /**
+     * 장바구니 담기
+     */
+    function addToCart() {
+      if (!currentProduct) {
+        alert('상품 정보를 불러오는 중입니다.');
+        return;
+      }
+      
+      // TODO: 장바구니 담기 로직 구현
+      alert('장바구니 담기 기능은 준비 중입니다.');
+    }
+
+    /**
+     * 카테고리 메뉴 로드
+     */
+    function loadCategoryMenu() {
+      const categoryMenu = document.getElementById('categoryMenu');
+      categoryMenu.innerHTML = '';
+
+      categoryData.forEach(category => {
+        const li = document.createElement('li');
+        
+        const parentLink = document.createElement('a');
+        parentLink.href = '#';
+        parentLink.textContent = category.parentName;
+        parentLink.onclick = function(e) {
+          e.preventDefault();
+          return false;
+        };
+        
+        li.appendChild(parentLink);
+        
+        if (category.children && category.children.length > 0) {
+          const depth2 = document.createElement('ul');
+          depth2.className = 'depth2';
+          
+          category.children.forEach(child => {
+            const childLi = document.createElement('li');
+            const childLink = document.createElement('a');
+            childLink.href = `/user/product/category?category=${encodeURIComponent(child)}`;
+            childLink.textContent = child;
+            childLi.appendChild(childLink);
+            depth2.appendChild(childLi);
+          });
+          
+          li.appendChild(depth2);
+        }
+        
+        categoryMenu.appendChild(li);
+      });
+    }
+
+    /**
+     * 헤더 네비게이션 로드
+     */
+    function loadHeaderNavigation() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = '';
+
+          if (data.loggedIn) {
+            let navHTML = `
+              <li><a href="/user/my_page">마이페이지</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+
+            if (data.isAdmin) {
+              navHTML += `<li><a href="/admin/dashboard"><b>관리자</b></a></li>`;
+            }
+
+            navHTML += `
+              <li><a href="#" onclick="handleLogout(); return false;">로그아웃</a></li>
+            `;
+
+            headerNav.innerHTML = navHTML;
+          } else {
+            headerNav.innerHTML = `
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/signup">회원가입</a></li>
+              <li><a href="/">공지사항</a></li>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('세션 정보 조회 실패:', error);
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = `
+            <li><a href="/login">로그인</a></li>
+            <li><a href="/signup">회원가입</a></li>
+            <li><a href="/">공지사항</a></li>
+          `;
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function handleLogout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        window.location.href = '/logout';
+      }
+    }
+  </script>
 </body>
 </html>
