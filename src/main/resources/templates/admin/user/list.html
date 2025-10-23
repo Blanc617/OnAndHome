@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     <!--사이드바 메뉴-->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-        <!-- <내부영역 -->
+        <!-- 내부영역 -->
       <div class="on-main">
         <h2 class="mb-30">User List</h2>
         <div class="flex mb-20 justify-end">
@@ -27,13 +27,13 @@
           <table>
             <colgroup>
               <col width="5%">
-              <col width="10%">
-              <col>
-              <col>
-              <col>
-              <col>
-              <col>
-              <col>
+              <col width="8%">
+              <col width="12%">
+              <col width="12%">
+              <col width="8%">
+              <col width="15%">
+              <col width="15%">
+              <col width="15%">
             </colgroup>
             <thead>
               <tr>
@@ -48,107 +48,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr th:each="user, stat : ${users}">
                 <td class="center"><input type="checkbox"></td>
-                <td class="center">1</td>
-                <td class="center"><a href="/admin/user/detail.html">사나</a></td>
-                <td class="center"><a href="/admin/user/detail.html">sana94</a></td>
-                <td class="center">F</td>
-                <td class="center">010-1234-4567</td>
-                <td class="center">1996-12-29</td>
-                <td class="center">2024-01-03</td>
+                <td class="center" th:text="${stat.index + 1}"></td>
+                <td class="center"><a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="${user.username}"></a></td>
+                <td class="center"><a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="${user.userId}"></a></td>
+                <td class="center" th:text="${user.gender}"></td>
+                <td class="center" th:text="${user.phone}"></td>
+                <td class="center" th:text="${user.birthDate}"></td>
+                <td class="center">
+                  <span th:if="${user.createdAt}" th:text="${#dates.format(user.createdAt, 'yyyy-MM-dd')}"></span>
+                  <span th:unless="${user.createdAt}">-</span>
+                </td>
               </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">2</td>
-                <td class="center"><a href="/admin/user/detail.html">아이유</a></td>
-                <td class="center"><a href="/admin/user/detail.html">iu_star</a></td>
-                <td class="center">F</td>
-                <td class="center">010-8754-3920</td>
-                <td class="center">1993-05-16</td>
-                <td class="center">2023-11-12</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">3</td>
-                <td class="center"><a href="/admin/user/detail.html">뷔</a></td>
-                <td class="center"><a href="/admin/user/detail.html">v_taehy</a></td>
-                <td class="center">M</td>
-                <td class="center">010-2845-7109</td>
-                <td class="center">1995-12-30</td>
-                <td class="center">2024-05-02</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">4</td>
-                <td class="center"><a href="/admin/user/detail.html">제니</a></td>
-                <td class="center"><a href="/admin/user/detail.html">jennie_k</a></td>
-                <td class="center">F</td>
-                <td class="center">010-6753-4298</td>
-                <td class="center">1996-01-16</td>
-                <td class="center">2024-02-27</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">5</td>
-                <td class="center"><a href="/admin/user/detail.html">정국</a></td>
-                <td class="center"><a href="/admin/user/detail.html">jkook95</a></td>
-                <td class="center">M</td>
-                <td class="center">010-9458-6372</td>
-                <td class="center">1997-09-01</td>
-                <td class="center">2023-12-19</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">6</td>
-                <td class="center"><a href="/admin/user/detail.html">태연</a></td>
-                <td class="center"><a href="/admin/user/detail.html">taeyeon</a></td>
-                <td class="center">F</td>
-                <td class="center">010-3589-7264</td>
-                <td class="center">1989-03-09</td>
-                <td class="center">2024-04-08</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">7</td>
-                <td class="center"><a href="/admin/user/detail.html">차은우</a></td>
-                <td class="center"><a href="/admin/user/detail.html">eunwoo7</a></td>
-                <td class="center">M</td>
-                <td class="center">010-6183-7452</td>
-                <td class="center">1997-03-30</td>
-                <td class="center">2023-09-14</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">8</td>
-                <td class="center"><a href="/admin/user/detail.html">리사</a></td>
-                <td class="center"><a href="/admin/user/detail.html">lalisa_m</a></td>
-                <td class="center">F</td>
-                <td class="center">010-7924-1830</td>
-                <td class="center">1997-03-27</td>
-                <td class="center">2024-03-20</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">9</td>
-                <td class="center"><a href="/admin/user/detail.html">지민</a></td>
-                <td class="center"><a href="/admin/user/detail.html">jimin95</a></td>
-                <td class="center">M</td>
-                <td class="center">010-3129-5784</td>
-                <td class="center">1995-10-13</td>
-                <td class="center">2023-11-07</td>
-              </tr>
-              <tr>
-                <td class="center"><input type="checkbox"></td>
-                <td class="center">10</td>
-                <td class="center"><a href="/admin/user/detail.html">아이린</a></td>
-                <td class="center"><a href="/admin/user/detail.html">irene0329</a></td>
-                <td class="center">F</td>
-                <td class="center">010-5827-9341</td>
-                <td class="center">1991-03-29</td>
-                <td class="center">2024-05-11</td>
-              </tr>
-
             </tbody>
           </table>
         </div>

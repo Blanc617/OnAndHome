@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +15,7 @@
     <!--사이드바 메뉴-->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-
-        <!-- <내부영역 -->
+        <!-- 내부영역 -->
       <div class="on-main">
         <h2 class="mb-30">User Detail</h2>
         <table class="table mb-40">
@@ -27,37 +26,58 @@
           <tbody>
             <tr>
               <th>이름</th>
-              <td>모모</td>
+              <td th:text="${user.username}"></td>
             </tr>
             <tr>
               <th>ID</th>
-              <td>momo</td>
+              <td th:text="${user.userId}"></td>
             </tr>    
             <tr>
               <th>성별</th>
-              <td>F</td>
+              <td th:text="${user.gender}"></td>
             </tr>
             <tr>
               <th>국적</th>
-              <td>외국인</td>
+              <td th:text="${user.nationality}"></td>
             </tr>                                  
             <tr>
               <th>e-mail</th>
-              <td>momo@naver.com</td>
+              <td th:text="${user.email}"></td>
             </tr>
             <tr>
               <th>전화번호</th>
-              <td>010-4567-6874</td>
+              <td th:text="${user.phone}"></td>
             </tr>
-
+            <tr>
+              <th>생년월일</th>
+              <td th:text="${user.birthDate}"></td>
+            </tr>
             <tr>
               <th>주소</th>
-              <td>서울 강남구 청담동 456-789 JYP 13층</td>
-            </tr>                         
+              <td th:text="${user.address}"></td>
+            </tr>
+            <tr>
+              <th>가입일자</th>
+              <td>
+                <span th:if="${user.createdAt}" th:text="${#dates.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                <span th:unless="${user.createdAt}">-</span>
+              </td>
+            </tr>
+            <tr>
+              <th>수정일자</th>
+              <td>
+                <span th:if="${user.updatedAt}" th:text="${#dates.format(user.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                <span th:unless="${user.updatedAt}">-</span>
+              </td>
+            </tr>
+            <tr>
+              <th>상태</th>
+              <td th:text="${user.active ? '활성' : '비활성'}"></td>
+            </tr>                        
           </tbody>
         </table>
         <div class="flex mb-20 mt-20 justify-end">
-          <a href="/admin/user/list.html"><button class="btn btn--quarternary-outline">목록</button></a>
+          <a href="/admin/user/list"><button class="btn btn--quarternary-outline">목록</button></a>
         </div>
       </div>
       </div>
