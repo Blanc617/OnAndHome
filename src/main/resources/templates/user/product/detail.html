@@ -10,54 +10,55 @@
 <body>
   <!-- 백그라운드 -->
   <div class="on-main-wrap">
-    <!-- 헤더 -->
-    <header class="on-header">
-      <!-- line01 -->
-      <div class="on-header-top">
-        <div class="on-header-inner">
-          <div>
-            <ul class="sns-list">
-              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>
-              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>
-              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>
-              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>
-            </ul>
-          </div>
-          <div class="login-group">
-            <ul class="login-group-list" id="headerNav">
-              <!-- 동적으로 변경될 네비게이션 -->
-            </ul>
-          </div>
-        </div>
+      <!-- 헤더 -->
+      <div th:replace="~{fragments/header :: header}">
       </div>
-      <!-- line02 -->
-      <div class="on-header-top">
-        <div class="on-header-inner2">
-          <a href="/"><div class="header-logo-placeholder"></div></a>
-          <div>
-            <h1>On&Home</h1>
-          </div>
-          <div class="header-search-area">
-            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
-            <ul class="header-icons">
-              <li class="ico-mypage"><a href="/user/my_page"></a></li>
-              <li class="ico-cart"><a href="/user/cart"></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- 메뉴 -->
-      <div class="on-header-top">
-        <div class="on-header-inner">
-          <div class="menu-wrapper">
-            <ul class="gnb" id="categoryMenu">
-              <!-- 동적으로 로드될 카테고리 메뉴 -->
-            </ul>
-          </div>
-        </div>
-      </div>      
-    </header>
-
+<!--    <header class="on-header">-->
+<!--      &lt;!&ndash; line01 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner">-->
+<!--          <div>-->
+<!--            <ul class="sns-list">-->
+<!--              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>-->
+<!--              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>-->
+<!--              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>-->
+<!--              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          <div class="login-group">-->
+<!--            <ul class="login-group-list" id="headerNav">-->
+<!--              &lt;!&ndash; 동적으로 변경될 네비게이션 &ndash;&gt;-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; line02 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner2">-->
+<!--          <a href="/"><div class="header-logo-placeholder"></div></a>-->
+<!--          <div>-->
+<!--            <h1>On&Home</h1>-->
+<!--          </div>-->
+<!--          <div class="header-search-area">-->
+<!--            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />-->
+<!--            <ul class="header-icons">-->
+<!--              <li class="ico-mypage"><a href="/user/my_page"></a></li>-->
+<!--              <li class="ico-cart"><a href="/user/cart"></a></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; 메뉴 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner">-->
+<!--          <div class="menu-wrapper">-->
+<!--            <ul class="gnb" id="categoryMenu">-->
+<!--              &lt;!&ndash; 동적으로 로드될 카테고리 메뉴 &ndash;&gt;-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>      -->
+<!--    </header>-->
 
      <!-- 아이템영역2  -->
     <div class="on-item02 mb-80">
@@ -110,7 +111,21 @@
             <div class="btn-group">
               <button class="btn btn-buy" onclick="buyNow()">바로구매</button>
               <button class="btn btn-cart" onclick="addToCart()">장바구니 담기</button>
-            </div>                                         
+            </div>
+              <div class="border-2p"></div>
+              <div class="detail-total-wrap">
+                  <div>
+                      <span>주문수량</span>
+                      <span class="btn-etc btn-ico--minus"></span>
+                      <span>1</span>
+                      <span class="btn-etc btn-ico--plus"></span>
+                  </div>
+                  <div class="mr-20">
+                      <span>합계금액</span>
+                      <span class="total-price">1,650,000</span>
+                      <span>원</span>
+                  </div>
+              </div>
           </div>
         </div>
         <div class="border-1p"></div>
@@ -208,74 +223,76 @@
         </div>                  
       </div>
     </div>  
-    <footer class="footer-o">
-      <div class="footer-wrapper">
-        <div class="footer-l">
-          <div>고객센터 <span class="footer-number">1544-7777</span></div>
-          <div class="flex mt-20">
-            <div>
-              <ul class="footer-title">
-                <li>회사명</li>
-                <li>대표</li>
-                <li>팩스</li>
-                <li>이메일</li>
-                <li>주소</li>
-                <li>사업자등록번호</li>
-                <li>통신판매업신고</li>
-                <li>개인정보 책임자</li>
-              </ul>
-            </div>
-            <div class="ml-20">
-              <ul class="footer-title">
-                <li>(주)하이미디어</li>
-                <li>이상혁</li>
-                <li>02-1544-7778</li>
-                <li>faker@naver.com</li>
-                <li>서울 서초구 서초동 123-456</li>
-                <li>123-456789</li>
-                <li>카456-7894</li>
-                <li>최우제</li>
-              </ul>
-            </div>            
-          </div>
+<!--    <footer class="footer-o">-->
+<!--      <div class="footer-wrapper">-->
+<!--        <div class="footer-l">-->
+<!--          <div>고객센터 <span class="footer-number">1544-7777</span></div>-->
+<!--          <div class="flex mt-20">-->
+<!--            <div>-->
+<!--              <ul class="footer-title">-->
+<!--                <li>회사명</li>-->
+<!--                <li>대표</li>-->
+<!--                <li>팩스</li>-->
+<!--                <li>이메일</li>-->
+<!--                <li>주소</li>-->
+<!--                <li>사업자등록번호</li>-->
+<!--                <li>통신판매업신고</li>-->
+<!--                <li>개인정보 책임자</li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--            <div class="ml-20">-->
+<!--              <ul class="footer-title">-->
+<!--                <li>(주)하이미디어</li>-->
+<!--                <li>이상혁</li>-->
+<!--                <li>02-1544-7778</li>-->
+<!--                <li>faker@naver.com</li>-->
+<!--                <li>서울 서초구 서초동 123-456</li>-->
+<!--                <li>123-456789</li>-->
+<!--                <li>카456-7894</li>-->
+<!--                <li>최우제</li>-->
+<!--              </ul>-->
+<!--            </div>            -->
+<!--          </div>-->
 
-        </div>
-        <div class="footer-r">
-          <div>
-            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>
-            <div class="footer-review">
-              <ul class="footer-title">
-                <li>배송 빠르고 좋아요!</li>
-                <li>포장 꼼꼼해서 만족합니다</li>
-                <li>색감 실물이 더 예뻐요</li>
-                <li>가격대비 품질이 훌륭합니다</li>
-                <li>설치 기사님 친절했어요</li>
-                <li>두 번째 구매인데 역시 좋네요</li>
-                <li>응대가 빠르고 친절합니다</li>
-              </ul>
-            </div>
-                      
-          </div>
-          <div>
-            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>
-            <div class="footer-review">
-              <ul class="footer-title">
-                <li>배송 빠르고 좋아요!</li>
-                <li>포장 꼼꼼해서 만족합니다</li>
-                <li>색감 실물이 더 예뻐요</li>
-                <li>가격대비 품질이 훌륭합니다</li>
-                <li>설치 기사님 친절했어요</li>
-                <li>두 번째 구매인데 역시 좋네요</li>
-                <li>응대가 빠르고 친절합니다</li>
-              </ul>
-            </div>
-            
-                      
-          </div>
+<!--        </div>-->
+<!--        <div class="footer-r">-->
+<!--          <div>-->
+<!--            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>-->
+<!--            <div class="footer-review">-->
+<!--              <ul class="footer-title">-->
+<!--                <li>배송 빠르고 좋아요!</li>-->
+<!--                <li>포장 꼼꼼해서 만족합니다</li>-->
+<!--                <li>색감 실물이 더 예뻐요</li>-->
+<!--                <li>가격대비 품질이 훌륭합니다</li>-->
+<!--                <li>설치 기사님 친절했어요</li>-->
+<!--                <li>두 번째 구매인데 역시 좋네요</li>-->
+<!--                <li>응대가 빠르고 친절합니다</li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--                      -->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>-->
+<!--            <div class="footer-review">-->
+<!--              <ul class="footer-title">-->
+<!--                <li>배송 빠르고 좋아요!</li>-->
+<!--                <li>포장 꼼꼼해서 만족합니다</li>-->
+<!--                <li>색감 실물이 더 예뻐요</li>-->
+<!--                <li>가격대비 품질이 훌륭합니다</li>-->
+<!--                <li>설치 기사님 친절했어요</li>-->
+<!--                <li>두 번째 구매인데 역시 좋네요</li>-->
+<!--                <li>응대가 빠르고 친절합니다</li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--            -->
+<!--                      -->
+<!--          </div>-->
 
-        </div>
+<!--        </div>-->
+<!--      </div>-->
+<!--    </footer>     -->
+      <div th:replace="fragments/footer :: footer">
       </div>
-    </footer>     
   </div>
 
   <script>
@@ -434,8 +451,41 @@
         return;
       }
       
-      // TODO: 장바구니 담기 로직 구현
-      alert('장바구니 담기 기능은 준비 중입니다.');
+      const quantity = 1;
+      console.log('장바구니 담기 시작 - 상품ID:', currentProduct.id, '수량:', quantity);
+
+      fetch('/api/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: currentProduct.id,
+          quantity: quantity
+        })
+      })
+      .then(response => {
+        console.log('API 응답 상태:', response.status);
+        return response.json().then(data => ({
+          status: response.status,
+          body: data
+        }));
+      })
+      .then(result => {
+        const { status, body } = result;
+        
+        if (body.success) {
+          console.log('장바구니 담기 성공');
+          alert('상품이 장바구니에 추가되었습니다.');
+          window.location.href = '/user/cart';
+        } else {
+          alert(body.message || '장바구니에 상품을 추가하는 중 오류가 발생했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error('장바구니 담기 오류:', error);
+        alert('장바구니에 상품을 추가하는 중 오류가 발생했습니다.');
+      });
     }
 
     /**

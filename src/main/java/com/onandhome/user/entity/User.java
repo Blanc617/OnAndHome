@@ -36,6 +36,9 @@ public class User {
     private String gender;
     
     @Column
+    private String nationality;  // 국적 (내국인/외국인)
+    
+    @Column
     private String birthDate;
     
     @Column

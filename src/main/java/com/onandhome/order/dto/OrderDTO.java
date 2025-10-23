@@ -16,24 +16,19 @@ import java.util.stream.Collectors;
 public class OrderDTO {
 
     private Long orderId;
-
     private String orderNumber;
-
     private Long userId;
-
-    private String status; // OrderStatus enum을 String으로
-
+    private String userIdStr;
+    private String username;
+    private String userEmail;
+    private String userPhone;
+    private String userAddress;
+    private String status;
     private int totalPrice;
-
     private List<OrderItemDTO> orderItems;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime paidAt;
 
-    /**
-     * Order Entity를 DTO로 변환
-     */
     public static OrderDTO fromEntity(Order order) {
         List<OrderItemDTO> orderItemDTOs = order.getOrderItems().stream()
                 .map(OrderItemDTO::fromEntity)
@@ -43,6 +38,11 @@ public class OrderDTO {
                 .orderId(order.getId())
                 .orderNumber(order.getOrderNumber())
                 .userId(order.getUser().getId())
+                .userIdStr(order.getUser().getUserId())
+                .username(order.getUser().getUsername())
+                .userEmail(order.getUser().getEmail())
+                .userPhone(order.getUser().getPhone())
+                .userAddress(order.getUser().getAddress())
                 .status(order.getStatus().toString())
                 .totalPrice(order.getTotalPrice())
                 .orderItems(orderItemDTOs)

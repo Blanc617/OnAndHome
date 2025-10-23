@@ -1,6 +1,5 @@
-package com.onandhome.admin.adminQna.entity;
+package com.onandhome.qna.entity;
 
-import com.onandhome.qna.entity.Qna;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,23 +7,26 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * QnaReply (답변) 엔티티
+ */
 @Entity
-@Table(name = "answer")
+@Table(name = "qna_reply")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Answer {
+public class QnaReply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ✅ Qna와 다대일 관계 (여러 답변이 하나의 질문에 속함)
+    // ✅ Qna와 다대일 관계 (하나의 질문에 여러 답변)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "qna_id")
+    @JoinColumn(name = "qna_id", nullable = false)
     private Qna qna;
 
-    private String content;  // 답변 내용
-    private String responder; // 답변 작성자 (관리자 등)
+    private String content;    // 답변 내용
+    private String responder;  // 작성자
     private LocalDateTime createdAt = LocalDateTime.now();
 }
