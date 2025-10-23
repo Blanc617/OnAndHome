@@ -20,11 +20,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class LoginController {
-    
+
     private final UserService userService;
-    
+
     private static final String SESSION_USER_KEY = "loginUser";
-    
+
     /**
      * 로그인 페이지 GET 요청
      */
@@ -33,7 +33,7 @@ public class LoginController {
         log.debug("로그인 페이지 요청");
         return "user/login";  // templates/user/login.html
     }
-    
+
     /**
      * User 회원가입 페이지 GET 요청
      */
@@ -42,7 +42,7 @@ public class LoginController {
         log.debug("User 회원가입 페이지 요청");
         return "user/regist";  // templates/user/regist.html
     }
-    
+
     /**
      * 로그인 처리 POST 요청 (User)
      * 로그인 성공 시 /user/index로 리다이렉트
@@ -54,37 +54,37 @@ public class LoginController {
             HttpSession session,
             Model model,
             RedirectAttributes redirectAttributes) {
-        
+
         log.info("User 로그인 시도: {}", userId);
-        
+
         try {
             // 사용자 인증
             Optional<UserDTO> userOptional = userService.login(userId, password);
-            
+
             if (userOptional.isPresent()) {
                 UserDTO user = userOptional.get();
-                
+
                 // 세션에 사용자 정보 저장
                 session.setAttribute(SESSION_USER_KEY, user);
-                
+
                 log.info("User 로그인 성공: {}", userId);
-                
+
                 // 사용자 메인 페이지로 리다이렉트
                 return "redirect:/user/index";
-                
+
             } else {
                 log.warn("로그인 실패 - 아이디 또는 비밀번호 오류: {}", userId);
                 redirectAttributes.addAttribute("error", true);
                 return "redirect:/login";  // templates/user/login.html로 리다이렉트
             }
-            
+
         } catch (Exception e) {
             log.error("로그인 처리 중 오류 발생: {}", e.getMessage());
             model.addAttribute("errorMessage", "로그인 처리 중 오류가 발생했습니다.");
             return "user/login";  // templates/user/login.html
         }
     }
-    
+
 
     /**
      * 로그아웃 처리 (User)
@@ -95,16 +95,16 @@ public class LoginController {
         if (loginUser != null) {
             log.info("User 로그아웃: {}", loginUser.getUserId());
         }
-        
+
         session.removeAttribute(SESSION_USER_KEY);
         session.invalidate();
-        
+
         log.info("User 로그아웃 처리 완료");
-        
+
         redirectAttributes.addAttribute("logout", true);
-        return "redirect:/user/index";  // templates/user/login.html로 리다이렉트
+        return "redirect:/login";  // templates/user/login.html로 리다이렉트
     }
-    
+
 
     /**
      * 회원 정보 조회
