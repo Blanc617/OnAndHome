@@ -26,6 +26,8 @@ public class UserDTO {
     
     private String gender;
     
+    private String nationality;  // 국적 (내국인/외국인)
+    
     private String birthDate;
     
     private String address;
@@ -50,6 +52,7 @@ public class UserDTO {
                 .username(user.getUsername())
                 .phone(user.getPhone())
                 .gender(user.getGender())
+                .nationality(user.getNationality())
                 .birthDate(user.getBirthDate())
                 .address(user.getAddress())
                 .role(user.getRole())
@@ -71,6 +74,7 @@ public class UserDTO {
                 .username(this.username)
                 .phone(this.phone)
                 .gender(this.gender)
+                .nationality(this.nationality)
                 .birthDate(this.birthDate)
                 .address(this.address)
                 .role(this.role)

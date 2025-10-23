@@ -175,6 +175,80 @@ public class UserController {
     }
 
     /**
+     * 나의 정보 조회 API
+     * GET /api/user/my-info
+     * 로그인한 사용자의 상세 정보 반환
+     */
+    @GetMapping("/my-info")
+    public ResponseEntity<Map<String, Object>> getMyInfo(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser != null) {
+                response.put("success", true);
+                response.put("data", loginUser);
+                log.debug("나의 정보 조회 - 사용자: {}", loginUser.getUserId());
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                log.warn("나의 정보 조회 실패 - 비로그인 사용자");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+        } catch (Exception e) {
+            log.error("나의 정보 조회 중 오류: {}", e.getMessage(), e);
+            response.put("success", false);
+            response.put("message", "사용자 정보 조회 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    /**
+     * 나의 정보 수정 API
+     * POST /api/user/my-info
+     * 로그인한 사용자의 정보 수정
+     */
+    @PostMapping("/my-info")
+    public ResponseEntity<Map<String, Object>> updateMyInfo(
+            @RequestBody UserDTO userDTO,
+            HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+
+            if (loginUser == null) {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                log.warn("나의 정보 수정 실패 - 비로그인 사용자");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            }
+
+            // 로그인한 사용자의 ID로 업데이트
+            userDTO.setId(loginUser.getId());
+            userDTO.setUserId(loginUser.getUserId()); // userId는 변경 불가
+            userDTO.setPassword(loginUser.getPassword()); // password는 여기서 변경 불가
+            userDTO.setRole(loginUser.getRole()); // role은 변경 불가
+
+            UserDTO updatedUser = userService.updateUser(userDTO);
+            
+            // 세션 업데이트
+            session.setAttribute(SESSION_USER_KEY, updatedUser);
+
+            response.put("success", true);
+            response.put("message", "정보가 수정되었습니다.");
+            response.put("data", updatedUser);
+            log.info("나의 정보 수정 성공 - 사용자: {}", loginUser.getUserId());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("나의 정보 수정 중 오류: {}", e.getMessage(), e);
+            response.put("success", false);
+            response.put("message", "정보 수정 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    /**
      * 로그인 요청 내부 클래스
      */
     public static class LoginRequest {
