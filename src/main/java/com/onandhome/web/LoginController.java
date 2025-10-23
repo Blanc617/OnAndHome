@@ -106,8 +106,9 @@ public class LoginController {
     }
     
 
-    //유연 작업(OK)
-    //회원 정보 조회
+    /**
+     * 회원 정보 조회
+     */
     @GetMapping("/admin/edit-view")
     public ResponseEntity<Map<String, Object>> getMyInfo(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
@@ -140,8 +141,9 @@ public class LoginController {
         }
     }
 
-    //유연 작업(실패 창은 OK)
-    //회원 정보 수정
+    /**
+     * 회원 정보 수정
+     */
     @PatchMapping("/admin/edit")
     public ResponseEntity<Map<String, Object>> editUser(
             @RequestBody UserDTO userDTO,
@@ -160,7 +162,6 @@ public class LoginController {
 
             userDTO.setId(loginUser.getId());
 
-            //UserService는 userDTO 하나만 받음!!
             UserDTO updatedUser = userService.updateUser(userDTO);
 
             session.setAttribute(SESSION_USER_KEY, updatedUser);
@@ -181,8 +182,9 @@ public class LoginController {
         }
     }
 
-    //유연 작업 (실패 창 OK)
-    //회원 탈퇴
+    /**
+     * 회원 탈퇴
+     */
     @DeleteMapping("/admin/delete")
     public ResponseEntity<Map<String, Object>> deleteUser(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
@@ -198,7 +200,7 @@ public class LoginController {
 
             userService.deleteUser(loginUser.getId());
 
-            session.invalidate(); //세션 종료 (로그아웃)
+            session.invalidate();
 
             response.put("success", true);
             response.put("message", "회원 탈퇴가 완료되었습니다.");
@@ -214,54 +216,6 @@ public class LoginController {
             log.error("회원 탈퇴 중 오류: {}", e.getMessage(), e);
             response.put("success", false);
             response.put("message", "회원 탈퇴 중 오류가 발생했습니다.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-    }
-
-    /**
-     * 현재 세션 정보 조회 (헤더 네비게이션 업데이트용)
-     * GET /api/user/session-info
-     * 로그인 상태, 사용자명, Admin 여부 반환
-     * 
-     * role: 0 = ADMIN, 1 = USER
-     */
-    @GetMapping("/api/user/session-info")
-    public ResponseEntity<Map<String, Object>> getSessionInfo(HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
-
-        try {
-            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
-
-            if (loginUser != null) {
-                // 로그인 상태
-                response.put("loggedIn", true);
-                response.put("userId", loginUser.getUserId());
-                response.put("username", loginUser.getUsername());
-                
-                // 사용자 역할 확인 (Admin인지 확인)
-                // role: 0 = ADMIN, 1 = USER
-                boolean isAdmin = false;
-                if (loginUser.getRole() != null) {
-                    // role이 0이면 ADMIN
-                    isAdmin = loginUser.getRole() == 0;
-                }
-                response.put("isAdmin", isAdmin);
-                
-                log.debug("세션 정보 조회 - 로그인 사용자: {} (Admin: {})", loginUser.getUserId(), isAdmin);
-            } else {
-                // 비로그인 상태
-                response.put("loggedIn", false);
-                response.put("isAdmin", false);
-                log.debug("세션 정보 조회 - 비로그인 사용자");
-            }
-
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-            log.error("세션 정보 조회 중 오류: {}", e.getMessage(), e);
-            response.put("loggedIn", false);
-            response.put("isAdmin", false);
-            response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }

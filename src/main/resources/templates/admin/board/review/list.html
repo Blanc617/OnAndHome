@@ -13,18 +13,20 @@
     <!-- 컨텐츠 영역 -->
     <div class="on-content">
 
-        <!-- ✅ 사이드바 fragment로 변경 -->
+        <!-- ✅ 사이드바 fragment 불러오기 -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
         <!-- ===== 메인 내부영역 ===== -->
         <div class="on-main">
-            <h2 class="mb-30">Review Board List</h2>
+            <h2 class="mb-30">리뷰 게시판</h2>
 
+            <!-- ✅ 검색 영역 -->
             <div class="flex mb-20 justify-end">
-                <input type="text" class="input mr-4" placeholder="검색어를 입력하세요" />
+                <input type="text" class="input mr-4" placeholder="상품명 또는 작성자를 입력하세요" />
                 <button class="btn-ico btn-ico--srch"></button>
             </div>
 
+            <!-- ✅ 리뷰 테이블 -->
             <div class="grid">
                 <table>
                     <colgroup>
@@ -36,32 +38,33 @@
                     <thead>
                     <tr>
                         <th scope="col">번호</th>
-                        <th scope="col">내용</th>
+                        <th scope="col">상품명</th>
                         <th scope="col">작성자</th>
                         <th scope="col">작성일자</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <!-- ✅ 타임리프 반복문으로 리뷰 목록 출력 -->
+                    <!-- ✅ 리뷰 목록 반복 -->
                     <tr th:each="review, stat : ${reviews}">
                         <td class="center" th:text="${stat.count}">1</td>
                         <td class="center">
-                            <a th:href="@{/admin/board/review/detail/{id}(id=${review.id})}"
-                               th:text="${#strings.abbreviate(review.content, 30)}">
-                                배송도 빠르고 물건도 좋네요.
+                            <a th:href="@{|/admin/board/review/detail/${review.id}|}"
+                               th:text="${review.productName}">
+                                상품명
                             </a>
                         </td>
-                        <td class="center" th:text="${review.user.username}">제니</td>
-                        <td class="center" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">
-                            2025-10-18
+                        <td class="center" th:text="${review.username}">홍길동</td>
+                        <td class="center"
+                            th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">
+                            2025-10-22
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
 </body>

@@ -82,6 +82,9 @@ public class ProductService {
         if (productDTO.getPrice() >= 0) {
             product.setPrice(productDTO.getPrice());
         }
+        if (productDTO.getSalePrice() != null && productDTO.getSalePrice() >= 0) {
+            product.setSalePrice(productDTO.getSalePrice());
+        }
         if (productDTO.getStock() >= 0) {
             product.setStock(productDTO.getStock());
         }
@@ -93,6 +96,12 @@ public class ProductService {
         }
         if (productDTO.getCategory() != null) {
             product.setCategory(productDTO.getCategory());
+        }
+        if (productDTO.getManufacturer() != null) {
+            product.setManufacturer(productDTO.getManufacturer());
+        }
+        if (productDTO.getCountry() != null) {
+            product.setCountry(productDTO.getCountry());
         }
 
         Product updatedProduct = productRepository.save(product);
