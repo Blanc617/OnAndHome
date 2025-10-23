@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -65,7 +66,13 @@ public class AdminController {
     }
 
     @GetMapping("/order/detail")
-    public String orderDetail() {
+    public String orderDetail(@RequestParam("id") Long orderId, Model model) {
+        try {
+            OrderDTO order = orderService.getOrder(orderId);
+            model.addAttribute("order", order);
+        } catch (Exception e) {
+            model.addAttribute("error", "주문 정보를 불러올 수 없습니다.");
+        }
         return "admin/order/detail";
     }
 

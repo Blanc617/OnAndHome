@@ -295,7 +295,8 @@
      * 구매하러 가기
      */
     function goToOrder() {
-      window.location.href = '/user/order_payment';
+      // 장바구니에서 온 것을 표시하기 위해 fromCart 파라미터 추가
+      window.location.href = '/user/order_payment?fromCart=true';
     }
 
     /**
