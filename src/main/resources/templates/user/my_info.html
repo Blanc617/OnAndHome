@@ -10,6 +10,93 @@
 <body>
   <!-- 백그라운드 -->
   <div class="on-main-wrap">
+      <!-- 헤더 -->
+      <div th:replace="~{fragments/header :: header}">
+      </div>
+<!--    <header class="on-header">-->
+<!--      &lt;!&ndash; line01 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner">-->
+<!--          <div>-->
+<!--            <ul class="sns-list">-->
+<!--              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>-->
+<!--              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>-->
+<!--              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>-->
+<!--              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          <div class="login-group">-->
+<!--            <ul class="login-group-list">-->
+<!--              <li><a href="/user/login.html">로그인</a></li>-->
+<!--              <li><a href="#">회원가입</a></li>-->
+<!--              <li><a href="#">공지사항</a></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; line02 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner2">-->
+<!--          <a href=""><div class="header-logo-placeholder"></div></a>-->
+<!--          <div>-->
+<!--            <h1>On&Home</h1>-->
+<!--          </div>-->
+<!--          <div class="header-search-area">-->
+<!--            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />-->
+<!--            <ul class="header-icons">-->
+<!--              <li class="ico-mypage"><a href="#"></a></li>-->
+<!--              <li class="ico-cart"><a href="#"></a></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; 메뉴 &ndash;&gt;-->
+<!--      <div class="on-header-top">-->
+<!--        <div class="on-header-inner">-->
+<!--          <div class="menu-wrapper">-->
+<!--            <ul class="gnb">-->
+<!--              <li>-->
+<!--                <a href="#">TV/오디오</a>-->
+<!--                <ul class="depth2">-->
+<!--                  <li><a href="#">TV</a></li>-->
+<!--                  <li><a href="#">오디오</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <a href="#">주방가전</a>-->
+<!--                <ul class="depth2">-->
+<!--                  <li><a href="#">냉장고</a></li>-->
+<!--                  <li><a href="#">전자렌지</a></li>-->
+<!--                  <li><a href="#">식기세척기</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <a href="#">생활가전</a>-->
+<!--                <ul class="depth2">-->
+<!--                  <li><a href="#">세탁기</a></li>-->
+<!--                  <li><a href="#">청소기</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <a href="#">에어컨/공기청정기</a>-->
+<!--                <ul class="depth2">-->
+<!--                  <li><a href="#">에어컨</a></li>-->
+<!--                  <li><a href="#">공기청정기</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <a href="#">기타</a>-->
+<!--                <ul class="depth2">-->
+<!--                  <li><a href="#">정수기</a></li>-->
+<!--                  <li><a href="#">안마의자</a></li>-->
+<!--                  <li><a href="#">PC</a></li>-->
+<!--                </ul>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>      -->
+<!--    </header>-->
     <!-- 헤더 -->
     <header class="on-header">
       <!-- line01 -->
@@ -24,10 +111,8 @@
             </ul>
           </div>
           <div class="login-group">
-            <ul class="login-group-list">
-              <li><a href="/user/login.html">로그인</a></li>
-              <li><a href="#">회원가입</a></li>
-              <li><a href="#">공지사항</a></li>
+            <ul class="login-group-list" id="headerNav">
+              <!-- 동적으로 변경될 네비게이션 -->
             </ul>
           </div>
         </div>
@@ -35,15 +120,15 @@
       <!-- line02 -->
       <div class="on-header-top">
         <div class="on-header-inner2">
-          <a href=""><div class="header-logo-placeholder"></div></a>
+          <a href="/"><div class="header-logo-placeholder"></div></a>
           <div>
             <h1>On&Home</h1>
           </div>
           <div class="header-search-area">
             <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
             <ul class="header-icons">
-              <li class="ico-mypage"><a href="#"></a></li>
-              <li class="ico-cart"><a href="#"></a></li>
+              <li class="ico-mypage"><a href="/user/my_page"></a></li>
+              <li class="ico-cart"><a href="/user/cart"></a></li>
             </ul>
           </div>
         </div>
@@ -52,44 +137,8 @@
       <div class="on-header-top">
         <div class="on-header-inner">
           <div class="menu-wrapper">
-            <ul class="gnb">
-              <li>
-                <a href="#">TV/오디오</a>
-                <ul class="depth2">
-                  <li><a href="#">TV</a></li>
-                  <li><a href="#">오디오</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">주방가전</a>
-                <ul class="depth2">
-                  <li><a href="#">냉장고</a></li>
-                  <li><a href="#">전자렌지</a></li>
-                  <li><a href="#">식기세척기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">생활가전</a>
-                <ul class="depth2">
-                  <li><a href="#">세탁기</a></li>
-                  <li><a href="#">청소기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">에어컨/공기청정기</a>
-                <ul class="depth2">
-                  <li><a href="#">에어컨</a></li>
-                  <li><a href="#">공기청정기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">기타</a>
-                <ul class="depth2">
-                  <li><a href="#">정수기</a></li>
-                  <li><a href="#">안마의자</a></li>
-                  <li><a href="#">PC</a></li>
-                </ul>
-              </li>
+            <ul class="gnb" id="categoryMenu">
+              <!-- 동적으로 로드될 카테고리 메뉴 -->
             </ul>
           </div>
         </div>
@@ -104,64 +153,65 @@
             <tr class="regeist_data_tit">
               <th>이름</th>
               <td>
-                <input class="input bd-n" type="text" value="모모" readonly>
+                <input class="input bd-n" type="text" id="username" readonly>
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>ID</th>
               <td>
-                <input class="input bd-n" type="text" value="momo" readonly>
+                <input class="input bd-n" type="text" id="userId" readonly>
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>성별</th>
               <td>
-                <input type="radio" name="sex">
+                <input type="radio" name="gender" value="남자" disabled>
                 <label class="mr-20">남자</label>
-                <input type="radio" name="sex" checked disabled>
+                <input type="radio" name="gender" value="여자" disabled>
                 <label>여자</label>
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>국적</th>
               <td>
-                <input type="radio" name="country">
+                <input type="radio" name="nationality" value="내국인" disabled>
                 <label class="mr-20">내국인</label>
-                <input type="radio" name="country" checked disabled>
+                <input type="radio" name="nationality" value="외국인" disabled>
                 <label>외국인</label>
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>e-mail</th>
               <td>
-                <input class="input bd-n" type="text" value="momo@naver.com" readonly>
+                <input class="input bd-n" type="text" id="email" readonly>
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>전화번호</th>
               <td>
-                <input class="input bd-n" type="text" value="010-1234-4567" readonly> 
+                <input class="input bd-n" type="text" id="phone" readonly> 
               </td>
             </tr>
             <tr class="regeist_data_tit">
               <th>주소</th>
               <td>
-                <input class="input bd-n" type="text" value="서울 강남구 청담동 123-34 JYP빌딩 13층" readonly>
+                <input class="input bd-n" type="text" id="address" readonly>
               </td>
             </tr>                                                                           
           </table>
           <div class="border-1p"></div>          
           <div class="flex justify-center">
-            <a href="/user/my_info_edit.html"><button class="btn btn--primary mr-4">정보수정</button></a>
-            <a href="#" id="btnWithdraw">
-              <button type="button" class="btn btn--secondary">회원탈퇴</button>
-            </a>
+            <button type="button" class="btn btn--primary mr-4" onclick="goToEdit()">정보수정</button>
+            <button type="button" class="btn btn--secondary" id="btnWithdraw">회원탈퇴</button>
           </div>   
         </div>
         <div>
         </div>        
       </div>
     </div>
+  </div>
+  <!-- 푸터 -->
+  <div th:replace="~{fragments/footer :: footer}">
   </div>
 </body>
 </html>

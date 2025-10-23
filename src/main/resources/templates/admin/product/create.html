@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +13,10 @@
   <!-- 컨텐츠 영역 -->
   <div class="on-content">
     <!-- 사이드바 메뉴 -->
-      <!--사이드바 메뉴-->
-      <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <!--사이드바 메뉴-->
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-      <!-- 내부영역 -->
+    <!-- 내부영역 -->
     <div class="on-main">
       <h2 class="mb-30">Product Create</h2>
       <div class="">
@@ -49,6 +48,18 @@
             <select id="category2" class="select">
               <option value="">선택2</option>
             </select>
+          </div>
+        </div>
+          <div class="on-comp-tbl-row">
+              <div class="on-comp-tbl-th col-2">재고수량</div>
+              <div class="on-comp-tbl-td col-10">
+                  <input class="on-inp" id="name">
+              </div>
+          </div>
+        <div class="on-comp-tbl-row">
+          <div class="on-comp-tbl-th col-2">재고수량</div>
+          <div class="on-comp-tbl-td col-10">
+            <input class="on-inp" id="stockTop" type="number" min="0">
           </div>
         </div>
         <div class="on-comp-tbl-row">
@@ -171,10 +182,10 @@
   function updateSubCategory() {
     const category1 = document.getElementById('category1').value;
     const category2Select = document.getElementById('category2');
-    
+
     // 기존 옵션 제거
     category2Select.innerHTML = '<option value="">선택2</option>';
-    
+
     if (category1 && subCategories[category1]) {
       subCategories[category1].forEach(sub => {
         const option = document.createElement('option');
@@ -306,7 +317,18 @@
     const category = document.getElementById('category2').value.trim();
     const price = parseInt(document.getElementById('price').value) || 0;
     const salePrice = parseInt(document.getElementById('salePrice').value) || null;
-    const stock = parseInt(document.getElementById('stock').value) || 0;
+    
+    // stockTop (상단 재고수량) 및 stock (하단 재고수량) 필드에서 값 수집
+    const stockTopValue = parseInt(document.getElementById('stockTop').value) || 0;
+    const stockBottomValue = parseInt(document.getElementById('stock').value) || 0;
+    
+    // 둘 중 하나라도 입력된 값이 있으면 그 값을 사용
+    let stock = 0;
+    if (stockTopValue > 0) {
+      stock = stockTopValue;
+    } else if (stockBottomValue > 0) {
+      stock = stockBottomValue;
+    }
 
     if (!name) {
       alert('상품명은 필수입니다.');
@@ -361,19 +383,19 @@
       },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(result => {
-      if (result.success) {
-        alert('상품이 성공적으로 등록되었습니다.');
-        window.location.href = '/admin/product/list';
-      } else {
-        alert(result.message || '상품 등록 중 오류가 발생했습니다.');
-      }
-    })
-    .catch(error => {
-      console.error('등록 오류:', error);
-      alert('상품 등록 중 오류가 발생했습니다.');
-    });
+            .then(response => response.json())
+            .then(result => {
+              if (result.success) {
+                alert('상품이 성공적으로 등록되었습니다.');
+                window.location.href = '/admin/product/list';
+              } else {
+                alert(result.message || '상품 등록 중 오류가 발생했습니다.');
+              }
+            })
+            .catch(error => {
+              console.error('등록 오류:', error);
+              alert('상품 등록 중 오류가 발생했습니다.');
+            });
   }
 </script>
 
