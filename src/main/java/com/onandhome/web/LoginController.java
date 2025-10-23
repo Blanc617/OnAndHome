@@ -102,7 +102,7 @@ public class LoginController {
         log.info("User 로그아웃 처리 완료");
         
         redirectAttributes.addAttribute("logout", true);
-        return "redirect:/login";  // templates/user/login.html로 리다이렉트
+        return "redirect:/user/index";  // templates/user/login.html로 리다이렉트
     }
     
 
