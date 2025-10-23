@@ -63,32 +63,11 @@
     <div class="on-item02 mb-80 mt-80">
       <div class="on-item02-inner">
         <h2 class="sub-title line-under">나의 주문내역</h2>
-        <h3 class="mb-20">배송정보</h3>
-        <table class="table mb-40">
-          <colgroup>
-            <col width="20%">
-            <col width="30%">
-            <col width="20%">
-            <col width="30%">
-          </colgroup>
-          <tbody id="deliveryInfoTable">
-            <!-- 동적으로 로드될 배송정보 -->
-          </tbody>
-        </table>
-        <h3 class="mb-20">주문정보</h3>
-        <table class="table">
-          <colgroup>
-            <col width="20%">
-            <col width="35%">
-            <col width="10%">
-            <col width="10%">
-            <col width="10%">
-            <col width="">
-          </colgroup>
-          <tbody id="orderInfoTable">
-            <!-- 동적으로 로드될 주문정보 -->
-          </tbody>
-        </table>
+        
+        <!-- 주문 내역 컨테이너 -->
+        <div id="ordersContainer">
+          <!-- 동적으로 로드될 주문 내역 -->
+        </div>
       </div>
     </div>  
     <footer class="footer-o">
@@ -194,13 +173,13 @@
     document.addEventListener('DOMContentLoaded', function() {
       loadCategoryMenu();
       loadHeaderNavigation();
-      loadLatestOrder();
+      loadAllOrders();
     });
 
     /**
-     * 최근 주문 내역 로드
+     * 모든 주문 내역 로드
      */
-    function loadLatestOrder() {
+    function loadAllOrders() {
       fetch('/api/user/session-info')
         .then(response => response.json())
         .then(data => {
@@ -217,9 +196,8 @@
         .then(response => response.json())
         .then(data => {
           if (data.success && data.data && data.data.length > 0) {
-            // 가장 최근 주문 (배열의 첫 번째 항목)
-            const latestOrder = data.data[0];
-            displayOrderInfo(latestOrder);
+            // 모든 주문 표시 (가장 최근부터)
+            displayAllOrders(data.data);
           } else {
             displayNoOrders();
           }
@@ -233,14 +211,26 @@
     }
 
     /**
-     * 주문 정보 표시
+     * 모든 주문 정보 표시
      */
-    function displayOrderInfo(order) {
-      // 배송정보 표시
-      const deliveryInfoTable = document.getElementById('deliveryInfoTable');
-      
-      // sessionStorage에서 배송정보 가져오기 (주문 시 저장한 정보)
-      const deliveryInfo = sessionStorage.getItem('deliveryInfo');
+    function displayAllOrders(orders) {
+      const ordersContainer = document.getElementById('ordersContainer');
+      let ordersHtml = '';
+
+      // 각 주문별로 섹션 생성
+      orders.forEach((order, index) => {
+        ordersHtml += generateOrderSection(order, index);
+      });
+
+      ordersContainer.innerHTML = ordersHtml;
+    }
+
+    /**
+     * 주문 섹션 생성
+     */
+    function generateOrderSection(order, index) {
+      // sessionStorage에서 배송정보 가져오기 (가장 최근 주문의 경우에만)
+      const deliveryInfo = index === 0 ? sessionStorage.getItem('deliveryInfo') : null;
       let deliveryData = null;
       
       if (deliveryInfo) {
@@ -251,39 +241,43 @@
         }
       }
 
-      // 배송정보 HTML 생성
-      deliveryInfoTable.innerHTML = `
-        <tr>
-          <th>이름</th>
-          <td>${deliveryData ? deliveryData.name : order.username || '-'}</td>
-          <th>ID</th>
-          <td>${deliveryData ? deliveryData.userId : order.userIdStr || '-'}</td>
-        </tr>
-        <tr>
-          <th>전화번호</th>
-          <td>${deliveryData ? deliveryData.phone : order.userPhone || '-'}</td>
-          <th>e-mail</th>
-          <td>${deliveryData ? deliveryData.email : order.userEmail || '-'}</td>
-        </tr>
-        <tr>
-          <th>주소</th>
-          <td colspan="3">${deliveryData ? deliveryData.address : order.userAddress || '-'}</td>
-        </tr>
-        <tr>
-          <th>요청사항</th>
-          <td colspan="3">${deliveryData && deliveryData.request ? deliveryData.request : '-'}</td>
-        </tr>
+      // 배송정보 테이블 생성
+      let deliveryHtml = `
+        <h3 class="mb-20" style="margin-top: 30px;">배송정보 (${index + 1})</h3>
+        <table class="table mb-40">
+          <colgroup>
+            <col width="20%">
+            <col width="30%">
+            <col width="20%">
+            <col width="30%">
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>이름</th>
+              <td>${deliveryData ? deliveryData.name : order.username || '-'}</td>
+              <th>ID</th>
+              <td>${deliveryData ? deliveryData.userId : order.userIdStr || '-'}</td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td>${deliveryData ? deliveryData.phone : order.userPhone || '-'}</td>
+              <th>e-mail</th>
+              <td>${deliveryData ? deliveryData.email : order.userEmail || '-'}</td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td colspan="3">${deliveryData ? deliveryData.address : order.userAddress || '-'}</td>
+            </tr>
+            <tr>
+              <th>요청사항</th>
+              <td colspan="3">${deliveryData && deliveryData.request ? deliveryData.request : '-'}</td>
+            </tr>
+          </tbody>
+        </table>
       `;
 
-      // 주문정보 표시
-      const orderInfoTable = document.getElementById('orderInfoTable');
-      
-      // 주문번호 (서버에서 생성된 값 사용)
-      const orderNumber = order.orderNumber || 'N/A';
-      
+      // 주문정보 테이블 생성
       let itemsHtml = '';
-
-      // 각 주문 아이템 표시
       order.orderItems.forEach(item => {
         const price = item.orderPrice || 0;
         const quantity = item.quantity || 0;
@@ -301,60 +295,54 @@
         `;
       });
 
-      // 서버에서 계산된 총 가격 사용
       const totalPrice = order.totalPrice || 0;
+      const orderNumber = order.orderNumber || 'N/A';
 
-      // 테이블 내용 설정
-      orderInfoTable.innerHTML = `
-        <tr>
-          <th>주문번호</th>
-          <td colspan="5">${orderNumber}</td>
-        </tr>
-        <tr>
-          <th>주문상품 리스트</th>
-          <th colspan="5"></th>
-        </tr>
-        ${itemsHtml}
-        <tr class="high-50">
-          <th>주문 합계</th>
-          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
-        </tr>
+      let orderHtml = `
+        <h3 class="mb-20">주문정보 (${index + 1})</h3>
+        <table class="table">
+          <colgroup>
+            <col width="20%">
+            <col width="35%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="">
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>주문번호</th>
+              <td colspan="5">${orderNumber}</td>
+            </tr>
+            <tr>
+              <th>주문상품 리스트</th>
+              <th colspan="5"></th>
+            </tr>
+            ${itemsHtml}
+            <tr class="high-50">
+              <th>주문 합계</th>
+              <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+            </tr>
+          </tbody>
+        </table>
       `;
+
+      return deliveryHtml + orderHtml;
     }
 
     /**
      * 주문 내역이 없을 때 표시
      */
     function displayNoOrders() {
-      const deliveryInfoTable = document.getElementById('deliveryInfoTable');
-      deliveryInfoTable.innerHTML = `
-        <tr>
-          <td colspan="4" style="text-align: center; padding: 40px;">
-            <h3>주문 내역이 없습니다.</h3>
-            <p style="margin-top: 10px;">
-              <a href="/" style="color: #007bff; text-decoration: underline;">쇼핑하러 가기</a>
-            </p>
-          </td>
-        </tr>
+      const ordersContainer = document.getElementById('ordersContainer');
+      ordersContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+          <h3>주문 내역이 없습니다.</h3>
+          <p style="margin-top: 10px;">
+            <a href="/" style="color: #007bff; text-decoration: underline;">쇼핑하러 가기</a>
+          </p>
+        </div>
       `;
-
-      const orderInfoTable = document.getElementById('orderInfoTable');
-      orderInfoTable.innerHTML = '';
-    }
-
-    /**
-     * 주문번호 생성
-     */
-    function generateOrderNumber(orderId, orderDate) {
-      if (orderDate) {
-        // orderDate를 파싱하여 YYYYMMDD 형식으로 변환
-        const date = new Date(orderDate);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}${month}${day}-${String(orderId).padStart(6, '0')}`;
-      }
-      return `ORDER-${orderId}`;
     }
 
     /**

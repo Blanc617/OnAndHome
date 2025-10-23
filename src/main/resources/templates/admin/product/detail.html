@@ -16,13 +16,13 @@
         <!--사이드바 메뉴-->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-        <!-- <내부영역 -->
+        <!-- 내부영역 -->
       <div class="on-main">
         <h2 class="mb-30">Product Detail</h2>
         <div class="">
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">상품코드</div>
-            <div class="on-comp-tbl-td col-10">PC-001</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.id} ? 'PC-' + ${product.id} : 'N/A'"></div>
           </div>
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">등록일자</div>
@@ -30,56 +30,56 @@
           </div>          
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">상품명</div>
-            <div class="on-comp-tbl-td col-10">LG Gram 17 (2025)</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.name} ?: '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">제조사</div>
-            <div class="on-comp-tbl-td col-10">LG</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.manufacturer} ?: '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">제조국</div>
-            <div class="on-comp-tbl-td col-10">VIETNAM</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.country} ?: '-'"></div>
           </div>          
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">정상가격</div>
-            <div class="on-comp-tbl-td col-10">2,350,000</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.price} ? ${#numbers.formatInteger(product.price, 1, 'DEFAULT')} + '원' : '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">할인가격</div>
-            <div class="on-comp-tbl-td col-10">1,890,000</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.salePrice} ? ${#numbers.formatInteger(product.salePrice, 1, 'DEFAULT')} + '원' : '-'"></div>
           </div>                                                        
         </div>
         <div class="flex justify-end mt-20">
-          <a href="/admin/product/list.html"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
-          <a href="#"><button class="btn btn--tertiary">수정</button></a>
+          <a href="/admin/product/list"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
+          <a th:href="@{/admin/product/edit/{id}(id=${product?.id})}"><button class="btn btn--tertiary">수정</button></a>
         </div>
         <div class="on-border mt-20"></div>
         <h3 class="mt-20 mb-12">상세스펙</h3>
         <div class="">
           <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">크기</div>
-            <div class="on-comp-tbl-td col-10">350 x 250 x 15 mm</div>
+            <div class="on-comp-tbl-th col-2">카테고리</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.category} ?: '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">무게</div>
-            <div class="on-comp-tbl-td col-10">1.2kg</div>
+            <div class="on-comp-tbl-th col-2">재고수량</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.stock} ?: '0'"></div>
           </div>          
           <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">전압</div>
-            <div class="on-comp-tbl-td col-10">LG Gram 17 (2025)</div>
+            <div class="on-comp-tbl-th col-2">설명</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.description} ?: '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">재질</div>
-            <div class="on-comp-tbl-td col-10">플라스틱 외</div>
+            <div class="on-comp-tbl-th col-2">썸네일 이미지</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.thumbnailImage} ?: '-'"></div>
           </div>
           <div class="on-comp-tbl-row">
-            <div class="on-comp-tbl-th col-2">추가상품</div>
-            <div class="on-comp-tbl-td col-10">무선마우스</div>
+            <div class="on-comp-tbl-th col-2">상세 이미지</div>
+            <div class="on-comp-tbl-td col-10" th:text="${product?.detailImage} ?: '-'"></div>
           </div>
         </div>
         <div class="flex justify-end mt-20">
-          <a href="/admin/product/list.html"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
-          <a href="#"><button class="btn btn--tertiary">수정</button></a>
+          <a href="/admin/product/list"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
+          <a th:href="@{/admin/product/edit/{id}(id=${product?.id})}"><button class="btn btn--tertiary">수정</button></a>
         </div>                                
       </div>
     </div>
