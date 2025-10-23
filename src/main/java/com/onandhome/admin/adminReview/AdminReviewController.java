@@ -1,17 +1,19 @@
 package com.onandhome.admin.adminReview;
 
 import com.onandhome.review.ReviewService;
-import com.onandhome.review.entity.Review;
+import com.onandhome.review.ReviewReplyService;
+import com.onandhome.review.dto.ReviewDTO;
+import com.onandhome.review.dto.ReviewReplyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
- * 리뷰 관리 컨트롤러
- * (Thymeleaf 템플릿 기반)
+ * ✅ 관리자 리뷰 컨트롤러
+ * 리뷰 목록, 상세, 답글 등록/수정/삭제 관리
  */
 @Controller
 @RequiredArgsConstructor
@@ -19,62 +21,68 @@ import java.time.LocalDateTime;
 public class AdminReviewController {
 
     private final ReviewService reviewService;
+    private final ReviewReplyService reviewReplyService;
 
-    /** 리뷰 목록 페이지 */
+    /** ✅ 리뷰 목록 */
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("reviews", reviewService.getAllReviews());
+        List<ReviewDTO> reviews = reviewService.findAll();
+        model.addAttribute("reviews", reviews);
         return "admin/board/review/list";
     }
 
-    /** 리뷰 상세 페이지 */
+    /** ✅ 리뷰 상세보기 */
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
-        Review review = reviewService.getReview(id)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+    public String detail(@PathVariable("id") Long reviewId, Model model) {
+        ReviewDTO review = reviewService.findById(reviewId);
+        List<ReviewReplyDTO> replies = reviewReplyService.findByReviewId(reviewId);
+
         model.addAttribute("review", review);
+        model.addAttribute("replies", replies);
         return "admin/board/review/detail";
     }
 
-    /** 리뷰 작성 폼 페이지 */
-    @GetMapping("/write")
-    public String writeForm(Model model) {
-        model.addAttribute("review", new Review());
-        return "admin/board/review/write";
+    /** ✅ 답글 등록 */
+    @PostMapping("/reply/{reviewId}")
+    public String createReply(@PathVariable Long reviewId,
+                              @RequestParam("content") String content) {
+        reviewReplyService.createReply(reviewId, content, "관리자", "admin", 1L);
+        return "redirect:/admin/board/review/detail/" + reviewId;
     }
 
-    /** 리뷰 등록 */
-    @PostMapping("/write")
-    public String write(@ModelAttribute Review review) {
-        review.setCreatedAt(LocalDateTime.now());
-        reviewService.save(review);
-        return "redirect:/admin/board/review/list";
-    }
-
-    /** 리뷰 수정 폼 */
-    @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        Review review = reviewService.getReview(id)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+    /** ✅ 답글 수정 폼 */
+    @GetMapping("/reply/edit/{replyId}/{reviewId}")
+    public String editReplyForm(@PathVariable Long replyId,
+                                @PathVariable Long reviewId,
+                                Model model) {
+        ReviewReplyDTO reply = reviewReplyService.findById(replyId);
+        ReviewDTO review = reviewService.findById(reviewId); // ✅ 리뷰 데이터도 같이 전달
+        model.addAttribute("reply", reply);
         model.addAttribute("review", review);
-        return "admin/board/review/edit";
+        return "admin/board/review/reply-edit";
     }
 
-    /** 리뷰 수정 저장 */
-    @PostMapping("/edit/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute Review newReview) {
-        Review review = reviewService.getReview(id)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-        review.setContent(newReview.getContent());
-        review.setRating(newReview.getRating());
-        reviewService.save(review);
-        return "redirect:/admin/board/review/detail/" + id;
+    /** ✅ 답글 수정 저장 */
+    @PostMapping("/reply/edit/{replyId}/{reviewId}")
+    public String editReply(@PathVariable Long replyId,
+                            @PathVariable Long reviewId,
+                            @RequestParam("content") String content) {
+        reviewReplyService.updateReply(replyId, content);
+        return "redirect:/admin/board/review/detail/" + reviewId;
     }
 
-    /** 리뷰 삭제 */
+    /** ✅ 답글 삭제 */
+    @PostMapping("/reply/delete/{replyId}/{reviewId}")
+    public String deleteReply(@PathVariable Long replyId,
+                              @PathVariable Long reviewId) {
+        reviewReplyService.deleteReply(replyId);
+        return "redirect:/admin/board/review/detail/" + reviewId;
+    }
+
+    /** ✅ 리뷰 삭제 */
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        reviewService.deleteReview(id);
+    public String delete(@PathVariable("id") Long reviewId) {
+        reviewService.deleteById(reviewId);
         return "redirect:/admin/board/review/list";
     }
 }

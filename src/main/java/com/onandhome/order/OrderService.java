@@ -32,6 +32,19 @@ public class OrderService {
     private final CartItemRepository cartRepo;
 
     /**
+     * 모든 주문 조회 (관리자용)
+     * 생성 순서 최신순으로 정렬
+     */
+    @Transactional(readOnly = true)
+    public List<OrderDTO> getAllOrders() {
+        List<Order> orders = orderRepo.findAll();
+        return orders.stream()
+                .sorted((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()))
+                .map(OrderDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 특정 사용자의 모든 주문 목록 조회
      */
     @Transactional(readOnly = true)

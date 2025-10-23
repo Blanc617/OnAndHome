@@ -1,3 +1,9 @@
+// ===================================================================
+// 주의: 이 클래스는 더 이상 사용되지 않습니다.
+// CartService와 CartBusinessService로 기능이 이동했습니다.
+// ===================================================================
+
+/*
 package com.onandhome.cart;
 
 import java.util.List;
@@ -63,4 +69,4 @@ public class CartController {
         cartRepo.deleteByUser(user);
     }
 }
-
+*/

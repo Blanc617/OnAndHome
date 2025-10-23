@@ -39,15 +39,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="notice, iterStat : ${notices}">
+                    <tr th:each="notice, iterStat : ${noticeList}">
                         <td th:text="${iterStat.count}" class="center"></td>
                         <td class="center">
-                            <a th:href="@{|/admin/board/notice/${notice.id}|}" th:text="${notice.title}"></a>
+                            <a th:href="@{|/admin/board/notice/detail/${notice.id}|}" th:text="${notice.title}"></a>
                         </td>
                         <td class="center" th:text="${notice.writer ?: 'admin'}"></td>
                         <td class="center" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(notices)}">
+                    <tr th:if="${#lists.isEmpty(noticeList)}">
                         <td colspan="4" class="center">등록된 공지사항이 없습니다.</td>
                     </tr>
                     </tbody>

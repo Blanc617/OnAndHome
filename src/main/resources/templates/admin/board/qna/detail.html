@@ -11,7 +11,7 @@
 <div class="on-wrapper">
     <div class="on-content">
 
-        <!-- ✅ 사이드바 fragment 불러오기 -->
+        <!-- ✅ 사이드바 fragment -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
         <div class="on-main">
@@ -54,27 +54,26 @@
 
             <div class="on-border mt-20"></div>
 
-            <!-- ✅ 답변 목록 -->
-            <div class="mt-8" th:if="${#lists.size(answers) > 0}">
-                <div th:each="answer : ${answers}" class="on-comp-tbl-row mt-10">
+            <!-- ✅ 리플라이(답변) 목록 -->
+            <div class="mt-8" th:if="${#lists.size(replies) > 0}">
+                <div th:each="reply : ${replies}" class="on-comp-tbl-row mt-10">
                     <div class="on-comp-tbl-th col-2">
-                        <span th:text="${answer.responder}">관리자</span>
+                        <span th:text="${reply.responder}">관리자</span>
                     </div>
                     <div class="on-comp-tbl-td col-10 flex justify-between items-start">
-                        <!-- 답변 내용 -->
-                        <div class="mr-4" th:text="${answer.content}">
+                        <div class="mr-4" th:text="${reply.content}">
                             고객님 안녕하세요 온앤홈입니다. 주문취소는 고객센터로 연락주시기 바랍니다.
                         </div>
 
-                        <!-- 버튼 영역 -->
                         <div class="flex">
                             <!-- 수정 -->
-                            <form th:action="@{/admin/board/qna/answer/edit/{id}(id=${answer.id})}" method="get">
-                                <button type="submit" class="btn-sm btn--tertiary mr-2">수정</button>
-                            </form>
+                            <a th:href="@{/admin/board/qna/reply/edit/{replyId}(replyId=${reply.id})}"
+                               class="btn-sm btn--tertiary mr-2">수정</a>
 
-                            <!-- 삭제 -->
-                            <form th:action="@{/admin/board/qna/answer/delete/{answerId}(answerId=${answer.id})}" method="post">
+                            <!-- ✅ 삭제 (확인창 추가됨) -->
+                            <form th:action="@{/admin/board/qna/reply/delete/{replyId}(replyId=${reply.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('정말 삭제하시겠습니까?');">
                                 <input type="hidden" name="qnaId" th:value="${qna.id}" />
                                 <button type="submit" class="btn-sm btn--secondary">삭제</button>
                             </form>
@@ -85,8 +84,8 @@
 
             <div class="on-border mt-20"></div>
 
-            <!-- ✅ 답변 등록 폼 -->
-            <form th:action="@{/admin/board/qna/answer/{id}(id=${qna.id})}" method="post">
+            <!-- ✅ 리플라이 등록 -->
+            <form th:action="@{/admin/board/qna/reply/{id}(id=${qna.id})}" method="post">
                 <div class="mt-20">
                     <div class="on-comp-tbl-row high-80">
                         <div class="on-comp-tbl-th col-2">답변 등록</div>
@@ -101,7 +100,6 @@
                     <button type="submit" class="btn btn--tertiary mr-4">답변등록</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

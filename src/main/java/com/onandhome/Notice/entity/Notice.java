@@ -25,7 +25,9 @@ public class Notice {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    private LocalDateTime updatedAt; // ✅ 새로 추가
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
