@@ -18,7 +18,7 @@
 
         <!-- 내부영역 -->
         <div class="on-main">
-            <h2 class="mb-30">Dash Board</h2>
+            <h2 class="mb-30">Board List</h2>
 
             <!-- 비로그인 사용자 경고 -->
             <div th:unless="${session.loginUser}"
@@ -32,62 +32,19 @@
             <!-- 대시보드 콘텐츠 -->
             <div class="dash-wrapper gap-20">
                 <div class="dash-up gap-20">
-
-                    <div class="dash-content">
-                        <h3 class="dash-content-tit">공지사항</h3>
-                        <div class="dash-content-inner mb-12">
-                            오늘의 주문<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            오늘의 매출<span class="dash-content-value"><a href="#">00</a></span>원
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            이달의 매출<span class="dash-content-value"><a href="#">00</a></span>원
-                        </div>
+                    <div class="dash-board-card">
+                        <h3 class="dash-content-tit2">공지사항</h3>
+                        <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/notice/list.html">35</a></span>건</div>
                     </div>
-
-                    <div class="dash-content">
-                        <h3 class="dash-content-tit">상품 현황</h3>
-                        <div class="dash-content-inner mb-12">
-                            전체상품<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            판매 중 상품<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            판매 중지 상품<span class="dash-content-value"><a href="#">8</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            품절 상품<span class="dash-content-value"><a href="#">4</a></span>건
-                        </div>
+                    <div class="dash-board-card">
+                        <h3 class="dash-content-tit2">리뷰</h3>
+                        <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/review/list.html">135</a></span>건</div>
                     </div>
                 </div>
-
-                <div class="dash-down gap-20">
-                    <div class="dash-content">
-                        <h3 class="dash-content-tit">회원 현황</h3>
-                        <div class="dash-content-inner mb-12">
-                            신규가입 회원<span class="dash-content-value"><a href="#">00</a></span>명
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            전체 회원<span class="dash-content-value"><a href="#">00</a></span>명
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            탈퇴 회원<span class="dash-content-value"><a href="#">00</a></span>명
-                        </div>
-                    </div>
-
-                    <div class="dash-content">
-                        <h3 class="dash-content-tit">게시판</h3>
-                        <div class="dash-content-inner mb-12">
-                            공지사항<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            고객리뷰<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
-                        <div class="dash-content-inner mb-12">
-                            Q&A<span class="dash-content-value"><a href="#">00</a></span>건
-                        </div>
+                <div class="dash-up gap-20">
+                    <div class="dash-board-card">
+                        <h3 class="dash-content-tit2">Q&A</h3>
+                        <div class="dash-content-inner">게시물<span class="dash-content-value"><a href="/admin/board/qna/list.html">254</a></span>건</div>
                     </div>
                 </div>
             </div>
