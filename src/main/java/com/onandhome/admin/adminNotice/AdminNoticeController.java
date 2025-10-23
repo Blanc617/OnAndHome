@@ -1,14 +1,20 @@
 package com.onandhome.admin.adminNotice;
 
 import com.onandhome.Notice.NoticeService;
-import com.onandhome.Notice.entity.Notice;
+import com.onandhome.Notice.dto.NoticeDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * ✅ 관리자 공지사항 컨트롤러 (DTO 반환 방식)
+ * 경로 기준: com.onandhome.admin.adminNotice
+ */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/board/notice")
@@ -16,84 +22,66 @@ public class AdminNoticeController {
 
     private final NoticeService noticeService;
 
-    /** 목록 */
+    /** ✅ 공지사항 목록 */
     @GetMapping("/list")
     public String list(Model model) {
-        List<Notice> notices = noticeService.findAll();
-        model.addAttribute("notices", notices);
+        List<NoticeDto> noticeList = noticeService.findAll();
+        model.addAttribute("noticeList", noticeList);
         return "admin/board/notice/list";
     }
 
-    /** 상세 보기 */
-    @GetMapping("/{id}")
+    /** ✅ 공지사항 상세보기 */
+    @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
-        Notice notice = noticeService.findById(id);
+        NoticeDto notice = noticeService.findById(id);
         model.addAttribute("notice", notice);
         return "admin/board/notice/detail";
     }
 
-//    @PostMapping("/write")
-//    public String write(@ModelAttribute Notice notice, @AuthenticationPrincipal User user) {
-//        if (user == null) {
-//            // 로그인 안 한 상태로 접근 → 거부
-//            return "redirect:/user/login";
-//        }
-//        notice.setWriter(user.getUsername());
-//        noticeService.save(notice);
-//        return "redirect:/admin/board/notice/list";
-//    }
-
-
-    /** 작성 화면 */
+    /** ✅ 공지사항 작성 폼 */
     @GetMapping("/write")
-    public String writeForm(Model model) {
-        model.addAttribute("notice", new Notice());
+    public String writeView(Model model) {
+        model.addAttribute("notice", new NoticeDto());
         return "admin/board/notice/write";
     }
 
-    /** 작성 저장 */
+    /** ✅ 공지사항 등록 처리 */
     @PostMapping("/write")
-    public String write(@ModelAttribute Notice notice) {
-        noticeService.save(notice);
+    public String write(@ModelAttribute NoticeDto dto) {
+        log.info("📨 등록 요청 도착 - title={}, writer={}, content={}",
+                dto.getTitle(), dto.getWriter(), dto.getContent());
+
+        if (dto.getTitle() == null || dto.getTitle().trim().isEmpty()) {
+            log.error("❌ 제목이 비어 있습니다. 등록 중단");
+            throw new IllegalArgumentException("제목은 필수 입력 항목입니다.");
+        }
+
+        noticeService.createNotice(dto);
+        log.info("✅ 공지사항 등록 완료");
         return "redirect:/admin/board/notice/list";
     }
 
-    /** 수정 화면 */
+    /** ✅ 공지사항 수정 폼 */
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        Notice notice = noticeService.findById(id);
+    public String editView(@PathVariable Long id, Model model) {
+        NoticeDto notice = noticeService.findById(id);
         model.addAttribute("notice", notice);
         return "admin/board/notice/edit";
     }
 
-    /** 수정 저장 */
+    /** ✅ 공지사항 수정 처리 (수정 후 목록으로 이동) */
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, @ModelAttribute Notice notice) {
-        noticeService.update(id, notice);
+    public String edit(@PathVariable Long id, @ModelAttribute NoticeDto dto) {
+        log.info("✏️ 수정 요청 도착 - id={}, title={}", id, dto.getTitle());
+        noticeService.update(id, dto);
+        log.info("✅ 수정 완료 → 목록으로 이동");
         return "redirect:/admin/board/notice/list";
     }
 
-    /** 삭제 */
+    /** ✅ 공지사항 삭제 */
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         noticeService.delete(id);
         return "redirect:/admin/board/notice/list";
     }
-
-
-//    @PostMapping("/edit/{id}")
-//    public String edit(@PathVariable Long id, @ModelAttribute Notice notice, @AuthenticationPrincipal User user) {
-//        if (user == null) return "redirect:/user/login";
-//        notice.setWriter(user.getUsername());
-//        noticeService.update(id, notice);
-//        return "redirect:/admin/board/notice/list";
-//    }
-//
-//    @PostMapping("/delete/{id}")
-//    public String delete(@PathVariable Long id, @AuthenticationPrincipal User user) {
-//        if (user == null) return "redirect:/user/login";
-//        noticeService.delete(id);
-//        return "redirect:/admin/board/notice/list";
-//    }
-
 }
