@@ -1,9 +1,9 @@
-package com.onandhome.admin.adminQna;
+package com.onandhome.admin.adminQnA;
 
-
-import com.onandhome.admin.adminQna.entity.Answer;
-import com.onandhome.qna.QnaService;
 import com.onandhome.qna.entity.Qna;
+import com.onandhome.qna.entity.QnaReply;
+import com.onandhome.qna.QnaService;
+import com.onandhome.qna.QnaReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Q&A 관리 컨트롤러
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/board/qna")
 public class AdminQnaController {
 
     private final QnaService qnaService;
-    private final AnswerService answerService;
+    private final QnaReplyService qnaReplyService;
 
-    /** QnA 목록 페이지 */
     /** ✅ QnA 목록 페이지 */
     @GetMapping("/list")
     public String list(Model model) {
@@ -48,11 +50,11 @@ public class AdminQnaController {
         Qna qna = qnaService.findById(id);
         if (qna == null) throw new IllegalArgumentException("Q&A 없음");
 
-        // ✅ 이 질문에 달린 모든 답변 조회
-        List<Answer>answers = answerService.findByQnaId(id);
+        // ✅ 이 질문에 달린 모든 리플라이 조회
+        List<QnaReply> replies = qnaReplyService.findByQnaId(id);
 
         model.addAttribute("qna", qna);
-        model.addAttribute("answers", answers);
+        model.addAttribute("replies", replies);
         return "admin/board/qna/detail";
     }
 
@@ -78,39 +80,39 @@ public class AdminQnaController {
         return "redirect:/admin/board/qna/list";
     }
 
-    /** ✅ 답변 등록 */
-    @PostMapping("/answer/{id}")
-    public String addAnswer(@PathVariable Long id,
-                            @RequestParam("content") String content) {
-        answerService.createAnswer(id, content, "관리자");
+    /** ✅ 리플라이 등록 */
+    @PostMapping("/reply/{id}")
+    public String addReply(@PathVariable Long id,
+                           @RequestParam("content") String content) {
+        qnaReplyService.createReply(id, content, "관리자");
         return "redirect:/admin/board/qna/" + id;
     }
 
-    /** ✅ 답변 수정 폼 */
-    @GetMapping("/answer/edit/{answerId}")
-    public String editAnswerForm(@PathVariable Long answerId, Model model) {
-        Answer answer = answerService.findById(answerId);
-        if (answer == null) throw new IllegalArgumentException("답변 없음");
+    /** ✅ 리플라이 수정 폼 */
+    @GetMapping("/reply/edit/{replyId}")
+    public String editReplyForm(@PathVariable Long replyId, Model model) {
+        QnaReply reply = qnaReplyService.findById(replyId);
+        if (reply == null) throw new IllegalArgumentException("답변 없음");
 
-        model.addAttribute("answer", answer);
-        model.addAttribute("qnaId", answer.getQna().getId());
-        return "admin/board/qna/answer-edit";  // ✅ 경로 수정됨 (templates/admin/board/qna/answer-edit.html)
+        model.addAttribute("reply", reply);
+        model.addAttribute("qnaId", reply.getQna().getId());
+        return "admin/board/qna/reply-edit";
     }
 
-    /** ✅ 답변 수정 저장 */
-    @PostMapping("/answer/edit/{answerId}")
-    public String editAnswer(@PathVariable Long answerId,
-                             @RequestParam("content") String content) {
-        answerService.updateAnswer(answerId, content);
-        Long qnaId = answerService.findById(answerId).getQna().getId();
+    /** ✅ 리플라이 수정 저장 */
+    @PostMapping("/reply/edit/{replyId}")
+    public String editReply(@PathVariable Long replyId,
+                            @RequestParam("content") String content) {
+        qnaReplyService.updateReply(replyId, content);
+        Long qnaId = qnaReplyService.findById(replyId).getQna().getId();
         return "redirect:/admin/board/qna/" + qnaId;
     }
 
-    /** ✅ 답변 삭제 */
-    @PostMapping("/answer/delete/{answerId}")
-    public String deleteAnswer(@PathVariable Long answerId,
-                               @RequestParam("qnaId") Long qnaId) {
-        answerService.deleteAnswer(answerId);
+    /** ✅ 리플라이 삭제 */
+    @PostMapping("/reply/delete/{replyId}")
+    public String deleteReply(@PathVariable Long replyId,
+                              @RequestParam("qnaId") Long qnaId) {
+        qnaReplyService.deleteReply(replyId);
         return "redirect:/admin/board/qna/" + qnaId;
     }
 }
