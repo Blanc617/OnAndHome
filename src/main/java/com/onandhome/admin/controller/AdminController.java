@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     // ==================== 사용자 관리 ====================
+    /* 🚨 AdminUserController와 중복되므로 주석 처리 (2025-10-23)
     @GetMapping("/user/list")
     public String userList() {
         return "admin/user/list";
     }
-
+    */
     @GetMapping("/user/detail")
     public String userDetail() {
         return "admin/user/detail";

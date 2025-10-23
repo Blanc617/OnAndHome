@@ -48,21 +48,51 @@
                 <div class="dash-down gap-20">
                     <div class="dash-content">
                         <h3 class="dash-content-tit">회원 현황</h3>
-                        <div class="dash-content-inner mb-12">신규가입 회원<span class="dash-content-value"><a href="#">00</a></span>명</div>
-                        <div class="dash-content-inner mb-12">전체 회원<span class="dash-content-value"><a href="#">00</a></span>명</div>
-                        <div class="dash-content-inner mb-12">탈퇴 회원<span class="dash-content-value"><a href="#">00</a></span>명</div>
-                    </div>
+                        <div class="dash-content-inner mb-12">
+                            신규가입 회원
+                            <a th:href="@{/admin/user/list(type='new')}" style="text-decoration: none; color: inherit;">
+                                <span class="dash-content-value" style="margin-right: 5px;">00</span>명
+                            </a>
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            전체 회원
+                            <a th:href="@{/admin/user/list}" style="text-decoration: none; color: inherit;">
+                                <span class="dash-content-value" style="margin-right: 5px;">00</span>명
+                            </a>
+                        </div>
+
+                        <div class="dash-content-inner mb-12">
+                            탈퇴 회원
+                            <a th:href="@{/admin/user/list(type='quit')}" style="text-decoration: none; color: inherit;">
+                                <span class="dash-content-value" style="margin-right: 5px;">00</span>명
+                            </a>
+                        </div>
+                        </div>
                     <div class="dash-content">
                         <h3 class="dash-content-tit">게시판</h3>
-                        <div class="dash-content-inner mb-12">공지사항<span class="dash-content-value"><a href="#">00</a></span>건</div>
-                        <div class="dash-content-inner mb-12">고객리뷰<span class="dash-content-value"><a href="#">00</a></span>건</div>
-                        <div class="dash-content-inner mb-12">Q&A<span class="dash-content-value"><a href="#">00</a></span>건</div>
+                        <div class="dash-content-inner mb-12">
+                            공지사항
+                            <a th:href="@{/admin/board/notice/list}" style="text-decoration: none; color: inherit;">
+                                <span class="dash-content-value" style="margin-right: 5px;">00</span>건
+                            </a>
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            고객리뷰
+                            <a th:href="@{/admin/board/review/list}" style="text-decoration: none; color: inherit;">
+                                <span class="dash-content-value" style="margin-right: 5px;">00</span>건
+                            </a>
+                        </div>
+                        <div class="dash-content-inner mb-12">
+                            Q&A
+                            <a th:href="@{/admin/board/qna/list}" style="text-decoration: none; color: inherit;">
+                            <span class="dash-content-value" style="margin-right: 5px;">00</span>건
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>
