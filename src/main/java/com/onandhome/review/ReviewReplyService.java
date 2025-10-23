@@ -3,6 +3,8 @@ package com.onandhome.review;
 import com.onandhome.review.dto.ReviewReplyDTO;
 import com.onandhome.review.entity.Review;
 import com.onandhome.review.entity.ReviewReply;
+import com.onandhome.review.ReviewRepository;
+import com.onandhome.review.ReviewReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,38 +14,53 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 리뷰 답글 서비스
+ * ✅ 리뷰 답글 서비스
  */
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class ReviewReplyService {
 
-    private final ReviewRepository reviewRepository;
     private final ReviewReplyRepository reviewReplyRepository;
+    private final ReviewRepository reviewRepository;
 
-    /** ✅ 특정 리뷰의 답글 전체 조회 */
+    /** ✅ 리뷰 ID 기준으로 답글 조회 (DTO 변환 포함) */
+    @Transactional(readOnly = true)
     public List<ReviewReplyDTO> findByReviewId(Long reviewId) {
-        List<ReviewReply> replies = reviewReplyRepository.findAllByReviewIdWithReview(reviewId);
-        return replies.stream().map(ReviewReplyDTO::new).collect(Collectors.toList());
+        return reviewReplyRepository.findByReviewId(reviewId)
+                .stream()
+                .map(ReviewReplyDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
-    /** ✅ 단일 답글 조회 (수정용) */
+    /** ✅ 답글 단일 조회 */
+    @Transactional(readOnly = true)
     public ReviewReplyDTO findById(Long replyId) {
-        ReviewReply reply = reviewReplyRepository.findWithReviewById(replyId);
-        return new ReviewReplyDTO(reply);
+        ReviewReply reply = reviewReplyRepository.findById(replyId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 답글이 존재하지 않습니다. ID=" + replyId));
+        return ReviewReplyDTO.fromEntity(reply);
     }
 
-    /** ✅ 답글 등록 */
-    public void createReply(Long reviewId, String content) {
+    /** ✅ 답글 생성 (관리자 / 사용자 공통) */
+    public void createReply(Long reviewId, String content, String author, String username, Long userId) {
         Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다. ID=" + reviewId));
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다. ID=" + reviewId));
 
         ReviewReply reply = new ReviewReply();
         reply.setReview(review);
-        reply.setUsername("관리자"); // 로그인 연동 시 session 사용자로 교체 가능
         reply.setContent(content);
+        reply.setAuthor(author);
+        reply.setUsername(username);
+
+        // ✅ 관리자 계정이면 userId를 null 처리 (외래키 제약 회피)
+        if (userId != null && userId > 0) {
+            reply.setUserId(userId);
+        } else {
+            reply.setUserId(null);
+        }
+
         reply.setCreatedAt(LocalDateTime.now());
+        reply.setUpdatedAt(LocalDateTime.now());
 
         reviewReplyRepository.save(reply);
     }
@@ -51,7 +68,7 @@ public class ReviewReplyService {
     /** ✅ 답글 수정 */
     public void updateReply(Long replyId, String content) {
         ReviewReply reply = reviewReplyRepository.findById(replyId)
-                .orElseThrow(() -> new RuntimeException("답글을 찾을 수 없습니다. ID=" + replyId));
+                .orElseThrow(() -> new IllegalArgumentException("해당 답글이 존재하지 않습니다. ID=" + replyId));
 
         reply.setContent(content);
         reply.setUpdatedAt(LocalDateTime.now());
@@ -60,13 +77,9 @@ public class ReviewReplyService {
 
     /** ✅ 답글 삭제 */
     public void deleteReply(Long replyId) {
-        reviewReplyRepository.deleteById(replyId);
-    }
-
-    /** ✅ 답글이 속한 리뷰 ID 조회 */
-    public Long getReviewIdByReplyId(Long replyId) {
         ReviewReply reply = reviewReplyRepository.findById(replyId)
-                .orElseThrow(() -> new RuntimeException("답글을 찾을 수 없습니다. ID=" + replyId));
-        return reply.getReview().getId();
+                .orElseThrow(() -> new IllegalArgumentException("해당 답글이 존재하지 않습니다. ID=" + replyId));
+
+        reviewReplyRepository.delete(reply);
     }
 }
