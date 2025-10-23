@@ -109,26 +109,26 @@
             <col width="20%">
             <col width="30%">
           </colgroup>
-          <tbody>
+          <tbody id="deliveryInfoTable">
             <tr>
               <th>이름</th>
-              <td>모모</td>
+              <td id="deliveryName">-</td>
               <th>ID</th>
-              <td>momo</td>
+              <td id="deliveryUserId">-</td>
             </tr>
             <tr>
               <th>전화번호</th>
-              <td>010-1234-5678</td>
+              <td id="deliveryPhone">-</td>
               <th>e-mail</th>
-              <td>momo@naver.com</td>
+              <td id="deliveryEmail">-</td>
             </tr>
             <tr>
               <th>주소</th>
-              <td colspan="3">서울 강남구 청담동 456-789 JYP 13층</td>
+              <td colspan="3" id="deliveryAddress">-</td>
             </tr>
             <tr>
               <th>요청사항</th>
-              <td colspan="3">사장님 모르게 조심해서 배송부탁드려요</td>
+              <td colspan="3" id="deliveryRequest">-</td>
             </tr>            
           </tbody>
         </table>
@@ -142,10 +142,10 @@
             <col width="10%">
             <col width="">
           </colgroup>
-          <tbody>
+          <tbody id="orderInfoTable">
             <tr>
               <th>주문번호</th>
-              <td colspan="5">123456-456789</td>
+              <td colspan="5" id="orderNumber">-</td>
             </tr>
             <tr>
               <th>주문상품 리스트</th>
@@ -153,23 +153,15 @@
             </tr>
             <tr>
               <th>상품명</th>
-              <td>Dyson Pure Cool 공기청정기</td>
+              <td id="productName">-</td>
               <th>수량</th>
-              <td class="center">1</td>
+              <td class="center" id="quantity">-</td>
               <th>가격</th>
-              <td class="right">790,000</td>                                
-            </tr>
-            <tr>
-              <th>상품명</th>
-              <td>Apple iPhone 16 Pro</td>
-              <th>수량</th>
-              <td class="center">1</td>
-              <th>가격</th>
-              <td class="right">1,450,000</td>                                
+              <td class="right" id="price">-</td>                                
             </tr>            
             <tr class="high-50">
               <th>주문 합계</th>
-              <td colspan="5" class="right"><span class="price-b">2,240,000</span><span class="ml-12">원</span></td>
+              <td colspan="5" class="right"><span class="price-b" id="totalPrice">-</span><span class="ml-12">원</span></td>
             </tr>         
           </tbody>
         </table>
@@ -244,5 +236,101 @@
       </div>
     </footer>     
   </div>
+
+  <script>
+    /**
+     * 헤더의 로그인 상태 업데이트
+     */
+    function updateHeaderLoginStatus() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const loginGroupList = document.querySelector('.login-group-list');
+          if (loginGroupList) {
+            if (data.loggedIn && data.user) {
+              loginGroupList.innerHTML = `
+                <li><a href="/user/my_page">${data.user.username || data.user.userId}님</a></li>
+                <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
+                <li><a href="/user/my_order">주문내역</a></li>
+              `;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('헤더 업데이트 오류:', error);
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function logout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        sessionStorage.clear();
+        window.location.href = '/user/index';
+      }
+    }
+
+    /**
+     * 페이지 로드 시 배송정보 로드 및 헤더 업데이트
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      updateHeaderLoginStatus();
+      loadDeliveryInfo();
+    });
+
+    /**
+     * URL 파라미터 추출
+     */
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    /**
+     * 배송정보 및 주문정보 로드
+     */
+    function loadDeliveryInfo() {
+      const orderId = getUrlParameter('orderId');
+      const deliveryInfoJson = sessionStorage.getItem('deliveryInfo');
+
+      if (!deliveryInfoJson) {
+        alert('주문 정보를 찾을 수 없습니다.');
+        window.location.href = '/user/index';
+        return;
+      }
+
+      try {
+        const deliveryInfo = JSON.parse(deliveryInfoJson);
+
+        // 배송정보 표시
+        document.getElementById('deliveryName').textContent = deliveryInfo.name || '-';
+        document.getElementById('deliveryUserId').textContent = deliveryInfo.userId || '-';
+        document.getElementById('deliveryPhone').textContent = deliveryInfo.phone || '-';
+        document.getElementById('deliveryEmail').textContent = deliveryInfo.email || '-';
+        document.getElementById('deliveryAddress').textContent = deliveryInfo.address || '-';
+        document.getElementById('deliveryRequest').textContent = deliveryInfo.request || '없음';
+
+        // 주문정보 표시
+        document.getElementById('orderNumber').textContent = orderId || '-';
+        document.getElementById('productName').textContent = deliveryInfo.productName || '-';
+        document.getElementById('quantity').textContent = deliveryInfo.quantity || '1';
+        document.getElementById('price').textContent = formatPrice(deliveryInfo.price || 0);
+        document.getElementById('totalPrice').textContent = formatPrice(deliveryInfo.totalPrice || 0);
+
+      } catch (error) {
+        console.error('주문 정보 파싱 오류:', error);
+        alert('주문 정보 처리 중 오류가 발생했습니다.');
+        window.location.href = '/user/index';
+      }
+    }
+
+    /**
+     * 가격 포매팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  </script>
 </body>
 </html>
