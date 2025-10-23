@@ -87,6 +87,7 @@ public class UserService {
         if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
         if (userDTO.getPhone() != null) user.setPhone(userDTO.getPhone());
         if (userDTO.getGender() != null) user.setGender(userDTO.getGender());
+        if (userDTO.getNationality() != null) user.setNationality(userDTO.getNationality());
         if (userDTO.getBirthDate() != null) user.setBirthDate(userDTO.getBirthDate());
         if (userDTO.getAddress() != null) user.setAddress(userDTO.getAddress());
 

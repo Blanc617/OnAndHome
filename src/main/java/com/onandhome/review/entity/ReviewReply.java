@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * 리뷰 답글 엔티티 (DB 컬럼 완전 매칭 버전)
+ * 리뷰 답글 엔티티 (DB 컬럼 완전 매칭)
  */
 @Entity
 @Getter
@@ -14,41 +14,33 @@ import java.time.LocalDateTime;
 @Table(name = "review_reply")
 public class ReviewReply {
 
-    /** ✅ 기본키 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // 기본키
 
-    /** ✅ 답글 내용 */
-    @Column(name = "content", nullable = false, length = 1000)
-    private String content;
+    @Column(nullable = false, length = 1000)
+    private String content; // 답글 내용
 
-    /** ✅ 작성 시각 */
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now(); // 작성 시각
 
-    /** ✅ 부모 리뷰 (외래키) */
+    // ✅ 부모 리뷰 (외래키)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-    /** ✅ 사용자 ID (회원 고유 식별자, 선택적으로 사용 가능) */
     @Column(name = "user_id")
-    private Long userId;
+    private Long userId; // 회원 고유 식별자
 
-    /** ✅ 작성자 이름 (별칭, 표시용) */
     @Column(name = "author")
-    private String author;
+    private String author; // 작성자 별칭
 
-    /** ✅ 수정 시각 */
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    /** ✅ 작성자 계정명 (로그인 사용자명) */
     @Column(name = "username", nullable = false)
-    private String username;
+    private String username; // 로그인 계정명
 
-    /** ✅ 수정 시각 자동 업데이트 */
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt; // 수정 시각
+
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
