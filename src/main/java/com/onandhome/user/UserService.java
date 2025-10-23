@@ -19,9 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    /**
-     * ✅ 사용자 회원가입
-     */
+    /** ✅ 사용자 회원가입 */
     public UserDTO register(UserDTO userDTO) {
         if (userRepository.existsByUserId(userDTO.getUserId())) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
@@ -41,9 +39,7 @@ public class UserService {
         return UserDTO.fromEntity(savedUser);
     }
 
-    /**
-     * ✅ 사용자 로그인 (userId와 password 검증)
-     */
+    /** ✅ 로그인 (userId + password 검증) */
     public Optional<UserDTO> login(String userId, String password) {
         Optional<User> userOptional = userRepository.findByUserId(userId);
 
@@ -68,27 +64,21 @@ public class UserService {
         return Optional.empty();
     }
 
-    /**
-     * ✅ userId로 사용자 조회
-     */
+    /** ✅ userId로 사용자 조회 (DTO) */
     @Transactional(readOnly = true)
     public Optional<UserDTO> getUserByUserId(String userId) {
         return userRepository.findByUserId(userId)
                 .map(UserDTO::fromEntity);
     }
 
-    /**
-     * ✅ ID로 사용자 조회
-     */
+    /** ✅ ID로 사용자 조회 */
     @Transactional(readOnly = true)
     public Optional<UserDTO> getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserDTO::fromEntity);
     }
 
-    /**
-     * ✅ 사용자 정보 업데이트
-     */
+    /** ✅ 사용자 정보 업데이트 */
     public UserDTO updateUser(UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -105,9 +95,7 @@ public class UserService {
         return UserDTO.fromEntity(updatedUser);
     }
 
-    /**
-     * ✅ 비밀번호 변경
-     */
+    /** ✅ 비밀번호 변경 */
     public void changePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
@@ -121,21 +109,15 @@ public class UserService {
         log.info("비밀번호 변경: {}", user.getUserId());
     }
 
-    /**
-     * ✅ 사용자 삭제
-     */
+    /** ✅ 사용자 삭제 */
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-
         userRepository.delete(user);
         log.info("사용자 삭제: {}", user.getUserId());
     }
 
-    /**
-     * ✅ 현재 로그인한 사용자 반환 (Spring Security 기반)
-     * 로그인하지 않은 경우 예외 발생
-     */
+    /** ✅ 현재 로그인한 사용자 반환 */
     @Transactional(readOnly = true)
     public User getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -150,5 +132,29 @@ public class UserService {
 
         return userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다: " + userId));
+    }
+
+    /** ✅ 엔티티 직접 반환용 */
+    @Transactional(readOnly = true)
+    public User findByUserId(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 사용자가 존재하지 않습니다: " + userId));
+    }
+
+    /** ✅ 관리자 계정 조회용 */
+    @Transactional(readOnly = true)
+    public User getAdminUser() {
+        return userRepository.findByUserId("admin")
+                .orElseGet(() -> userRepository.findAll().stream()
+                        .filter(u -> u.getRole() != null && u.getRole() == 0)
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalStateException("관리자 계정을 찾을 수 없습니다.")));
+    }
+
+    /** ✅ username 기반 엔티티 직접 반환 (컨트롤러에서 사용됨) */
+    @Transactional(readOnly = true)
+    public User getUser(String username) {
+        return userRepository.findByUserId(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다: " + username));
     }
 }

@@ -1,38 +1,32 @@
 package com.onandhome.review.dto;
 
-import com.onandhome.review.entity.Review;
 import com.onandhome.review.entity.ReviewReply;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
+/** 리뷰 답글 DTO */
 @Getter
-@NoArgsConstructor
+@Setter
 public class ReviewReplyDTO {
 
     private Long id;
+    private Long reviewId;
     private String content;
     private String username;
+    private String author;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String reviewProductName;
 
-    // ✅ 엔티티 → DTO 변환
     public ReviewReplyDTO(ReviewReply reply) {
         this.id = reply.getId();
+        this.reviewId = reply.getReview() != null ? reply.getReview().getId() : null;
         this.content = reply.getContent();
+        this.username = reply.getUsername();
+        this.author = reply.getAuthor();
         this.createdAt = reply.getCreatedAt();
-        this.username = (reply.getUser() != null)
-                ? reply.getUser().getUsername() // ✅ User.username 필드 접근
-                : (reply.getAuthor() != null ? reply.getAuthor() : "관리자");
-    }
-
-    // ✅ DTO → 엔티티 변환
-    public ReviewReply toEntity(Review review) {
-        ReviewReply reply = new ReviewReply();
-        reply.setReview(review);
-        reply.setContent(this.content);
-        reply.setCreatedAt(LocalDateTime.now());
-        reply.setUser(null); // ✅ 나중에 로그인 유저 연결 시 주입
-        reply.setAuthor(this.username);
-        return reply;
+        this.updatedAt = reply.getUpdatedAt();
+        this.reviewProductName = reply.getReview() != null ? reply.getReview().getProductName() : null;
     }
 }
