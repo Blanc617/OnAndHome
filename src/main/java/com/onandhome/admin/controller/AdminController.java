@@ -2,6 +2,8 @@ package com.onandhome.admin.controller;
 
 import com.onandhome.order.OrderService;
 import com.onandhome.order.dto.OrderDTO;
+import com.onandhome.user.UserService;
+import com.onandhome.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +29,29 @@ import java.util.List;
 public class AdminController {
 
     private final OrderService orderService;
+    private final UserService userService;
 
     // ==================== 사용자 관리 ====================
     @GetMapping("/user/list")
-    public String userList() {
+    public String userList(Model model) {
+        try {
+            List<UserDTO> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+        } catch (Exception e) {
+            model.addAttribute("users", List.of());
+        }
         return "admin/user/list";
     }
 
     @GetMapping("/user/detail")
-    public String userDetail() {
+    public String userDetail(@RequestParam("id") Long userId, Model model) {
+        try {
+            UserDTO user = userService.getUserById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+            model.addAttribute("user", user);
+        } catch (Exception e) {
+            model.addAttribute("error", "사용자 정보를 불러올 수 없습니다.");
+        }
         return "admin/user/detail";
     }
 

@@ -151,6 +151,15 @@ public class UserService {
                         .orElseThrow(() -> new IllegalStateException("관리자 계정을 찾을 수 없습니다.")));
     }
 
+    /** ✅ 모든 사용자 조회 (관리자용) */
+    @Transactional(readOnly = true)
+    public java.util.List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .sorted((u1, u2) -> u2.getCreatedAt().compareTo(u1.getCreatedAt()))
+                .map(UserDTO::fromEntity)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
     /** ✅ username 기반 엔티티 직접 반환 (컨트롤러에서 사용됨) */
     @Transactional(readOnly = true)
     public User getUser(String username) {

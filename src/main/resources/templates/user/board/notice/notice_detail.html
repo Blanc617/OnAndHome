@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,10 +24,8 @@
             </ul>
           </div>
           <div class="login-group">
-            <ul class="login-group-list">
-              <li><a href="/user/login.html">로그인</a></li>
-              <li><a href="/user/regeist.html">회원가입</a></li>
-              <li><a href="/user/notice.html">공지사항</a></li>
+            <ul class="login-group-list" id="headerNav">
+              <!-- 동적으로 변경될 네비게이션 -->
             </ul>
           </div>
         </div>
@@ -35,15 +33,15 @@
       <!-- line02 -->
       <div class="on-header-top">
         <div class="on-header-inner2">
-          <a href=""><div class="header-logo-placeholder"></div></a>
+          <a href="/"><div class="header-logo-placeholder"></div></a>
           <div>
             <h1>On&Home</h1>
           </div>
           <div class="header-search-area">
             <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
             <ul class="header-icons">
-              <li class="ico-mypage"><a href="#"></a></li>
-              <li class="ico-cart"><a href="#"></a></li>
+              <li class="ico-mypage"><a href="/user/my_page"></a></li>
+              <li class="ico-cart"><a href="/user/cart"></a></li>
             </ul>
           </div>
         </div>
@@ -52,44 +50,8 @@
       <div class="on-header-top">
         <div class="on-header-inner">
           <div class="menu-wrapper">
-            <ul class="gnb">
-              <li>
-                <a href="#">TV/오디오</a>
-                <ul class="depth2">
-                  <li><a href="#">TV</a></li>
-                  <li><a href="#">오디오</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">주방가전</a>
-                <ul class="depth2">
-                  <li><a href="#">냉장고</a></li>
-                  <li><a href="#">전자렌지</a></li>
-                  <li><a href="#">식기세척기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">생활가전</a>
-                <ul class="depth2">
-                  <li><a href="#">세탁기</a></li>
-                  <li><a href="#">청소기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">에어컨/공기청정기</a>
-                <ul class="depth2">
-                  <li><a href="#">에어컨</a></li>
-                  <li><a href="#">공기청정기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">기타</a>
-                <ul class="depth2">
-                  <li><a href="#">정수기</a></li>
-                  <li><a href="#">안마의자</a></li>
-                  <li><a href="#">PC</a></li>
-                </ul>
-              </li>
+            <ul class="gnb" id="categoryMenu">
+              <!-- 동적으로 로드될 카테고리 메뉴 -->
             </ul>
           </div>
         </div>
@@ -101,31 +63,37 @@
     <div class="on-item02 mb-80 mt-80">
       <div class="on-item02-inner">
         <h2 class="sub-title line-under">공지사항</h2>
-        <div class="">
+        <div th:if="${error}">
+          <div class="on-comp-tbl-row">
+            <div class="on-comp-tbl-td col-12" style="text-align: center; padding: 40px;">
+              <h3 th:text="${error}">오류</h3>
+            </div>
+          </div>
+        </div>
+        <div th:if="${notice != null}">
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">번호</div>
-            <div class="on-comp-tbl-td col-10">01</div>
+            <div class="on-comp-tbl-td col-10" th:text="${notice.id}">번호</div>
           </div>
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">작성일자</div>
-            <div class="on-comp-tbl-td col-10">2025-01-01</div>
+            <div class="on-comp-tbl-td col-10" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}">작성일자</div>
+          </div>
+          <div class="on-comp-tbl-row">
+            <div class="on-comp-tbl-th col-2">작성자</div>
+            <div class="on-comp-tbl-td col-10" th:text="${notice.writer != null ? notice.writer : 'admin'}">작성자</div>
           </div>                    
           <div class="on-comp-tbl-row">
             <div class="on-comp-tbl-th col-2">제목</div>
-            <div class="on-comp-tbl-td col-10">
-              쇼핑몰 오픈입니다.
-            </div>
+            <div class="on-comp-tbl-td col-10" th:text="${notice.title}">제목</div>
           </div>  
           <div class="on-comp-tbl-row high-500">
             <div class="on-comp-tbl-th col-2">내용</div>
-            <div class="on-comp-tbl-td col-10 mt-20 items-start">
-              안녕하세요 온앤홈입니다. 쇼핑몰이 10월 19일부로 오픈하게 되었습니다.
-            </div>
+            <div class="on-comp-tbl-td col-10 mt-20 items-start" th:text="${notice.content}">내용</div>
           </div>        
         </div>
         <div class="flex justify-end mt-20">
-          <a href="/user/board/notice/notice_list.html"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
-          <!-- <a href="/admin/board/notice/edit.html"><button class="btn btn--tertiary">수정</button></a> -->
+          <a href="/user/board/notice/list"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
         </div>        
             
       </div>
@@ -164,7 +132,7 @@
         </div>
         <div class="footer-r">
           <div>
-            <span class="footer-number">Review 게시판</span>
+            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -179,7 +147,7 @@
                       
           </div>
           <div>
-            <span class="footer-number">Q&A 게시판</span>
+            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -191,13 +159,139 @@
                 <li>응대가 빠르고 친절합니다</li>
               </ul>
             </div>
-            
-                      
           </div>
-
         </div>
       </div>
     </footer>     
   </div>
+
+  <script>
+    /**
+     * 카테고리 데이터
+     */
+    const categoryData = [
+      {
+        parentName: 'TV/오디오',
+        children: ['TV', '오디오']
+      },
+      {
+        parentName: '주방가전',
+        children: ['냉장고', '전자렌지', '식기세척기']
+      },
+      {
+        parentName: '생활가전',
+        children: ['세탁기', '청소기']
+      },
+      {
+        parentName: '에어컨/공기청정기',
+        children: ['에어컨', '공기청정기']
+      },
+      {
+        parentName: '기타',
+        children: ['정수기', '안마의자', 'PC']
+      }
+    ];
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCategoryMenu();
+      loadHeaderNavigation();
+    });
+
+    /**
+     * 카테고리 메뉴 로드
+     */
+    function loadCategoryMenu() {
+      const categoryMenu = document.getElementById('categoryMenu');
+      categoryMenu.innerHTML = '';
+
+      categoryData.forEach(category => {
+        const li = document.createElement('li');
+        
+        const parentLink = document.createElement('a');
+        parentLink.href = '#';
+        parentLink.textContent = category.parentName;
+        parentLink.onclick = function(e) {
+          e.preventDefault();
+          return false;
+        };
+        
+        li.appendChild(parentLink);
+        
+        if (category.children && category.children.length > 0) {
+          const depth2 = document.createElement('ul');
+          depth2.className = 'depth2';
+          
+          category.children.forEach(child => {
+            const childLi = document.createElement('li');
+            const childLink = document.createElement('a');
+            childLink.href = `/user/product/category?category=${encodeURIComponent(child)}`;
+            childLink.textContent = child;
+            childLi.appendChild(childLink);
+            depth2.appendChild(childLi);
+          });
+          
+          li.appendChild(depth2);
+        }
+        
+        categoryMenu.appendChild(li);
+      });
+    }
+
+    /**
+     * 헤더 네비게이션 로드
+     */
+    function loadHeaderNavigation() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = '';
+
+          if (data.loggedIn) {
+            let navHTML = `
+              <li><a href="/user/my_page">마이페이지</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+
+            if (data.isAdmin) {
+              navHTML += `<li><a href="/admin/dashboard"><b>관리자</b></a></li>`;
+            }
+
+            navHTML += `
+              <li><a href="#" onclick="handleLogout(); return false;">로그아웃</a></li>
+            `;
+
+            headerNav.innerHTML = navHTML;
+          } else {
+            headerNav.innerHTML = `
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/signup">회원가입</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('세션 정보 조회 실패:', error);
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = `
+            <li><a href="/login">로그인</a></li>
+            <li><a href="/signup">회원가입</a></li>
+            <li><a href="/user/board/notice/list">공지사항</a></li>
+          `;
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function handleLogout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        window.location.href = '/logout';
+      }
+    }
+  </script>
 </body>
 </html>

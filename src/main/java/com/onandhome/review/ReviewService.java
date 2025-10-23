@@ -1,11 +1,16 @@
 package com.onandhome.review;
 
+import com.onandhome.admin.adminProduct.ProductRepository;
+import com.onandhome.admin.adminProduct.entity.Product;
 import com.onandhome.review.dto.ReviewDTO;
 import com.onandhome.review.entity.Review;
+import com.onandhome.user.UserRepository;
+import com.onandhome.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +24,8 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     /** ✅ 전체 리뷰 목록 조회 */
     @Transactional(readOnly = true)
@@ -60,5 +67,49 @@ public class ReviewService {
             throw new IllegalArgumentException("리뷰가 존재하지 않습니다. id=" + id);
         }
         reviewRepository.deleteById(id);
+    }
+
+    /** ✅ 상품별 리뷰 목록 조회 */
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> findByProductId(Long productId) {
+        List<Review> reviews = reviewRepository.findByProductIdOrderByCreatedAtDesc(productId);
+        
+        // ✅ 캐시 초기화
+        reviews.forEach(r -> {
+            r.getAuthor();
+            r.getProductName();
+            r.getContent();
+            r.getCreatedAt();
+        });
+
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    /** ✅ 리뷰 작성 */
+    @Transactional
+    public ReviewDTO createReview(Long productId, Long userId, String content, int rating) {
+        // 상품 조회
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+        
+        // 사용자 조회
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        
+        // 리뷰 생성
+        Review review = new Review();
+        review.setProduct(product);
+        review.setUser(user);
+        review.setContent(content);
+        review.setRating(rating);
+        review.setProductName(product.getName());
+        review.setAuthor(user.getUsername() != null ? user.getUsername() : user.getUserId());
+        review.setUsername(user.getUserId());
+        review.setCreatedAt(LocalDateTime.now());
+        
+        Review savedReview = reviewRepository.save(review);
+        return ReviewDTO.fromEntity(savedReview);
     }
 }

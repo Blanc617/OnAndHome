@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,10 +24,8 @@
             </ul>
           </div>
           <div class="login-group">
-            <ul class="login-group-list">
-              <li><a href="/user/login.html">로그인</a></li>
-              <li><a href="/user/regeist.html">회원가입</a></li>
-              <li><a href="/user/notice.html">공지사항</a></li>
+            <ul class="login-group-list" id="headerNav">
+              <!-- 동적으로 변경될 네비게이션 -->
             </ul>
           </div>
         </div>
@@ -35,15 +33,15 @@
       <!-- line02 -->
       <div class="on-header-top">
         <div class="on-header-inner2">
-          <a href=""><div class="header-logo-placeholder"></div></a>
+          <a href="/"><div class="header-logo-placeholder"></div></a>
           <div>
             <h1>On&Home</h1>
           </div>
           <div class="header-search-area">
             <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
             <ul class="header-icons">
-              <li class="ico-mypage"><a href="#"></a></li>
-              <li class="ico-cart"><a href="#"></a></li>
+              <li class="ico-mypage"><a href="/user/my_page"></a></li>
+              <li class="ico-cart"><a href="/user/cart"></a></li>
             </ul>
           </div>
         </div>
@@ -52,44 +50,8 @@
       <div class="on-header-top">
         <div class="on-header-inner">
           <div class="menu-wrapper">
-            <ul class="gnb">
-              <li>
-                <a href="#">TV/오디오</a>
-                <ul class="depth2">
-                  <li><a href="#">TV</a></li>
-                  <li><a href="#">오디오</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">주방가전</a>
-                <ul class="depth2">
-                  <li><a href="#">냉장고</a></li>
-                  <li><a href="#">전자렌지</a></li>
-                  <li><a href="#">식기세척기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">생활가전</a>
-                <ul class="depth2">
-                  <li><a href="#">세탁기</a></li>
-                  <li><a href="#">청소기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">에어컨/공기청정기</a>
-                <ul class="depth2">
-                  <li><a href="#">에어컨</a></li>
-                  <li><a href="#">공기청정기</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">기타</a>
-                <ul class="depth2">
-                  <li><a href="#">정수기</a></li>
-                  <li><a href="#">안마의자</a></li>
-                  <li><a href="#">PC</a></li>
-                </ul>
-              </li>
+            <ul class="gnb" id="categoryMenu">
+              <!-- 동적으로 로드될 카테고리 메뉴 -->
             </ul>
           </div>
         </div>
@@ -123,72 +85,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="center">01</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">쇼핑몰 오픈입니다.</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-10-18</td>
+                <tr th:if="${#lists.isEmpty(noticeList)}">
+                  <td colspan="4" class="center">등록된 공지사항이 없습니다.</td>
                 </tr>
-                <tr>
-                  <td class="center">02</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">추석 연휴 배송 일정 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-09-05</td>
-                </tr>
-                <tr>
-                  <td class="center">03</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">신규 회원 대상 할인 쿠폰 지급 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-09-20</td>
-                </tr>
-                <tr>
-                  <td class="center">04</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">시스템 점검으로 인한 서비스 일시 중단 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-08-14</td>
-                </tr>
-                <tr>
-                  <td class="center">05</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">여름 시즌 한정 세일 이벤트 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-07-01</td>
-                </tr>
-                <tr>
-                  <td class="center">06</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">적립금 제도 변경 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-06-15</td>
-                </tr>
-                <tr>
-                  <td class="center">07</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">배송지 정보 변경 기능 개선 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-05-28</td>
-                </tr>
-                <tr>
-                  <td class="center">08</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">신규 브랜드 입점 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-04-10</td>
-                </tr>
-                <tr>
-                  <td class="center">09</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">무료 배송 이벤트 종료 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-03-22</td>
-                </tr>
-                <tr>
-                  <td class="center">10</td>
-                  <td class="center"><a href="/user/board/notice/notice_detail.html">고객센터 운영시간 변경 안내</a></td>
-                  <td class="center">admin</td>
-                  <td class="center">2025-02-03</td>
+                <tr th:each="notice, iterStat : ${noticeList}">
+                  <td class="center" th:text="${#lists.size(noticeList) - iterStat.index}">번호</td>
+                  <td class="center">
+                    <a th:href="@{/user/board/notice/detail/{id}(id=${notice.id})}" th:text="${notice.title}">제목</a>
+                  </td>
+                  <td class="center" th:text="${notice.writer != null ? notice.writer : 'admin'}">작성자</td>
+                  <td class="center" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}">작성일자</td>
                 </tr>
               </tbody>
             </table>
           </div>                 
-          <!-- <div class="flex mb-20 mt-20 justify-end">
-            <a href="/admin/board/notice/write.html"><button class="btn btn--primary">등록</button></a>
-          </div>         -->
       </div>
     </div>  
     <footer class="footer-o">
@@ -225,7 +135,7 @@
         </div>
         <div class="footer-r">
           <div>
-            <span class="footer-number">Review 게시판</span>
+            <a href="/user/board/review/list"><span class="footer-number">Review 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -240,7 +150,7 @@
                       
           </div>
           <div>
-            <span class="footer-number">Q&A 게시판</span>
+            <a href="/user/board/qna/list"><span class="footer-number">Q&A 게시판</span></a>
             <div class="footer-review">
               <ul class="footer-title">
                 <li>배송 빠르고 좋아요!</li>
@@ -252,13 +162,139 @@
                 <li>응대가 빠르고 친절합니다</li>
               </ul>
             </div>
-            
-                      
           </div>
-
         </div>
       </div>
     </footer>     
   </div>
+
+  <script>
+    /**
+     * 카테고리 데이터
+     */
+    const categoryData = [
+      {
+        parentName: 'TV/오디오',
+        children: ['TV', '오디오']
+      },
+      {
+        parentName: '주방가전',
+        children: ['냉장고', '전자렌지', '식기세척기']
+      },
+      {
+        parentName: '생활가전',
+        children: ['세탁기', '청소기']
+      },
+      {
+        parentName: '에어컨/공기청정기',
+        children: ['에어컨', '공기청정기']
+      },
+      {
+        parentName: '기타',
+        children: ['정수기', '안마의자', 'PC']
+      }
+    ];
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCategoryMenu();
+      loadHeaderNavigation();
+    });
+
+    /**
+     * 카테고리 메뉴 로드
+     */
+    function loadCategoryMenu() {
+      const categoryMenu = document.getElementById('categoryMenu');
+      categoryMenu.innerHTML = '';
+
+      categoryData.forEach(category => {
+        const li = document.createElement('li');
+        
+        const parentLink = document.createElement('a');
+        parentLink.href = '#';
+        parentLink.textContent = category.parentName;
+        parentLink.onclick = function(e) {
+          e.preventDefault();
+          return false;
+        };
+        
+        li.appendChild(parentLink);
+        
+        if (category.children && category.children.length > 0) {
+          const depth2 = document.createElement('ul');
+          depth2.className = 'depth2';
+          
+          category.children.forEach(child => {
+            const childLi = document.createElement('li');
+            const childLink = document.createElement('a');
+            childLink.href = `/user/product/category?category=${encodeURIComponent(child)}`;
+            childLink.textContent = child;
+            childLi.appendChild(childLink);
+            depth2.appendChild(childLi);
+          });
+          
+          li.appendChild(depth2);
+        }
+        
+        categoryMenu.appendChild(li);
+      });
+    }
+
+    /**
+     * 헤더 네비게이션 로드
+     */
+    function loadHeaderNavigation() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = '';
+
+          if (data.loggedIn) {
+            let navHTML = `
+              <li><a href="/user/my_page">마이페이지</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+
+            if (data.isAdmin) {
+              navHTML += `<li><a href="/admin/dashboard"><b>관리자</b></a></li>`;
+            }
+
+            navHTML += `
+              <li><a href="#" onclick="handleLogout(); return false;">로그아웃</a></li>
+            `;
+
+            headerNav.innerHTML = navHTML;
+          } else {
+            headerNav.innerHTML = `
+              <li><a href="/login">로그인</a></li>
+              <li><a href="/signup">회원가입</a></li>
+              <li><a href="/user/board/notice/list">공지사항</a></li>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('세션 정보 조회 실패:', error);
+          const headerNav = document.getElementById('headerNav');
+          headerNav.innerHTML = `
+            <li><a href="/login">로그인</a></li>
+            <li><a href="/signup">회원가입</a></li>
+            <li><a href="/user/board/notice/list">공지사항</a></li>
+          `;
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function handleLogout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        window.location.href = '/logout';
+      }
+    }
+  </script>
 </body>
 </html>
