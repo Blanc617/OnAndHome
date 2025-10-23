@@ -289,7 +289,15 @@
     function loadOrderInfo() {
       const productId = getUrlParameter('productId');
       const quantity = getUrlParameter('quantity') || 1;
+      const fromCart = getUrlParameter('fromCart'); // 장바구니에서 온 경우
 
+      // 장바구니에서 온 경우
+      if (fromCart === 'true') {
+        loadCartOrderInfo();
+        return;
+      }
+
+      // 단일 상품 주문인 경우
       if (!productId) {
         alert('잘못된 접근입니다.');
         window.location.href = '/';
@@ -319,6 +327,87 @@
           alert('상품 정보를 불러올 수 없습니다.');
           window.location.href = '/';
         });
+    }
+
+    /**
+     * 장바구니 기반 주문 정보 로드
+     */
+    function loadCartOrderInfo() {
+      fetch('/api/cart')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('장바구니를 불러올 수 없습니다.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success && data.data && data.data.length > 0) {
+            // 장바구니 아이템을 전역 변수에 저장
+            window.cartItems = data.data;
+            displayCartOrderInfo();
+          } else {
+            alert('장바구니가 비어있습니다.');
+            window.location.href = '/user/cart';
+          }
+        })
+        .catch(error => {
+          console.error('장바구니 로드 오류:', error);
+          alert('장바구니 정보를 불러올 수 없습니다.');
+          window.location.href = '/user/cart';
+        });
+    }
+
+    /**
+     * 장바구니 주문 정보 표시
+     */
+    function displayCartOrderInfo() {
+      if (!window.cartItems || window.cartItems.length === 0) return;
+
+      // 주문번호 생성
+      const orderNumber = generateOrderNumber();
+      
+      // 주문정보 테이블 수정
+      const tableBody = document.querySelector('table.table:nth-of-type(2) tbody');
+      
+      let totalPrice = 0;
+      let itemsHtml = '';
+
+      // 각 장바구니 아이템에 대한 행 생성
+      window.cartItems.forEach(item => {
+        const product = item.product;
+        const quantity = item.quantity;
+        const price = product.salePrice > 0 ? product.salePrice : product.price;
+        const itemTotal = price * quantity;
+        totalPrice += itemTotal;
+
+        itemsHtml += `
+          <tr>
+            <th>상품명</th>
+            <td>${product.name}</td>
+            <th>수량</th>
+            <td class="center">${quantity}</td>
+            <th>가격</th>
+            <td class="right">${formatPrice(itemTotal)}</td>
+          </tr>
+        `;
+      });
+
+      // 테이블 내용 교체
+      tableBody.innerHTML = `
+        <tr>
+          <th>주문번호</th>
+          <td colspan="5">${orderNumber}</td>
+        </tr>
+        <tr>
+          <th>주문상품 리스트</th>
+          <th colspan="5"></th>
+        </tr>
+        ${itemsHtml}
+        <tr class="high-50">
+          <th>주문 합계</th>
+          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+        </tr>
+      `;
     }
 
     /**
@@ -468,9 +557,77 @@
         return;
       }
 
-      // 배송정보 및 상품정보 준비
-      const productId = getUrlParameter('productId');
+      const fromCart = getUrlParameter('fromCart');
       const userId = window.currentUserId;
+
+      // 장바구니 기반 주문
+      if (fromCart === 'true' && window.cartItems) {
+        processCartOrder(userId, name, phone, address);
+      } else {
+        // 단일 상품 주문
+        processSingleProductOrder(userId, name, phone, address);
+      }
+    });
+
+    /**
+     * 장바구니 기반 주문 처리
+     */
+    function processCartOrder(userId, name, phone, address) {
+      // 장바구니 아이템을 orderItems 형식으로 변환
+      const orderItems = window.cartItems.map(item => ({
+        productId: item.product.id,
+        quantity: item.quantity
+      }));
+
+      const createOrderRequest = {
+        userId: userId,
+        orderItems: orderItems
+      };
+
+      // 서버에 주문 생성 API 호출
+      fetch('/api/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createOrderRequest)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.data) {
+          const orderId = data.data.id;
+          
+          // 배송정보 저장 후 order 페이지로 이동
+          const deliveryInfo = {
+            orderId: orderId,
+            name: name,
+            userId: document.getElementById('deliveryId').value,
+            phone: phone,
+            email: document.getElementById('deliveryEmail').value,
+            address: address,
+            request: document.getElementById('deliveryRequest').value.trim()
+          };
+
+          sessionStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+          
+          // order 페이지로 이동
+          alert('주문이 완료되었습니다!');
+          window.location.href = '/user/my_order';
+        } else {
+          alert('주문 생성에 실패했습니다: ' + (data.message || '알 수 없는 오류'));
+        }
+      })
+      .catch(error => {
+        console.error('주문 생성 오류:', error);
+        alert('주문 생성 중 오류가 발생했습니다.');
+      });
+    }
+
+    /**
+     * 단일 상품 주문 처리
+     */
+    function processSingleProductOrder(userId, name, phone, address) {
+      const productId = getUrlParameter('productId');
       
       // 가격 계산
       const price = orderProduct.salePrice && orderProduct.salePrice > 0 
@@ -478,7 +635,7 @@
         : orderProduct.price;
       const totalPrice = price * orderQuantity;
 
-      // 주문 생성 요청 (userId는 이미 Long 타입)
+      // 주문 생성 요청
       const createOrderRequest = {
         userId: userId,
         orderItems: [
@@ -520,8 +677,9 @@
 
           sessionStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
           
-          // order 페이지로 이동 (컨트롤러가 처리함)
-          window.location.href = '/user/order?orderId=' + orderId;
+          // order 페이지로 이동
+          alert('주문이 완료되었습니다!');
+          window.location.href = '/user/my_order';
         } else {
           alert('주문 생성에 실패했습니다: ' + (data.message || '알 수 없는 오류'));
         }
@@ -530,7 +688,7 @@
         console.error('주문 생성 오류:', error);
         alert('주문 생성 중 오류가 발생했습니다.');
       });
-    });
+    }
   </script>
 </body>
 </html>

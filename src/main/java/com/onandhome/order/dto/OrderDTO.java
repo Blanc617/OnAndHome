@@ -20,6 +20,9 @@ public class OrderDTO {
     private Long userId;
     private String userIdStr;
     private String username;
+    private String userEmail;
+    private String userPhone;
+    private String userAddress;
     private String status;
     private int totalPrice;
     private List<OrderItemDTO> orderItems;
@@ -37,6 +40,9 @@ public class OrderDTO {
                 .userId(order.getUser().getId())
                 .userIdStr(order.getUser().getUserId())
                 .username(order.getUser().getUsername())
+                .userEmail(order.getUser().getEmail())
+                .userPhone(order.getUser().getPhone())
+                .userAddress(order.getUser().getAddress())
                 .status(order.getStatus().toString())
                 .totalPrice(order.getTotalPrice())
                 .orderItems(orderItemDTOs)
