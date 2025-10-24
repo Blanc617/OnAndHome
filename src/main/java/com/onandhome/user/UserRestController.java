@@ -103,4 +103,45 @@ public class UserRestController {
             return ResponseEntity.status(500).body(response);
         }
     }
+
+    /**
+     * 회원 탈퇴
+     * DELETE /api/user/withdraw
+     */
+    @DeleteMapping("/withdraw")
+    public ResponseEntity<Map<String, Object>> withdrawUser(HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            log.info("회원 탈퇴 요청");
+            
+            // 세션에서 사용자 정보 가져오기
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+            
+            if (loginUser == null) {
+                log.warn("세션에 사용자 정보가 없음");
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return ResponseEntity.status(401).body(response);
+            }
+            
+            Long userId = loginUser.getId();
+            String userIdStr = loginUser.getUserId();
+            
+            // 사용자 삭제
+            userService.deleteUser(userId);
+            
+            // 세션 무효화
+            session.invalidate();
+            
+            response.put("success", true);
+            response.put("message", "회원 탈퇴가 완료되었습니다.");
+            log.info("회원 탈퇴 성공 - userId: {}", userIdStr);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("회원 탈퇴 오류", e);
+            response.put("success", false);
+            response.put("message", "회원 탈퇴 중 오류가 발생했습니다: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
+    }
 }
