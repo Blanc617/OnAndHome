@@ -325,7 +325,7 @@
 
         // 페이지 타이틀 변경
         document.title = product.name + ' - On&Home';
-        
+
         // 합계금액 초기화
         updateTotalPrice();
     }
@@ -366,12 +366,12 @@
         if (!currentProduct) {
             return;
         }
-        
+
         // 할인가격이 있으면 할인가격 사용, 없으면 정상가격 사용
-        const pricePerUnit = (currentProduct.salePrice && currentProduct.salePrice < currentProduct.price) 
-            ? currentProduct.salePrice 
+        const pricePerUnit = (currentProduct.salePrice && currentProduct.salePrice < currentProduct.price)
+            ? currentProduct.salePrice
             : currentProduct.price;
-        
+
         const totalPrice = pricePerUnit * orderQuantity;
         document.getElementById('totalPrice').textContent = formatPrice(totalPrice);
     }
