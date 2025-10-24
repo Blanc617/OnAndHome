@@ -162,6 +162,7 @@ html, body {width:100%; height:100%; background-color:#fff}
 .ml-12 { margin-left: 12px !important}
 .ml-16 { margin-left: 16px !important}
 .ml-20 { margin-left: 20px !important}
+.ml-200 { margin-left: 200px !important}
 
 /* padding left */
 .pl-20 {padding-left: 20px !important;}
