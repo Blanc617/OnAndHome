@@ -1,0 +1,38 @@
+<th:block th:fragment="sidebar">
+    <div class="on-side-menu">
+        <div class="side-menu-logo">
+            <a th:href="@{/admin/dashboard}"><h2 class="header-logo"></h2></a>
+        </div>
+
+        <div class="on-side-menu-nav">
+            <ul class="side-menu-list">
+                <li><a th:href="@{/admin/order/list}"><span class="ico_order"></span>주문관리</a></li>
+                <li><a th:href="@{/admin/product/list}"><span class="ico_item"></span>상품관리</a></li>
+                <li>
+                    <a th:href="@{/admin/board/dashboard}"><span class="ico_board"></span>게시판관리</a>
+                    <ul>
+                        <li><a th:href="@{/admin/board/dashboard}">게시판 전체보기</a></li>
+                        <li><a th:href="@{/admin/board/notice/list}">공지사항</a></li>
+                        <li><a th:href="@{/admin/board/review/list}">리뷰</a></li>
+                        <li><a th:href="@{/admin/board/qna/list}">Q&amp;A</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/admin/user/list}"><span class="ico_member"></span>회원관리</a></li>
+            </ul>
+        </div>
+
+        <div class="on-side-menu-user">
+            <span class="on-side-menu-id">Admin</span><span>님</span><br>
+            <span>안녕하세요</span>
+            <div class="on-side-menu-logout">
+                <span style="font-size: 16px;">logout</span>
+                <a th:href="@{/login}">
+                    <button class="log-out"></button>
+                </a>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+

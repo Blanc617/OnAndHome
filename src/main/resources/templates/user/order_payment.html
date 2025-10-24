@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On&Home</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+  
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-main-wrap">
+    <!-- 헤더 -->
+    <header class="on-header">
+      <!-- line01 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div>
+            <ul class="sns-list">
+              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>
+              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>
+              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>
+              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>
+            </ul>
+          </div>
+          <div class="login-group">
+            <ul class="login-group-list">
+              <li><a href="/user/login.html">로그인</a></li>
+              <li><a href="/user/regeist.html">회원가입</a></li>
+              <li><a href="/user/notice.html">공지사항</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- line02 -->
+      <div class="on-header-top">
+        <div class="on-header-inner2">
+          <a href=""><div class="header-logo-placeholder"></div></a>
+          <div>
+            <h1>On&Home</h1>
+          </div>
+          <div class="header-search-area">
+            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
+            <ul class="header-icons">
+              <li class="ico-mypage"><a href="#"></a></li>
+              <li class="ico-cart"><a href="#"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 메뉴 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div class="menu-wrapper">
+            <ul class="gnb">
+              <li>
+                <a href="#">TV/오디오</a>
+                <ul class="depth2">
+                  <li><a href="#">TV</a></li>
+                  <li><a href="#">오디오</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">주방가전</a>
+                <ul class="depth2">
+                  <li><a href="#">냉장고</a></li>
+                  <li><a href="#">전자렌지</a></li>
+                  <li><a href="#">식기세척기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">생활가전</a>
+                <ul class="depth2">
+                  <li><a href="#">세탁기</a></li>
+                  <li><a href="#">청소기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">에어컨/공기청정기</a>
+                <ul class="depth2">
+                  <li><a href="#">에어컨</a></li>
+                  <li><a href="#">공기청정기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">기타</a>
+                <ul class="depth2">
+                  <li><a href="#">정수기</a></li>
+                  <li><a href="#">안마의자</a></li>
+                  <li><a href="#">PC</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>      
+    </header>
+
+
+     <!-- 아이템영역2  -->
+    <div class="on-item02 mb-80 mt-80">
+      <div class="on-item02-inner">
+        <h2 class="sub-title line-under">주문/결제</h2>
+        <h3 class="mb-20">배송정보</h3>
+        <table class="table mb-40">
+          <colgroup>
+            <col width="20%">
+            <col width="30%">
+            <col width="20%">
+            <col width="30%">
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>이름</th>
+              <td>
+                <input class="input w-full" id="deliveryName">
+              </td>
+              <th>ID</th>
+              <td>
+                <input class="input w-full" id="deliveryId" readonly>                
+              </td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td>
+                <input class="input w-full" id="deliveryPhone">                
+              </td>
+              <th>e-mail</th>
+              <td>
+                <input class="input w-full" id="deliveryEmail" readonly>                
+              </td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td colspan="3">
+                <input class="input w-full" id="deliveryAddress">                
+              </td>
+            </tr>
+            <tr>
+              <th>요청사항</th>
+              <td colspan="3">
+                <textarea class="textarea w-full" id="deliveryRequest"></textarea>
+              </td>
+            </tr>            
+          </tbody>
+        </table>
+        <h3 class="mb-20">주문정보</h3>
+        <table class="table">
+          <colgroup>
+            <col width="20%">
+            <col width="35%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="">
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>주문번호</th>
+              <td colspan="5">123456-456789</td>
+            </tr>
+            <tr>
+              <th>주문상품 리스트</th>
+              <th colspan="5"></th>
+            </tr>
+            <tr>
+              <th>상품명</th>
+              <td>Dyson Pure Cool 공기청정기</td>
+              <th>수량</th>
+              <td class="center">1</td>
+              <th>가격</th>
+              <td class="right">790,000</td>                                
+            </tr>
+            <tr>
+              <th>상품명</th>
+              <td>Apple iPhone 16 Pro</td>
+              <th>수량</th>
+              <td class="center">1</td>
+              <th>가격</th>
+              <td class="right">1,450,000</td>                                
+            </tr>            
+            <tr class="high-50">
+              <th>주문 합계</th>
+              <td colspan="5" class="right"><span class="price-b">2,240,000</span><span class="ml-12">원</span></td>
+            </tr>         
+          </tbody>
+        </table>
+      </div>
+      <div class="btn-group justify-center mt-40">
+          <button class="btn btn-buy" id="btnPay">결제하기</button>
+      </div>       
+    </div>  
+    <footer class="footer-o">
+      <div class="footer-wrapper">
+        <div class="footer-l">
+          <div>고객센터 <span class="footer-number">1544-7777</span></div>
+          <div class="flex mt-20">
+            <div>
+              <ul class="footer-title">
+                <li>회사명</li>
+                <li>대표</li>
+                <li>팩스</li>
+                <li>이메일</li>
+                <li>주소</li>
+                <li>사업자등록번호</li>
+                <li>통신판매업신고</li>
+                <li>개인정보 책임자</li>
+              </ul>
+            </div>
+            <div class="ml-20">
+              <ul class="footer-title">
+                <li>(주)하이미디어</li>
+                <li>이상혁</li>
+                <li>02-1544-7778</li>
+                <li>faker@naver.com</li>
+                <li>서울 서초구 서초동 123-456</li>
+                <li>123-456789</li>
+                <li>카456-7894</li>
+                <li>최우제</li>
+              </ul>
+            </div>            
+          </div>
+
+        </div>
+        <div class="footer-r">
+          <div>
+            <span class="footer-number">Review 게시판</span>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+                      
+          </div>
+          <div>
+            <span class="footer-number">Q&A 게시판</span>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+            
+                      
+          </div>
+
+        </div>
+      </div>
+    </footer>     
+  </div>
+
+  <script>
+    // 전역 변수: 주문 상품 정보
+    let orderProduct = null;
+    let orderQuantity = 1;
+    let currentUserId = null;
+
+    /**
+     * 페이지 로드
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      loadOrderInfo();
+      loadUserInfo();
+    });
+
+    /**
+     * URL 파라미터에서 상품 ID 추출
+     */
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    /**
+     * 주문 정보 로드
+     */
+    function loadOrderInfo() {
+      const productId = getUrlParameter('productId');
+      const quantity = getUrlParameter('quantity') || 1;
+      const fromCart = getUrlParameter('fromCart'); // 장바구니에서 온 경우
+
+      // 장바구니에서 온 경우
+      if (fromCart === 'true') {
+        loadCartOrderInfo();
+        return;
+      }
+
+      // 단일 상품 주문인 경우
+      if (!productId) {
+        alert('잘못된 접근입니다.');
+        window.location.href = '/';
+        return;
+      }
+
+      orderQuantity = parseInt(quantity);
+
+      // 상품 정보 로드
+      fetch(`/api/products/${productId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('상품을 찾을 수 없습니다.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success && data.data) {
+            orderProduct = data.data;
+            displayOrderInfo();
+          } else {
+            throw new Error('상품 정보를 불러올 수 없습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('상품 로드 오류:', error);
+          alert('상품 정보를 불러올 수 없습니다.');
+          window.location.href = '/';
+        });
+    }
+
+    /**
+     * 장바구니 기반 주문 정보 로드
+     */
+    function loadCartOrderInfo() {
+      fetch('/api/cart')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('장바구니를 불러올 수 없습니다.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success && data.data && data.data.length > 0) {
+            // 장바구니 아이템을 전역 변수에 저장
+            window.cartItems = data.data;
+            displayCartOrderInfo();
+          } else {
+            alert('장바구니가 비어있습니다.');
+            window.location.href = '/user/cart';
+          }
+        })
+        .catch(error => {
+          console.error('장바구니 로드 오류:', error);
+          alert('장바구니 정보를 불러올 수 없습니다.');
+          window.location.href = '/user/cart';
+        });
+    }
+
+    /**
+     * 장바구니 주문 정보 표시
+     */
+    function displayCartOrderInfo() {
+      if (!window.cartItems || window.cartItems.length === 0) return;
+
+      // 주문번호 생성
+      const orderNumber = generateOrderNumber();
+      
+      // 주문정보 테이블 수정
+      const tableBody = document.querySelector('table.table:nth-of-type(2) tbody');
+      
+      let totalPrice = 0;
+      let itemsHtml = '';
+
+      // 각 장바구니 아이템에 대한 행 생성
+      window.cartItems.forEach(item => {
+        const product = item.product;
+        const quantity = item.quantity;
+        const price = product.salePrice > 0 ? product.salePrice : product.price;
+        const itemTotal = price * quantity;
+        totalPrice += itemTotal;
+
+        itemsHtml += `
+          <tr>
+            <th>상품명</th>
+            <td>${product.name}</td>
+            <th>수량</th>
+            <td class="center">${quantity}</td>
+            <th>가격</th>
+            <td class="right">${formatPrice(itemTotal)}</td>
+          </tr>
+        `;
+      });
+
+      // 테이블 내용 교체
+      tableBody.innerHTML = `
+        <tr>
+          <th>주문번호</th>
+          <td colspan="5">${orderNumber}</td>
+        </tr>
+        <tr>
+          <th>주문상품 리스트</th>
+          <th colspan="5"></th>
+        </tr>
+        ${itemsHtml}
+        <tr class="high-50">
+          <th>주문 합계</th>
+          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+        </tr>
+      `;
+    }
+
+    /**
+     * 주문 정보 표시
+     */
+    function displayOrderInfo() {
+      if (!orderProduct) return;
+
+      // 주문번호 생성 (현재 시간 기반)
+      const orderNumber = generateOrderNumber();
+      
+      // 주문정보 테이블 수정
+      const tableBody = document.querySelector('table.table:nth-of-type(2) tbody');
+      
+      // 가격 계산 (할인가가 있으면 할인가, 없으면 정상가)
+      const price = orderProduct.salePrice && orderProduct.salePrice > 0 
+        ? orderProduct.salePrice 
+        : orderProduct.price;
+      const totalPrice = price * orderQuantity;
+
+      // 테이블 내용 교체
+      tableBody.innerHTML = `
+        <tr>
+          <th>주문번호</th>
+          <td colspan="5">${orderNumber}</td>
+        </tr>
+        <tr>
+          <th>주문상품 리스트</th>
+          <th colspan="5"></th>
+        </tr>
+        <tr>
+          <th>상품명</th>
+          <td>${orderProduct.name}</td>
+          <th>수량</th>
+          <td class="center">${orderQuantity}</td>
+          <th>가격</th>
+          <td class="right">${formatPrice(price)}</td>
+        </tr>
+        <tr class="high-50">
+          <th>주문 합계</th>
+          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+        </tr>
+      `;
+    }
+
+    /**
+     * 주문번호 생성
+     */
+    function generateOrderNumber() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      return `${year}${month}${day}-${random}`;
+    }
+
+    /**
+     * 가격 포매팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    /**
+     * 사용자 정보 로드
+     */
+    function loadUserInfo() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          if (data.loggedIn && data.user) {
+            // 배송정보 필드에 사용자 정보 자동 로드
+            // id는 숨겨진 전역 변수로 저장 (주문 생성 시 사용)
+            window.currentUserId = data.user.id;
+            document.getElementById('deliveryName').value = data.user.username || '';
+            document.getElementById('deliveryId').value = data.user.userId || '';
+            document.getElementById('deliveryPhone').value = data.user.phone || '';
+            document.getElementById('deliveryEmail').value = data.user.email || '';
+            document.getElementById('deliveryAddress').value = data.user.address || '';
+            document.getElementById('deliveryRequest').value = '';
+            
+            // 헤더의 로그인/로그아웃 버튼 업데이트
+            updateHeaderLoginStatus(data.user);
+          } else {
+            // 로그인하지 않은 경우 로그인 페이지로 이동
+            alert('로그인이 필요합니다.');
+            window.location.href = '/user/login.html';
+          }
+        })
+        .catch(error => {
+          console.error('사용자 정보 로드 실패:', error);
+          alert('사용자 정보를 불러올 수 없습니다.');
+          window.location.href = '/user/login.html';
+        });
+    }
+
+    /**
+     * 헤더의 로그인 상태 업데이트
+     */
+    function updateHeaderLoginStatus(user) {
+      const loginGroupList = document.querySelector('.login-group-list');
+      if (loginGroupList && user) {
+        loginGroupList.innerHTML = `
+          <li><a href="/user/my_page">${user.username || user.userId}님</a></li>
+          <li><a href="/api/user/logout" onclick="logout(); return false;">로그아웃</a></li>
+          <li><a href="/user/my_order">주문내역</a></li>
+        `;
+      }
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function logout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        // 세션 종료 (필요시 API 호출)
+        sessionStorage.clear();
+        window.location.href = '/user/index';
+      }
+    }
+
+    /**
+     * 결제하기 버튼 이벤트
+     */
+    document.getElementById('btnPay').addEventListener('click', function() {
+      // 배송정보 검증 (수정 가능한 필드만 확인)
+      const name = document.getElementById('deliveryName').value.trim();
+      const phone = document.getElementById('deliveryPhone').value.trim();
+      const address = document.getElementById('deliveryAddress').value.trim();
+
+      if (!name) {
+        alert('이름을 입력해주세요.');
+        document.getElementById('deliveryName').focus();
+        return;
+      }
+
+      if (!phone) {
+        alert('전화번호를 입력해주세요.');
+        document.getElementById('deliveryPhone').focus();
+        return;
+      }
+
+      if (!address) {
+        alert('주소를 입력해주세요.');
+        document.getElementById('deliveryAddress').focus();
+        return;
+      }
+
+      const fromCart = getUrlParameter('fromCart');
+      const userId = window.currentUserId;
+
+      // 장바구니 기반 주문
+      if (fromCart === 'true' && window.cartItems) {
+        processCartOrder(userId, name, phone, address);
+      } else {
+        // 단일 상품 주문
+        processSingleProductOrder(userId, name, phone, address);
+      }
+    });
+
+    /**
+     * 장바구니 기반 주문 처리
+     */
+    function processCartOrder(userId, name, phone, address) {
+      // 장바구니 아이템을 orderItems 형식으로 변환
+      const orderItems = window.cartItems.map(item => ({
+        productId: item.product.id,
+        quantity: item.quantity
+      }));
+
+      const createOrderRequest = {
+        userId: userId,
+        orderItems: orderItems
+      };
+
+      // 서버에 주문 생성 API 호출
+      fetch('/api/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createOrderRequest)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.data) {
+          const orderId = data.data.id;
+          
+          // 배송정보 저장 후 order 페이지로 이동
+          const deliveryInfo = {
+            orderId: orderId,
+            name: name,
+            userId: document.getElementById('deliveryId').value,
+            phone: phone,
+            email: document.getElementById('deliveryEmail').value,
+            address: address,
+            request: document.getElementById('deliveryRequest').value.trim()
+          };
+
+          sessionStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+          
+          // order 페이지로 이동
+          alert('주문이 완료되었습니다!');
+          window.location.href = '/user/my_order';
+        } else {
+          alert('주문 생성에 실패했습니다: ' + (data.message || '알 수 없는 오류'));
+        }
+      })
+      .catch(error => {
+        console.error('주문 생성 오류:', error);
+        alert('주문 생성 중 오류가 발생했습니다.');
+      });
+    }
+
+    /**
+     * 단일 상품 주문 처리
+     */
+    function processSingleProductOrder(userId, name, phone, address) {
+      const productId = getUrlParameter('productId');
+      
+      // 가격 계산
+      const price = orderProduct.salePrice && orderProduct.salePrice > 0 
+        ? orderProduct.salePrice 
+        : orderProduct.price;
+      const totalPrice = price * orderQuantity;
+
+      // 주문 생성 요청
+      const createOrderRequest = {
+        userId: userId,
+        orderItems: [
+          {
+            productId: parseInt(productId),
+            quantity: orderQuantity
+          }
+        ]
+      };
+
+      // 서버에 주문 생성 API 호출
+      fetch('/api/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(createOrderRequest)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.data) {
+          const orderId = data.data.id;
+          
+          // 배송정보 저장 후 order 페이지로 이동
+          const deliveryInfo = {
+            orderId: orderId,
+            name: name,
+            userId: document.getElementById('deliveryId').value,
+            phone: phone,
+            email: document.getElementById('deliveryEmail').value,
+            address: address,
+            request: document.getElementById('deliveryRequest').value.trim(),
+            productId: parseInt(productId),
+            quantity: orderQuantity,
+            productName: orderProduct.name,
+            price: price,
+            totalPrice: totalPrice
+          };
+
+          sessionStorage.setItem('deliveryInfo', JSON.stringify(deliveryInfo));
+          
+          // order 페이지로 이동
+          alert('주문이 완료되었습니다!');
+          window.location.href = '/user/my_order';
+        } else {
+          alert('주문 생성에 실패했습니다: ' + (data.message || '알 수 없는 오류'));
+        }
+      })
+      .catch(error => {
+        console.error('주문 생성 오류:', error);
+        alert('주문 생성 중 오류가 발생했습니다.');
+      });
+    }
+  </script>
+</body>
+</html>
