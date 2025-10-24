@@ -415,21 +415,6 @@
             reviewList.innerHTML = '<div class="rep"><div>등록된 리뷰가 없습니다.</div></div>';
             return;
         }
-<<<<<<< HEAD
-=======
-        qnaContainer.innerHTML = '';
-        qnaList.forEach(q => {
-            const replies = (q.replies || []).map(r =>
-                `<li>${escapeHtml(r.responder || '관리자')}: ${escapeHtml(r.content || '')}</li>`).join('');
-            qnaContainer.insertAdjacentHTML('beforeend', `
-        <div class="rep">
-          <div><b>${escapeHtml(q.title || '상품 문의')}</b> (${escapeHtml(q.writer || '익명')})</div>
-          <div>${escapeHtml(q.question || '')}</div>
-          ${replies ? `<ul>${replies}</ul>` : ''}
-          <div class="border-1p-nm"></div>
-        </div>
-      `);
->>>>>>> 1e3bf3ac6456368a167668d59e61764ba7d25d0f
 
         reviewList.innerHTML = '';
         reviews.forEach(review => {
