@@ -1,102 +1,104 @@
+<!-- 📂 위치: templates/admin/board/qna/detail.html -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>온앤홈 관리자</title>
+    <title>Q&A 상세보기</title>
     <link rel="stylesheet" href="/css/import.css" />
-    <script src="/js/oncommon.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const qnaId = window.location.pathname.split("/").pop();
+            const qnaUrl = `/api/admin/qna/${qnaId}`;
+            const replyUrl = `/api/admin/qna/${qnaId}/replies`;
+
+            try {
+                const [qnaRes, replyRes] = await Promise.all([
+                    fetch(qnaUrl),
+                    fetch(replyUrl)
+                ]);
+                const qna = await qnaRes.json();
+                const replies = await replyRes.json();
+
+                document.getElementById("qna-id").textContent = qna.id;
+                document.getElementById("qna-title").textContent = qna.title;
+                document.getElementById("qna-writer").textContent = qna.writer;
+                document.getElementById("qna-question").textContent = qna.question;
+                document.getElementById("qna-created").textContent =
+                    qna.createdAt.replace('T', ' ').slice(0, 16);
+
+                const replyContainer = document.getElementById("reply-container");
+                replyContainer.innerHTML = "";
+
+                replies.forEach(r => {
+                    replyContainer.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                        <div class="on-comp-tbl-row mt-10">
+                            <div class="on-comp-tbl-th col-2">${r.responder}</div>
+                            <div class="on-comp-tbl-td col-10 flex justify-between items-start">
+                                <div class="mr-4">${r.content}</div>
+                                <div class="flex">
+                                    <a href="/admin/board/qna/reply/edit/${r.id}">
+                                        <button class="btn btn-sm btn--tertiary mr-8">수정</button>
+                                    </a>
+                                    <button class="btn btn-sm btn--secondary"
+                                        onclick="deleteReply(${r.id})">삭제</button>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                });
+            } catch (err) {
+                console.error("상세 로드 실패:", err);
+            }
+
+            document.getElementById("replyForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const content = e.target.content.value;
+                await fetch(replyUrl, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({content, responder: "관리자"})
+                });
+                location.reload();
+            });
+        });
+
+        async function deleteReply(replyId) {
+            if (!confirm("정말 삭제하시겠습니까?")) return;
+            await fetch(`/api/admin/qna/replies/${replyId}`, { method: "DELETE" });
+            location.reload();
+        }
+    </script>
 </head>
 <body>
 <div class="on-wrapper">
     <div class="on-content">
-
-        <!-- ✅ 사이드바 fragment -->
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-
         <div class="on-main">
-            <h2 class="mb-30">Q&amp;A Board</h2>
+            <h2 class="mb-30">Q&A 상세보기</h2>
 
-            <!-- ✅ 질문 상세 -->
             <div>
-                <div class="on-comp-tbl-row">
-                    <div class="on-comp-tbl-th col-2">번호</div>
-                    <div class="on-comp-tbl-td col-10" th:text="${qna.id}">01</div>
-                </div>
-
-                <div class="on-comp-tbl-row">
-                    <div class="on-comp-tbl-th col-2">작성일자</div>
-                    <div class="on-comp-tbl-td col-10"
-                         th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">
-                        2025-01-01
-                    </div>
-                </div>
-
-                <div class="on-comp-tbl-row">
-                    <div class="on-comp-tbl-th col-2">작성자</div>
-                    <div class="on-comp-tbl-td col-10" th:text="${qna.writer}">이상혁</div>
-                </div>
-
-                <div class="on-comp-tbl-row">
-                    <div class="on-comp-tbl-th col-2">제목</div>
-                    <div class="on-comp-tbl-td col-10" th:text="${qna.title}">
-
-                    </div>
-                </div>
-
-                <div class="on-comp-tbl-row high-100">
-                    <div class="on-comp-tbl-th col-2">질문 내용</div>
-                    <div class="on-comp-tbl-td col-10 items-start" th:text="${qna.question}">
-
-                    </div>
-                </div>
+                <div class="on-comp-tbl-row"><div class="on-comp-tbl-th col-2">번호</div><div class="on-comp-tbl-td col-10" id="qna-id"></div></div>
+                <div class="on-comp-tbl-row"><div class="on-comp-tbl-th col-2">작성일자</div><div class="on-comp-tbl-td col-10" id="qna-created"></div></div>
+                <div class="on-comp-tbl-row"><div class="on-comp-tbl-th col-2">작성자</div><div class="on-comp-tbl-td col-10" id="qna-writer"></div></div>
+                <div class="on-comp-tbl-row"><div class="on-comp-tbl-th col-2">제목</div><div class="on-comp-tbl-td col-10" id="qna-title"></div></div>
+                <div class="on-comp-tbl-row high-100"><div class="on-comp-tbl-th col-2">질문 내용</div><div class="on-comp-tbl-td col-10 items-start" id="qna-question"></div></div>
             </div>
 
             <div class="on-border mt-20"></div>
-
-            <!-- ✅ 리플라이(답변) 목록 -->
-            <div class="mt-8" th:if="${#lists.size(replies) > 0}">
-                <div th:each="reply : ${replies}" class="on-comp-tbl-row mt-10">
-                    <div class="on-comp-tbl-th col-2">
-                        <span th:text="${reply.responder}">관리자</span>
-                    </div>
-                    <div class="on-comp-tbl-td col-10 flex justify-between items-start">
-                        <div class="mr-4" th:text="${reply.content}">
-
-                        </div>
-
-                        <div class="flex justify-center items-center">
-                            <!-- 수정 -->
-<!--                            <a th:href="@{/admin/board/qna/reply/edit/{replyId}(replyId=${reply.id})}"-->
-<!--                               class="btn-sm btn&#45;&#45;tertiary mr-2">수정</a>-->
-                            <a th:href="@{/admin/board/qna/reply/edit/{replyId}(replyId=${reply.id})}"><button class="btn btn-sm btn--tertiary mr-8">수정</button></a>
-
-                            <!-- ✅ 삭제 (확인창 추가됨) -->
-                            <form th:action="@{/admin/board/qna/reply/delete/{replyId}(replyId=${reply.id})}"
-                                  method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
-                                <input type="hidden" name="qnaId" th:value="${qna.id}" />
-                                <button type="submit" class="btn btn-sm btn--secondary">삭제</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <div id="reply-container" class="mt-8"></div>
             <div class="on-border mt-20"></div>
 
-            <!-- ✅ 리플라이 등록 -->
-            <form th:action="@{/admin/board/qna/reply/{id}(id=${qna.id})}" method="post">
-                <div class="mt-20">
-                    <div class="on-comp-tbl-row high-80">
-                        <div class="on-comp-tbl-th col-2">답변 등록</div>
-                        <div class="on-comp-tbl-td col-10">
-                            <textarea class="textarea w-full" name="content" placeholder="답변을 입력하세요"></textarea>
-                        </div>
+            <form id="replyForm" class="mt-20">
+                <div class="on-comp-tbl-row high-80">
+                    <div class="on-comp-tbl-th col-2">답변 등록</div>
+                    <div class="on-comp-tbl-td col-10">
+                        <textarea class="textarea w-full" name="content" placeholder="답변을 입력하세요"></textarea>
                     </div>
                 </div>
-
                 <div class="flex justify-end mt-20">
-                    <a th:href="@{/admin/board/qna/list}"><button class="btn btn--quarternary-outline mr-4">목록</button></a>
+                    <a href="/admin/board/qna/list"><button type="button" class="btn btn--quarternary-outline mr-4">목록</button></a>
                     <button type="submit" class="btn btn--tertiary mr-4">답변등록</button>
                 </div>
             </form>

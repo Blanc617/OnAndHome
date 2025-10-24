@@ -1,17 +1,12 @@
 package com.onandhome.qna;
 
 import com.onandhome.qna.entity.Qna;
-import com.onandhome.qna.entity.QnaReply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * QnaReply 서비스
- */
 @Service
 @RequiredArgsConstructor
 public class QnaReplyService {
@@ -19,8 +14,9 @@ public class QnaReplyService {
     private final QnaRepository qnaRepository;
     private final QnaReplyRepository qnaReplyRepository;
 
-    /** ✅ 리플라이 등록 */
-    public void createReply(Long qnaId, String content, String responder) {
+    /** ✅ 답변 등록 */
+    @Transactional
+    public QnaReply createReply(Long qnaId, String content, String responder) {
         Qna qna = qnaRepository.findById(qnaId)
                 .orElseThrow(() -> new IllegalArgumentException("질문을 찾을 수 없습니다. ID=" + qnaId));
 
@@ -29,38 +25,49 @@ public class QnaReplyService {
         reply.setContent(content);
         reply.setResponder(responder);
         reply.setCreatedAt(LocalDateTime.now());
-
-        qnaReplyRepository.save(reply);
+        return qnaReplyRepository.save(reply);
     }
 
-    /** ✅ 특정 Qna에 속한 모든 리플라이 조회 */
+    /** ✅ 특정 QnA의 답변 목록 조회 (Lazy 방지 포함) */
+    @Transactional(readOnly = true)
     public List<QnaReply> findByQnaId(Long qnaId) {
-        return qnaReplyRepository.findByQnaId(qnaId);
+        List<QnaReply> replies = qnaReplyRepository.findByQnaId(qnaId);
+        replies.forEach(r -> {
+            if (r.getQna() != null) {
+                // ✅ Lazy 로딩 강제 초기화 (세션이 닫히기 전에)
+                r.getQna().getTitle();
+                r.getQna().getQuestion();
+            }
+        });
+        return replies;
     }
 
-    /** ✅ 리플라이 단건 조회 */
+    /** ✅ 단일 답변 조회 (Lazy 방지 포함) */
     @Transactional(readOnly = true)
     public QnaReply findById(Long replyId) {
         QnaReply reply = qnaReplyRepository.findById(replyId)
                 .orElseThrow(() -> new IllegalArgumentException("답변을 찾을 수 없습니다. ID=" + replyId));
 
-        // Lazy 로딩 초기화
         if (reply.getQna() != null) {
+            // ✅ Lazy 로딩 강제 초기화
             reply.getQna().getTitle();
+            reply.getQna().getQuestion();
         }
+
         return reply;
     }
 
-    /** ✅ 리플라이 수정 */
-    public void updateReply(Long replyId, String content) {
+    /** ✅ 답변 수정 */
+    @Transactional
+    public QnaReply updateReply(Long replyId, String content) {
         QnaReply reply = qnaReplyRepository.findById(replyId)
                 .orElseThrow(() -> new IllegalArgumentException("답변을 찾을 수 없습니다. ID=" + replyId));
-
         reply.setContent(content);
-        qnaReplyRepository.save(reply);
+        return qnaReplyRepository.save(reply);
     }
 
-    /** ✅ 리플라이 삭제 */
+    /** ✅ 답변 삭제 */
+    @Transactional
     public void deleteReply(Long replyId) {
         qnaReplyRepository.deleteById(replyId);
     }

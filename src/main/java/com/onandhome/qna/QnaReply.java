@@ -1,15 +1,12 @@
-package com.onandhome.qna.entity;
+package com.onandhome.qna;
 
+import com.onandhome.qna.entity.Qna;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
-/**
- * QnaReply (답변) 엔티티
- */
 @Entity
 @Table(name = "qna_reply")
 @Getter
@@ -21,12 +18,12 @@ public class QnaReply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ✅ Qna와 다대일 관계 (하나의 질문에 여러 답변)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "qna_id", nullable = false)
-    private Qna qna;
-
-    private String content;    // 답변 내용
-    private String responder;  // 작성자
+    private String content;
+    private String responder;
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    /** ✅ QnaReply → Qna (단방향) */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qna_id")
+    private Qna qna;
 }

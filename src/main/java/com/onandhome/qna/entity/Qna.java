@@ -1,18 +1,15 @@
 package com.onandhome.qna.entity;
 
 import com.onandhome.admin.adminProduct.entity.Product;
+import com.onandhome.qna.QnaReply;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 질문(QnA) 엔티티
- */
 @Entity
 @Table(name = "qna")
 @Getter
@@ -29,16 +26,15 @@ public class Qna {
     private String question;  // 질문 내용
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // ✅ 제품 정보 연결 (기존 유지)
+    /** ✅ QnA → Product (단방향) */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    // ✅ 여러 개의 리플라이(답변) 연결 (1:N 관계)
-    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL, orphanRemoval = true)
+    /** ✅ QnA → QnaReply (단방향) */
+    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<QnaReply> replies = new ArrayList<>();
 
-    /** ✅ 편의 메서드: Qna에 리플라이 추가 시 자동 연결 */
     public void addReply(QnaReply reply) {
         replies.add(reply);
         reply.setQna(this);
