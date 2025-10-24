@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On&Home</title>
+  <link rel="stylesheet" href="/css/import.css" />
+  <script src="/js/oncommon.js"></script>
+</head>
+<body>
+  <!-- 백그라운드 -->
+  <div class="on-main-wrap">
+    <!-- 헤더 -->
+    <header class="on-header">
+      <!-- line01 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div>
+            <ul class="sns-list">
+              <a href="https://www.facebook.com/?locale=ko_KR" target="_blank"><li class="sns-obj-fb"></li></a>
+              <a href="https://section.blog.naver.com/" target="_blank"><li class="sns-obj-blg"></li></a>
+              <a href="https://www.instagram.com/" target="_blank"><li class="sns-obj-ins"></li></a>
+              <a href="https://www.youtube.com/" target="_blank"><li class="sns-obj-ut"></li></a>
+            </ul>
+          </div>
+          <div class="login-group">
+            <ul class="login-group-list">
+              <li><a href="/user/login.html">로그인</a></li>
+              <li><a href="/user/regeist.html">회원가입</a></li>
+              <li><a href="/user/notice.html">공지사항</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- line02 -->
+      <div class="on-header-top">
+        <div class="on-header-inner2">
+          <a href=""><div class="header-logo-placeholder"></div></a>
+          <div>
+            <h1>On&Home</h1>
+          </div>
+          <div class="header-search-area">
+            <input type="text" class="input-m" placeholder="검색어를 입력하세요" />
+            <ul class="header-icons">
+              <li class="ico-mypage"><a href="#"></a></li>
+              <li class="ico-cart"><a href="#"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 메뉴 -->
+      <div class="on-header-top">
+        <div class="on-header-inner">
+          <div class="menu-wrapper">
+            <ul class="gnb">
+              <li>
+                <a href="#">TV/오디오</a>
+                <ul class="depth2">
+                  <li><a href="#">TV</a></li>
+                  <li><a href="#">오디오</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">주방가전</a>
+                <ul class="depth2">
+                  <li><a href="#">냉장고</a></li>
+                  <li><a href="#">전자렌지</a></li>
+                  <li><a href="#">식기세척기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">생활가전</a>
+                <ul class="depth2">
+                  <li><a href="#">세탁기</a></li>
+                  <li><a href="#">청소기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">에어컨/공기청정기</a>
+                <ul class="depth2">
+                  <li><a href="#">에어컨</a></li>
+                  <li><a href="#">공기청정기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">기타</a>
+                <ul class="depth2">
+                  <li><a href="#">정수기</a></li>
+                  <li><a href="#">안마의자</a></li>
+                  <li><a href="#">PC</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>      
+    </header>
+
+
+     <!-- 아이템영역2  -->
+    <div class="on-item02 mb-80 mt-80">
+      <div class="on-item02-inner">
+        <h2 class="sub-title line-under">주문내역</h2>
+        <h3 class="mb-20">배송정보</h3>
+        <table class="table mb-40">
+          <colgroup>
+            <col width="20%">
+            <col width="30%">
+            <col width="20%">
+            <col width="30%">
+          </colgroup>
+          <tbody id="deliveryInfoTable">
+            <tr>
+              <th>이름</th>
+              <td id="deliveryName">-</td>
+              <th>ID</th>
+              <td id="deliveryUserId">-</td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td id="deliveryPhone">-</td>
+              <th>e-mail</th>
+              <td id="deliveryEmail">-</td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td colspan="3" id="deliveryAddress">-</td>
+            </tr>
+            <tr>
+              <th>요청사항</th>
+              <td colspan="3" id="deliveryRequest">-</td>
+            </tr>            
+          </tbody>
+        </table>
+        <h3 class="mb-20">주문정보</h3>
+        <table class="table">
+          <colgroup>
+            <col width="20%">
+            <col width="35%">
+            <col width="10%">
+            <col width="10%">
+            <col width="10%">
+            <col width="">
+          </colgroup>
+          <tbody id="orderInfoTable">
+            <tr>
+              <th>주문번호</th>
+              <td colspan="5" id="orderNumber">-</td>
+            </tr>
+            <tr>
+              <th>주문상품 리스트</th>
+              <th colspan="5"></th>
+            </tr>
+            <tr>
+              <th>상품명</th>
+              <td id="productName">-</td>
+              <th>수량</th>
+              <td class="center" id="quantity">-</td>
+              <th>가격</th>
+              <td class="right" id="price">-</td>                                
+            </tr>            
+            <tr class="high-50">
+              <th>주문 합계</th>
+              <td colspan="5" class="right"><span class="price-b" id="totalPrice">-</span><span class="ml-12">원</span></td>
+            </tr>         
+          </tbody>
+        </table>
+      </div>
+    </div>  
+    <footer class="footer-o">
+      <div class="footer-wrapper">
+        <div class="footer-l">
+          <div>고객센터 <span class="footer-number">1544-7777</span></div>
+          <div class="flex mt-20">
+            <div>
+              <ul class="footer-title">
+                <li>회사명</li>
+                <li>대표</li>
+                <li>팩스</li>
+                <li>이메일</li>
+                <li>주소</li>
+                <li>사업자등록번호</li>
+                <li>통신판매업신고</li>
+                <li>개인정보 책임자</li>
+              </ul>
+            </div>
+            <div class="ml-20">
+              <ul class="footer-title">
+                <li>(주)하이미디어</li>
+                <li>이상혁</li>
+                <li>02-1544-7778</li>
+                <li>faker@naver.com</li>
+                <li>서울 서초구 서초동 123-456</li>
+                <li>123-456789</li>
+                <li>카456-7894</li>
+                <li>최우제</li>
+              </ul>
+            </div>            
+          </div>
+
+        </div>
+        <div class="footer-r">
+          <div>
+            <span class="footer-number">Review 게시판</span>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+                      
+          </div>
+          <div>
+            <span class="footer-number">Q&A 게시판</span>
+            <div class="footer-review">
+              <ul class="footer-title">
+                <li>배송 빠르고 좋아요!</li>
+                <li>포장 꼼꼼해서 만족합니다</li>
+                <li>색감 실물이 더 예뻐요</li>
+                <li>가격대비 품질이 훌륭합니다</li>
+                <li>설치 기사님 친절했어요</li>
+                <li>두 번째 구매인데 역시 좋네요</li>
+                <li>응대가 빠르고 친절합니다</li>
+              </ul>
+            </div>
+            
+                      
+          </div>
+
+        </div>
+      </div>
+    </footer>     
+  </div>
+
+  <script>
+    /**
+     * 헤더의 로그인 상태 업데이트
+     */
+    function updateHeaderLoginStatus() {
+      fetch('/api/user/session-info')
+        .then(response => response.json())
+        .then(data => {
+          const loginGroupList = document.querySelector('.login-group-list');
+          if (loginGroupList) {
+            if (data.loggedIn && data.user) {
+              loginGroupList.innerHTML = `
+                <li><a href="/user/my_page">${data.user.username || data.user.userId}님</a></li>
+                <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
+                <li><a href="/user/my_order">주문내역</a></li>
+              `;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('헤더 업데이트 오류:', error);
+        });
+    }
+
+    /**
+     * 로그아웃 처리
+     */
+    function logout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        sessionStorage.clear();
+        window.location.href = '/user/index';
+      }
+    }
+
+    /**
+     * 페이지 로드 시 배송정보 로드 및 헤더 업데이트
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+      updateHeaderLoginStatus();
+      loadDeliveryInfo();
+    });
+
+    /**
+     * URL 파라미터 추출
+     */
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    /**
+     * 배송정보 및 주문정보 로드
+     */
+    function loadDeliveryInfo() {
+      const orderId = getUrlParameter('orderId');
+      const deliveryInfoJson = sessionStorage.getItem('deliveryInfo');
+
+      if (!deliveryInfoJson) {
+        alert('주문 정보를 찾을 수 없습니다.');
+        window.location.href = '/user/index';
+        return;
+      }
+
+      try {
+        const deliveryInfo = JSON.parse(deliveryInfoJson);
+
+        // 배송정보 표시
+        document.getElementById('deliveryName').textContent = deliveryInfo.name || '-';
+        document.getElementById('deliveryUserId').textContent = deliveryInfo.userId || '-';
+        document.getElementById('deliveryPhone').textContent = deliveryInfo.phone || '-';
+        document.getElementById('deliveryEmail').textContent = deliveryInfo.email || '-';
+        document.getElementById('deliveryAddress').textContent = deliveryInfo.address || '-';
+        document.getElementById('deliveryRequest').textContent = deliveryInfo.request || '없음';
+
+        // 주문정보 표시
+        document.getElementById('orderNumber').textContent = orderId || '-';
+        document.getElementById('productName').textContent = deliveryInfo.productName || '-';
+        document.getElementById('quantity').textContent = deliveryInfo.quantity || '1';
+        document.getElementById('price').textContent = formatPrice(deliveryInfo.price || 0);
+        document.getElementById('totalPrice').textContent = formatPrice(deliveryInfo.totalPrice || 0);
+
+      } catch (error) {
+        console.error('주문 정보 파싱 오류:', error);
+        alert('주문 정보 처리 중 오류가 발생했습니다.');
+        window.location.href = '/user/index';
+      }
+    }
+
+    /**
+     * 가격 포매팅
+     */
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  </script>
+</body>
+</html>
