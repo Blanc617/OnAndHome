@@ -418,6 +418,7 @@
 
         reviewList.innerHTML = '';
         reviews.forEach(review => {
+            // 리뷰 본문
             const reviewDiv = document.createElement('div');
             reviewDiv.className = 'rep';
             reviewDiv.innerHTML = `
@@ -425,6 +426,19 @@
           <div><b>${escapeHtml(review.author || review.username || 'Anonymous')}</b></div>
         `;
             reviewList.appendChild(reviewDiv);
+
+            // 답글 표시 (replies 배열이 있고 비어있지 않은 경우)
+            if (review.replies && review.replies.length > 0) {
+                review.replies.forEach(reply => {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.className = 'rep qna-rep';
+                    replyDiv.innerHTML = `
+                        <div>${escapeHtml(reply.content || '')}</div>
+                        <div><b>${escapeHtml(reply.author || reply.username || 'Admin')}</b></div>
+                    `;
+                    reviewList.appendChild(replyDiv);
+                });
+            }
         });
     }
 

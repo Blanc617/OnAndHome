@@ -2,7 +2,9 @@ package com.onandhome.review;
 
 import com.onandhome.review.dto.ReviewDTO;
 import com.onandhome.user.UserService;
+import com.onandhome.user.dto.UserDTO;
 import com.onandhome.user.entity.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class ReviewRestController {
 
     private final ReviewService reviewService;
     private final UserService userService;
+    private static final String SESSION_USER_KEY = "loginUser";
 
     /**
      * 상품별 리뷰 목록 조회
@@ -51,33 +54,37 @@ public class ReviewRestController {
      * POST /api/reviews
      */
     @PostMapping
-    public ResponseEntity<Map<String, Object>> createReview(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> createReview(
+            @RequestBody Map<String, Object> request,
+            HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("리뷰 작성 요청: {}", request);
             
-            // 로그인한 사용자 정보 가져오기
-            User user = userService.getLoginUser();
+            // 세션에서 로그인한 사용자 정보 가져오기
+            UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
+            
+            if (loginUser == null) {
+                log.warn("세션에 사용자 정보가 없음 - 로그인 필요");
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return ResponseEntity.status(401).body(response);
+            }
             
             Long productId = Long.valueOf(request.get("productId").toString());
             String content = request.get("content").toString();
             int rating = request.containsKey("rating") ? 
                     Integer.parseInt(request.get("rating").toString()) : 5;
             
-            log.info("리뷰 작성 - userId: {}, productId: {}, content: {}", user.getId(), productId, content);
+            log.info("리뷰 작성 - userId: {}, productId: {}, content: {}", loginUser.getId(), productId, content);
             
-            ReviewDTO review = reviewService.createReview(productId, user.getId(), content, rating);
+            ReviewDTO review = reviewService.createReview(productId, loginUser.getId(), content, rating);
             
             response.put("success", true);
             response.put("message", "리뷰가 등록되었습니다.");
             response.put("data", review);
             log.info("리뷰 작성 성공 - reviewId: {}", review.getId());
             return ResponseEntity.ok(response);
-        } catch (IllegalStateException e) {
-            log.warn("로그인 필요: {}", e.getMessage());
-            response.put("success", false);
-            response.put("message", "로그인이 필요합니다.");
-            return ResponseEntity.status(401).body(response);
         } catch (Exception e) {
             log.error("리뷰 작성 오류", e);
             response.put("success", false);
