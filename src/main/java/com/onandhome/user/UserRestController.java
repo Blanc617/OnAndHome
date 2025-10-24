@@ -32,21 +32,21 @@ public class UserRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("사용자 정보 조회 요청");
-            
+
             // 세션에서 사용자 정보 가져오기
             UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
-            
+
             if (loginUser == null) {
                 log.warn("세션에 사용자 정보가 없음");
                 response.put("success", false);
                 response.put("message", "로그인이 필요합니다.");
                 return ResponseEntity.status(401).body(response);
             }
-            
+
             // DB에서 최신 사용자 정보 다시 조회
             User user = userService.findByUserId(loginUser.getUserId());
             UserDTO userDTO = UserDTO.fromEntity(user);
-            
+
             response.put("success", true);
             response.put("data", userDTO);
             log.info("사용자 정보 조회 성공 - userId: {}", loginUser.getUserId());
@@ -68,29 +68,29 @@ public class UserRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("사용자 정보 수정 요청: {}", userDTO.getUserId());
-            
+
             // 세션에서 사용자 정보 가져오기
             UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
-            
+
             if (loginUser == null) {
                 log.warn("세션에 사용자 정보가 없음");
                 response.put("success", false);
                 response.put("message", "로그인이 필요합니다.");
                 return ResponseEntity.status(401).body(response);
             }
-            
+
             // 본인 정보만 수정 가능
             if (!loginUser.getId().equals(userDTO.getId())) {
                 response.put("success", false);
                 response.put("message", "본인의 정보만 수정할 수 있습니다.");
                 return ResponseEntity.status(403).body(response);
             }
-            
+
             UserDTO updatedUser = userService.updateUser(userDTO);
-            
+
             // 세션 정보도 업데이트
             session.setAttribute(SESSION_USER_KEY, updatedUser);
-            
+
             response.put("success", true);
             response.put("message", "정보가 수정되었습니다.");
             response.put("data", updatedUser);
@@ -113,26 +113,26 @@ public class UserRestController {
         Map<String, Object> response = new HashMap<>();
         try {
             log.info("회원 탈퇴 요청");
-            
+
             // 세션에서 사용자 정보 가져오기
             UserDTO loginUser = (UserDTO) session.getAttribute(SESSION_USER_KEY);
-            
+
             if (loginUser == null) {
                 log.warn("세션에 사용자 정보가 없음");
                 response.put("success", false);
                 response.put("message", "로그인이 필요합니다.");
                 return ResponseEntity.status(401).body(response);
             }
-            
+
             Long userId = loginUser.getId();
             String userIdStr = loginUser.getUserId();
-            
+
             // 사용자 삭제
             userService.deleteUser(userId);
-            
+
             // 세션 무효화
             session.invalidate();
-            
+
             response.put("success", true);
             response.put("message", "회원 탈퇴가 완료되었습니다.");
             log.info("회원 탈퇴 성공 - userId: {}", userIdStr);

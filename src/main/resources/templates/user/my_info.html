@@ -55,7 +55,7 @@
             </ul>
           </div>
         </div>
-      </div>      
+      </div>
     </header>
     <div class="regeist_wrapper mb-40">
       <div class="regeist_inner">
@@ -102,7 +102,7 @@
             <tr class="regeist_data_tit">
               <th>전화번호</th>
               <td>
-                <input class="input bd-n" type="text" id="phone" value="" readonly> 
+                <input class="input bd-n" type="text" id="phone" value="" readonly>
               </td>
             </tr>
             <tr class="regeist_data_tit">
@@ -110,18 +110,18 @@
               <td>
                 <input class="input bd-n" type="text" id="address" value="" readonly>
               </td>
-            </tr>                                                                           
+            </tr>
           </table>
-          <div class="border-1p"></div>          
+          <div class="border-1p"></div>
           <div class="flex justify-center">
             <a href="/user/my_info_edit"><button class="btn btn--primary mr-4">정보수정</button></a>
             <a href="/user/index" id="btnWithdraw">
               <button type="button" class="btn btn--secondary">회원탈퇴</button>
             </a>
-          </div>   
+          </div>
         </div>
         <div>
-        </div>        
+        </div>
       </div>
     </div>
       <div th:replace="fragments/footer :: footer">
@@ -162,7 +162,7 @@
       loadCategoryMenu();
       loadHeaderNavigation();
       loadUserInfo();
-      
+
       // 회원 탈퇴 버튼 이벤트 리스너
       document.getElementById('btnWithdraw').addEventListener('click', handleWithdraw);
     });
@@ -200,26 +200,26 @@
     function displayUserInfo(user) {
       // 이름
       document.getElementById('username').value = user.username || '';
-      
+
       // ID
       document.getElementById('userId').value = user.userId || '';
-      
+
       // 성별
       if (user.gender === '남자' || user.gender === 'M' || user.gender === 'MALE') {
         document.getElementById('genderMale').checked = true;
       } else if (user.gender === '여자' || user.gender === 'F' || user.gender === 'FEMALE') {
         document.getElementById('genderFemale').checked = true;
       }
-      
+
       // 국적 (추후 확장 가능)
       document.getElementById('countryLocal').checked = true;
-      
+
       // 이메일
       document.getElementById('email').value = user.email || '';
-      
+
       // 전화번호
       document.getElementById('phone').value = user.phone || '';
-      
+
       // 주소
       document.getElementById('address').value = user.address || '';
     }
@@ -229,7 +229,7 @@
      */
     function handleWithdraw(e) {
       e.preventDefault();
-      
+
       if (confirm('회원탈퇴 하시겠습니까?')) {
         fetch('/api/user/withdraw', {
           method: 'DELETE',
@@ -263,7 +263,7 @@
 
       categoryData.forEach(category => {
         const li = document.createElement('li');
-        
+
         const parentLink = document.createElement('a');
         parentLink.href = '#';
         parentLink.textContent = category.parentName;
@@ -271,13 +271,13 @@
           e.preventDefault();
           return false;
         };
-        
+
         li.appendChild(parentLink);
-        
+
         if (category.children && category.children.length > 0) {
           const depth2 = document.createElement('ul');
           depth2.className = 'depth2';
-          
+
           category.children.forEach(child => {
             const childLi = document.createElement('li');
             const childLink = document.createElement('a');
@@ -286,10 +286,10 @@
             childLi.appendChild(childLink);
             depth2.appendChild(childLi);
           });
-          
+
           li.appendChild(depth2);
         }
-        
+
         categoryMenu.appendChild(li);
       });
     }
