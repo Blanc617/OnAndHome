@@ -1,6 +1,5 @@
 package com.onandhome.qna;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.onandhome.qna.entity.Qna;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class QnaReply {
 
     @Id
@@ -24,8 +22,8 @@ public class QnaReply {
     private String responder;
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    /** ✅ QnaReply → Qna (단방향) */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "qna_id")
-    @JsonIgnoreProperties({"replies", "product"}) // 순환 참조 방지
     private Qna qna;
 }

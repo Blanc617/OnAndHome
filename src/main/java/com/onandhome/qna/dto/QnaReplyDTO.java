@@ -19,12 +19,13 @@ public class QnaReplyDTO {
     private String responder;
     private LocalDateTime createdAt;
 
+    /** ✅ 엔티티 → DTO 변환 */
     public static QnaReplyDTO fromEntity(QnaReply reply) {
         return QnaReplyDTO.builder()
                 .id(reply.getId())
-                .qnaId(reply.getQna().getId())
-                .qnaTitle(reply.getQna().getTitle())
-                .qnaQuestion(reply.getQna().getQuestion())
+                .qnaId(reply.getQna() != null ? reply.getQna().getId() : null)
+                .qnaTitle(reply.getQna() != null ? reply.getQna().getTitle() : null)
+                .qnaQuestion(reply.getQna() != null ? reply.getQna().getQuestion() : null)
                 .content(reply.getContent())
                 .responder(reply.getResponder())
                 .createdAt(reply.getCreatedAt())

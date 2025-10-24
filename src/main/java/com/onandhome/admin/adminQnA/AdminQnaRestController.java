@@ -19,6 +19,10 @@ public class AdminQnaRestController {
     private final QnaService qnaService;
     private final QnaReplyService qnaReplyService;
 
+    /* ============================================================
+       ✅ QnA (관리자용)
+       ============================================================ */
+
     /** ✅ 모든 QnA 조회 */
     @GetMapping
     public List<QnaDTO> getAllQna() {
@@ -39,8 +43,8 @@ public class AdminQnaRestController {
 
     /** ✅ 수정 */
     @PutMapping("/{id}")
-    public QnaDTO updateQna(@PathVariable Long id, @RequestBody Qna updated) {
-        return QnaDTO.fromEntity(qnaService.update(id, updated));
+    public QnaDTO updateQna(@PathVariable Long id, @RequestBody QnaDTO dto) {
+        return qnaService.update(id, dto);
     }
 
     /** ✅ 삭제 */
@@ -49,14 +53,20 @@ public class AdminQnaRestController {
         qnaService.delete(id);
     }
 
-    /** ✅ 특정 QnA의 리플라이 조회 */
+    /* ============================================================
+       ✅ QnA Reply (관리자용)
+       ============================================================ */
+
+    /** ✅ 특정 QnA의 모든 리플라이 조회 */
     @GetMapping("/{id}/replies")
     public List<QnaReplyDTO> getReplies(@PathVariable Long id) {
         List<QnaReply> replies = qnaReplyService.findByQnaId(id);
-        return replies.stream().map(QnaReplyDTO::fromEntity).collect(Collectors.toList());
+        return replies.stream()
+                .map(QnaReplyDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
-    /** ✅ 리플라이 단건 조회 (수정용) */
+    /** ✅ 리플라이 단건 조회 */
     @GetMapping("/replies/{replyId}")
     public QnaReplyDTO getReply(@PathVariable Long replyId) {
         QnaReply reply = qnaReplyService.findById(replyId);
