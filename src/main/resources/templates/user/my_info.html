@@ -115,7 +115,7 @@
           <div class="border-1p"></div>          
           <div class="flex justify-center">
             <a href="/user/my_info_edit"><button class="btn btn--primary mr-4">정보수정</button></a>
-            <a href="#" id="btnWithdraw">
+            <a href="/user/index" id="btnWithdraw">
               <button type="button" class="btn btn--secondary">회원탈퇴</button>
             </a>
           </div>   
@@ -162,6 +162,9 @@
       loadCategoryMenu();
       loadHeaderNavigation();
       loadUserInfo();
+      
+      // 회원 탈퇴 버튼 이벤트 리스너
+      document.getElementById('btnWithdraw').addEventListener('click', handleWithdraw);
     });
 
     /**
@@ -219,6 +222,36 @@
       
       // 주소
       document.getElementById('address').value = user.address || '';
+    }
+
+    /**
+     * 회원 탈퇴 처리
+     */
+    function handleWithdraw(e) {
+      e.preventDefault();
+      
+      if (confirm('회원탈퇴 하시겠습니까?')) {
+        fetch('/api/user/withdraw', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('회원 탈퇴가 완료되었습니다.');
+            // 메인 페이지로 이동 (replace 사용으로 뒤로가기 방지)
+            window.location.replace('/');
+          } else {
+            alert(data.message || '회원 탈퇴에 실패했습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('회원 탈퇴 오류:', error);
+          alert('회원 탈퇴 중 오류가 발생했습니다.');
+        });
+      }
     }
 
     /**

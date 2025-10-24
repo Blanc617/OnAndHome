@@ -1,6 +1,7 @@
 package com.onandhome.review;
 
 import com.onandhome.review.entity.Review;
+import com.onandhome.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      * 상품 ID로 리뷰 목록 조회
      */
     List<Review> findByProductId(Long productId);
+    
+    /**
+     * 사용자 ID로 리뷰 목록 조회
+     */
+    List<Review> findByUserId(Long userId);
+    
+    /**
+     * 사용자로 리뷰 목록 조회
+     */
+    List<Review> findByUser(User user);
 }

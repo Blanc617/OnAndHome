@@ -1,5 +1,8 @@
 package com.onandhome.user;
 
+import com.onandhome.cart.CartItemRepository;
+import com.onandhome.order.OrderRepository;
+import com.onandhome.review.ReviewRepository;
 import com.onandhome.user.dto.UserDTO;
 import com.onandhome.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,9 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ReviewRepository reviewRepository;
 
     /** ✅ 사용자 회원가입 */
     public UserDTO register(UserDTO userDTO) {
@@ -113,8 +119,22 @@ public class UserService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        
+        // 1. 장바구니 아이템 삭제
+        log.info("장바구니 아이템 삭제 - userId: {}", user.getUserId());
+        cartItemRepository.deleteByUser(user);
+        
+        // 2. 주문 삭제 (주문 아이템은 cascade로 자동 삭제됨)
+        log.info("주문 삭제 - userId: {}", user.getUserId());
+        orderRepository.deleteAll(orderRepository.findByUser(user));
+        
+        // 3. 리뷰 삭제 (리뷰 답글은 cascade로 자동 삭제됨)
+        log.info("리뷰 삭제 - userId: {}", user.getUserId());
+        reviewRepository.deleteAll(reviewRepository.findByUser(user));
+        
+        // 4. 사용자 삭제
         userRepository.delete(user);
-        log.info("사용자 삭제: {}", user.getUserId());
+        log.info("사용자 삭제 완료: {}", user.getUserId());
     }
 
     /** ✅ 현재 로그인한 사용자 반환 */

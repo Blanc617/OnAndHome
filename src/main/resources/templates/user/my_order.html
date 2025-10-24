@@ -198,7 +198,7 @@
     });
 
     /**
-     * 최근 주문 내역 로드
+     * 모든 주문 내역 로드
      */
     function loadLatestOrder() {
         fetch('/api/user/session-info')
@@ -217,9 +217,8 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.data && data.data.length > 0) {
-                    // 가장 최근 주문 (배열의 첫 번째 항목)
-                    const latestOrder = data.data[0];
-                    displayOrderInfo(latestOrder);
+                    // 모든 주문 내역 표시
+                    displayAllOrders(data.data);
                 } else {
                     displayNoOrders();
                 }
@@ -233,10 +232,11 @@
     }
 
     /**
-     * 주문 정보 표시
+     * 모든 주문 정보 표시
      */
-    function displayOrderInfo(order) {
-        // 배송정보 표시
+    function displayAllOrders(orders) {
+        // 가장 최근 주문의 배송정보 표시
+        const latestOrder = orders[0];
         const deliveryInfoTable = document.getElementById('deliveryInfoTable');
 
         // sessionStorage에서 배송정보 가져오기 (주문 시 저장한 정보)
@@ -251,23 +251,23 @@
             }
         }
 
-        // 배송정보 HTML 생성
+        // 배송정보 HTML 생성 (최신 주문 기준)
         deliveryInfoTable.innerHTML = `
         <tr>
           <th>이름</th>
-          <td>${deliveryData ? deliveryData.name : order.username || '-'}</td>
+          <td>${deliveryData ? deliveryData.name : latestOrder.username || '-'}</td>
           <th>ID</th>
-          <td>${deliveryData ? deliveryData.userId : order.userIdStr || '-'}</td>
+          <td>${deliveryData ? deliveryData.userId : latestOrder.userIdStr || '-'}</td>
         </tr>
         <tr>
           <th>전화번호</th>
-          <td>${deliveryData ? deliveryData.phone : order.userPhone || '-'}</td>
+          <td>${deliveryData ? deliveryData.phone : latestOrder.userPhone || '-'}</td>
           <th>e-mail</th>
-          <td>${deliveryData ? deliveryData.email : order.userEmail || '-'}</td>
+          <td>${deliveryData ? deliveryData.email : latestOrder.userEmail || '-'}</td>
         </tr>
         <tr>
           <th>주소</th>
-          <td colspan="3">${deliveryData ? deliveryData.address : order.userAddress || '-'}</td>
+          <td colspan="3">${deliveryData ? deliveryData.address : latestOrder.userAddress || '-'}</td>
         </tr>
         <tr>
           <th>요청사항</th>
@@ -275,51 +275,60 @@
         </tr>
       `;
 
-        // 주문정보 표시
+        // 주문정보 표시 - 모든 주문 내역
         const orderInfoTable = document.getElementById('orderInfoTable');
+        let allOrdersHtml = '';
 
-        // 주문번호 (서버에서 생성된 값 사용)
-        const orderNumber = order.orderNumber || 'N/A';
+        // 각 주문을 순회하며 표시
+        orders.forEach((order, orderIndex) => {
+            const orderNumber = order.orderNumber || 'N/A';
+            const orderDate = order.orderDate ? new Date(order.orderDate).toLocaleString('ko-KR') : '-';
+            let itemsHtml = '';
 
-        let itemsHtml = '';
+            // 각 주문 아이템 표시
+            order.orderItems.forEach(item => {
+                const price = item.orderPrice || 0;
+                const quantity = item.quantity || 0;
+                const itemTotal = price * quantity;
 
-        // 각 주문 아이템 표시
-        order.orderItems.forEach(item => {
-            const price = item.orderPrice || 0;
-            const quantity = item.quantity || 0;
-            const itemTotal = price * quantity;
+                itemsHtml += `
+              <tr>
+                <th>상품명</th>
+                <td>${item.productName}</td>
+                <th>수량</th>
+                <td class="center">${quantity}</td>
+                <th>가격</th>
+                <td class="right">${formatPrice(itemTotal)}</td>
+              </tr>
+            `;
+            });
 
-            itemsHtml += `
-          <tr>
-            <th>상품명</th>
-            <td>${item.productName}</td>
-            <th>수량</th>
-            <td class="center">${quantity}</td>
-            <th>가격</th>
-            <td class="right">${formatPrice(itemTotal)}</td>
-          </tr>
-        `;
+            // 서버에서 계산된 총 가격 사용
+            const totalPrice = order.totalPrice || 0;
+
+            // 각 주문별 HTML 추가
+            allOrdersHtml += `
+            ${orderIndex > 0 ? '<tr style="height: 20px;"><td colspan="6"></td></tr>' : ''}
+            <tr style="background-color: #f5f5f5;">
+              <th>주문번호</th>
+              <td colspan="3">${orderNumber}</td>
+              <th>주문일시</th>
+              <td>${orderDate}</td>
+            </tr>
+            <tr>
+              <th>주문상품 리스트</th>
+              <th colspan="5"></th>
+            </tr>
+            ${itemsHtml}
+            <tr class="high-50">
+              <th>주문 합계</th>
+              <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
+            </tr>
+          `;
         });
 
-        // 서버에서 계산된 총 가격 사용
-        const totalPrice = order.totalPrice || 0;
-
         // 테이블 내용 설정
-        orderInfoTable.innerHTML = `
-        <tr>
-          <th>주문번호</th>
-          <td colspan="5">${orderNumber}</td>
-        </tr>
-        <tr>
-          <th>주문상품 리스트</th>
-          <th colspan="5"></th>
-        </tr>
-        ${itemsHtml}
-        <tr class="high-50">
-          <th>주문 합계</th>
-          <td colspan="5" class="right"><span class="price-b">${formatPrice(totalPrice)}</span><span class="ml-12">원</span></td>
-        </tr>
-      `;
+        orderInfoTable.innerHTML = allOrdersHtml;
     }
 
     /**
